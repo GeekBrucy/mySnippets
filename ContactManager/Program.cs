@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ContactManager.Data;
+using Microsoft.AspNetCore.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,8 +12,30 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddRazorPages();
+
+// fallback policy applies to razor pages, controllers or action methods that do now have applied authorization attribute, like [AllowAnonymous] etc.
+builder.Services.AddAuthorization(options =>
+{
+    options.FallbackPolicy = new AuthorizationPolicyBuilder()
+        .RequireAuthenticatedUser()
+        .Build();
+});
+
+/*
+An alternative way for MVC controllers and Razor Pages to require all users be authenticated is adding an authorization filter:
+*/
+/*
+builder.Services.AddControllers(config =>
+{
+    var policy = new AuthorizationPolicyBuilder()
+                     .RequireAuthenticatedUser()
+                     .Build();
+    config.Filters.Add(new AuthorizeFilter(policy));
+});
+*/
 
 var app = builder.Build();
 
