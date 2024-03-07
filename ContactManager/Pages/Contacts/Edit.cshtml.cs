@@ -8,70 +8,98 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ContactManager.Data;
 using ContactManager.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using ContactManager.Authorization;
 
 namespace ContactManager.Pages.Contacts
 {
-    public class EditModel : PageModel
+  public class EditModel : DI_BasePageModel
+  {
+
+    public EditModel(
+    ApplicationDbContext context,
+    IAuthorizationService authorizationService,
+    UserManager<IdentityUser> userManager)
+    : base(context, authorizationService, userManager)
     {
-        private readonly ContactManager.Data.ApplicationDbContext _context;
-
-        public EditModel(ContactManager.Data.ApplicationDbContext context)
-        {
-            _context = context;
-        }
-
-        [BindProperty]
-        public Contact Contact { get; set; } = default!;
-
-        public async Task<IActionResult> OnGetAsync(int? id)
-        {
-            if (id == null || _context.Contact == null)
-            {
-                return NotFound();
-            }
-
-            var contact =  await _context.Contact.FirstOrDefaultAsync(m => m.ContactId == id);
-            if (contact == null)
-            {
-                return NotFound();
-            }
-            Contact = contact;
-            return Page();
-        }
-
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
-        {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
-
-            _context.Attach(Contact).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ContactExists(Contact.ContactId))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return RedirectToPage("./Index");
-        }
-
-        private bool ContactExists(int id)
-        {
-          return (_context.Contact?.Any(e => e.ContactId == id)).GetValueOrDefault();
-        }
     }
+
+    [BindProperty]
+    public Contact Contact { get; set; } = default!;
+
+    public async Task<IActionResult> OnGetAsync(int id)
+    {
+      Contact? contact = await Context.Contact.FirstOrDefaultAsync(m => m.ContactId == id);
+
+      if (contact == null)
+      {
+        return NotFound();
+      }
+
+      Contact = contact;
+
+      var isAuthorized = await AuthorizationService.AuthorizeAsync(User, Contact, ContactOperations.Update);
+
+      if (!isAuthorized.Succeeded)
+      {
+        return Forbid();
+      }
+
+      return Page();
+    }
+
+    // To protect from overposting attacks, enable the specific properties you want to bind to.
+    // For more details, see https://aka.ms/RazorPagesCRUD.
+    public async Task<IActionResult> OnPostAsync(int id)
+    {
+      if (!ModelState.IsValid)
+      {
+        return Page();
+      }
+
+      var contact = await Context.Contact.AsNoTracking().FirstOrDefaultAsync(m => m.ContactId == id);
+
+      if (contact == null)
+      {
+        return NotFound();
+      }
+
+      var isAuthorized = await AuthorizationService.AuthorizeAsync(User, contact, ContactOperations.Update);
+
+      if (!isAuthorized.Succeeded)
+      {
+        return Forbid();
+      }
+
+      Contact.OwnerID = contact.OwnerID;
+
+      Context.Attach(Contact).State = EntityState.Modified;
+
+      if (Contact.Status == ContactStatus.Approved)
+      {
+        // If the contact is updated after approval, 
+        // and the user cannot approve,
+        // set the status back to submitted so the update can be
+        // checked and approved.
+        var canApprove = await AuthorizationService.AuthorizeAsync(User,
+                                Contact,
+                                ContactOperations.Approve);
+
+        if (!canApprove.Succeeded)
+        {
+          Contact.Status = ContactStatus.Submitted;
+        }
+      }
+
+      await Context.SaveChangesAsync();
+
+      return RedirectToPage("./Index");
+    }
+
+    private bool ContactExists(int id)
+    {
+      return (Context.Contact?.Any(e => e.ContactId == id)).GetValueOrDefault();
+    }
+  }
 }

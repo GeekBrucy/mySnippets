@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ContactManager.Data;
 using Microsoft.AspNetCore.Authorization;
+using ContactManager.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +25,22 @@ builder.Services.AddAuthorization(options =>
         .Build();
 });
 
+// Authorization handlers
+builder.Services
+    .AddScoped<IAuthorizationHandler, ContactIsOwnerAuthorizationHandler>();
+
+/*
+ContactAdministratorsAuthorizationHandler is singleton,
+because it doesn't use EF
+*/
+builder.Services
+    .AddSingleton<IAuthorizationHandler, ContactAdministratorsAuthorizationHandler>();
+/*
+ContactAdministratorsAuthorizationHandler is singleton,
+because it doesn't use EF
+*/
+builder.Services
+    .AddSingleton<IAuthorizationHandler, ContactManagerAuthorizationHandler>();
 /*
 An alternative way for MVC controllers and Razor Pages to require all users be authenticated is adding an authorization filter:
 */
@@ -43,7 +60,13 @@ using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
 
-    await SeedData.Initialize(services);
+    var context = services.GetRequiredService<ApplicationDbContext>();
+
+    context.Database.Migrate();
+
+    var testUserPw = builder.Configuration.GetValue<string>("SeedUserPW");
+
+    await SeedData.Initialize(services, testUserPw);
 }
 
 // Configure the HTTP request pipeline.
