@@ -1,4 +1,9 @@
 {
+  {
+  "engines": {
+      "node": "^18.13.0"
+    }
+  },
   "name": "linked-data",
   "version": "0.0.0",
   "scripts": {
