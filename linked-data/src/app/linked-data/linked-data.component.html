@@ -1,8 +1,38 @@
 <div class="d-flex p-3 text-white align-items-center" style="gap: 15px">
+  <mat-card class="p-2">
+    {{ head.desc }}
+  </mat-card>
+  <mat-icon class="text-dark" *ngIf="head.next">arrow_right_alt</mat-icon>
   <ng-container *ngFor="let node of sortedData; let i = index">
-    <mat-card class="p-2" >
+    <mat-card class="p-2">
       {{ node.desc }}
     </mat-card>
     <mat-icon class="text-dark" *ngIf="node.next">arrow_right_alt</mat-icon>
   </ng-container>
+</div>
+<div>
+  <h5>Orphaned Node</h5>
+  <div class="d-flex p-3 text-white">
+    <mat-card class="p-2" *ngFor="let node of orphanedData; let i = index">
+      {{ node.desc }}
+    </mat-card>
+  </div>
+</div>
+<div class="p-3">
+  <form [formGroup]="form" class="d-flex flex-column">
+    <mat-form-field>
+      <mat-label>Current</mat-label>
+      <input formControlName="current" matInput>
+      <mat-error>Required</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Next</mat-label>
+      <input formControlName="next" matInput>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Desc</mat-label>
+      <input formControlName="desc" matInput>
+    </mat-form-field>
+  </form>
+  <button mat-raised-button color="primary" (click)="addNode()">Add Node</button>
 </div>
