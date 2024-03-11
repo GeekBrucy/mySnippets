@@ -1,23 +1,23 @@
-<div class="d-flex p-3 text-white align-items-center" style="gap: 15px">
+<div class="d-flex p-3 text-white align-items-center flex-wrap" style="gap: 15px">
   <mat-card class="p-2">
     {{ head.desc }}
   </mat-card>
   <mat-icon class="text-dark" *ngIf="head.next">arrow_right_alt</mat-icon>
   <ng-container *ngFor="let node of sortedData; let i = index">
-    <!-- [class.border.border-3.rounded-2.border-warning]="node.isNew" -->
     <mat-card
       class="p-2"
       [ngClass]="{'virtual-node border border-3 rounded-2 border-warning': node.isNew}"
     >
       <mat-card-header>
-        {{ node.desc }}
+        <mat-card-title>{{ node.desc }}</mat-card-title>
+        <mat-card-subtitle>Current Value: {{ node.current }}</mat-card-subtitle>
+        <mat-card-subtitle>Next Value: {{ node.next }}</mat-card-subtitle>
       </mat-card-header>
       <mat-card-actions>
         <button *ngIf="node.isNew else editNode" mat-raised-button color="accent" (click)="create(node)">
           Create
         </button>
         <ng-template #editNode>
-          <!-- (click)="edit(node)" -->
           <button
             mat-raised-button
             color="primary"
@@ -35,7 +35,16 @@
   <h5>Orphaned Node</h5>
   <div class="d-flex p-3 text-white">
     <mat-card class="p-2" *ngFor="let node of orphanedData; let i = index">
-      {{ node.desc }}
+      <mat-card-header>
+        <mat-card-title>{{ node.desc }}</mat-card-title>
+        <mat-card-subtitle>Current Value: {{ node.current }}</mat-card-subtitle>
+        <mat-card-subtitle>Next Value: {{ node.next }}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-actions>
+        <button mat-raised-button color="primary" (click)="edit(node)">
+          Edit
+        </button>
+      </mat-card-actions>
     </mat-card>
   </div>
 </div>
