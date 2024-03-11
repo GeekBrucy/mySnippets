@@ -4,8 +4,29 @@
   </mat-card>
   <mat-icon class="text-dark" *ngIf="head.next">arrow_right_alt</mat-icon>
   <ng-container *ngFor="let node of sortedData; let i = index">
-    <mat-card class="p-2">
-      {{ node.desc }}
+    <!-- [class.border.border-3.rounded-2.border-warning]="node.isNew" -->
+    <mat-card
+      class="p-2"
+      [ngClass]="{'virtual-node border border-3 rounded-2 border-warning': node.isNew}"
+    >
+      <mat-card-header>
+        {{ node.desc }}
+      </mat-card-header>
+      <mat-card-actions>
+        <button *ngIf="node.isNew else editNode" mat-raised-button color="accent" (click)="create(node)">
+          Create
+        </button>
+        <ng-template #editNode>
+          <!-- (click)="edit(node)" -->
+          <button
+            mat-raised-button
+            color="primary"
+            (click)="edit(node)"
+          >
+            Edit
+          </button>
+        </ng-template>
+      </mat-card-actions>
     </mat-card>
     <mat-icon class="text-dark" *ngIf="node.next">arrow_right_alt</mat-icon>
   </ng-container>
@@ -20,6 +41,7 @@
 </div>
 <div class="p-3">
   <form [formGroup]="form" class="d-flex flex-column">
+    <h5 *ngIf="id">Editing {{ id }}</h5>
     <mat-form-field>
       <mat-label>Current</mat-label>
       <input formControlName="current" matInput>
