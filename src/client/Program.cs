@@ -4,7 +4,9 @@ internal class Program
 {
   private static async Task Main(string[] args)
   {
-    await WrongUsage();
+    // await WrongUsage();
+    // Console.WriteLine(await DownloadHtmlAsync("https://azure.microsoft.com/en-au", @"./html.txt"));
+    // NoAsyncFunc();
   }
 
   static async Task WrongUsage()
@@ -22,6 +24,38 @@ internal class Program
     // 2. Here will throw exception: The process cannot access the file.....
     // because the process is still writing texts to the target file
     string s = File.ReadAllText(fileName);
+    Console.WriteLine(s);
+  }
+
+  static async Task<int> DownloadHtmlAsync(string url, string fileName)
+  {
+    using HttpClient httpClient = new HttpClient();
+
+    string html = await httpClient.GetStringAsync(url);
+    await File.WriteAllTextAsync(fileName, html);
+
+    return html.Length;
+  }
+
+  /// <summary>
+  /// Demo: if for some reason, the function cannot be
+  /// defined as 'async', Wait() and Task.Result can be used
+  /// NOTE: it may cause deadlock
+  /// </summary>
+  static void NoAsyncFunc()
+  {
+    string fileName = @"./1.txt";
+    StringBuilder sb = new StringBuilder();
+    for (int i = 0; i < 10000; i++)
+    {
+      sb.AppendLine("hello");
+    }
+
+    // use Wait() to wait for the process
+    File.WriteAllTextAsync(fileName, sb.ToString()).Wait();
+
+    // use Task.Result to get the async result
+    string s = File.ReadAllTextAsync(fileName).Result;
     Console.WriteLine(s);
   }
 }
