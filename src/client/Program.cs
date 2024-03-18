@@ -58,4 +58,23 @@ internal class Program
     string s = File.ReadAllTextAsync(fileName).Result;
     Console.WriteLine(s);
   }
+
+  static void ThreadPoolDemo()
+  {
+    string fileName = @"./1.txt";
+    StringBuilder sb = new StringBuilder();
+
+    ThreadPool.QueueUserWorkItem(async (obj) =>
+    {
+      for (int i = 0; i < 10000; i++)
+      {
+        sb.AppendLine("hello");
+      }
+      // use Wait() to wait for the process
+      await File.WriteAllTextAsync(fileName, sb.ToString());
+
+      // use Task.Result to get the async result
+      string s = await File.ReadAllTextAsync(fileName);
+    });
+  }
 }
