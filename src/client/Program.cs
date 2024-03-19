@@ -7,6 +7,8 @@ internal class Program
     // await WrongUsage();
     // Console.WriteLine(await DownloadHtmlAsync("https://azure.microsoft.com/en-au", @"./html.txt"));
     // NoAsyncFunc();
+    // await SwitchThread();
+    // await SwitchThread2();
   }
 
   static async Task WrongUsage()
@@ -75,5 +77,34 @@ internal class Program
 
       string s = await File.ReadAllTextAsync(fileName);
     });
+  }
+
+  static async Task SwitchThread()
+  {
+    // get current thread id before await
+    Console.WriteLine(Thread.CurrentThread.ManagedThreadId);
+    StringBuilder sb = new StringBuilder();
+    for (int i = 0; i < 10000; i++)
+    {
+      sb.Append("abc");
+    }
+    await File.WriteAllTextAsync("./test.txt", sb.ToString());
+    // get current thread id after await, the thread id may differ
+    Console.WriteLine(Thread.CurrentThread.ManagedThreadId);
+  }
+
+  static async Task SwitchThread2()
+  {
+    // get current thread id before await
+    Console.WriteLine(Thread.CurrentThread.ManagedThreadId);
+    StringBuilder sb = new StringBuilder();
+    // reduce the iteration number
+    for (int i = 0; i < 10; i++)
+    {
+      sb.Append("abc");
+    }
+    await File.WriteAllTextAsync("./test.txt", sb.ToString());
+    // get current thread id after await, the thread id will be the same because the write is quick
+    Console.WriteLine(Thread.CurrentThread.ManagedThreadId);
   }
 }
