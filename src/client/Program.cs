@@ -9,6 +9,22 @@ internal class Program
     // NoAsyncFunc();
     // await SwitchThread();
     // await SwitchThread2();
+
+    /*
+    No matter how slow the StayInTheSameThreadAsync is, the thread number will not change, as the async is inside of Main and Main will always use one thread
+    */
+    // Console.WriteLine($"Thread id before await: {Thread.CurrentThread.ManagedThreadId}");
+    // var r = await (StayInTheSameThreadAsync(50000));
+    // Console.WriteLine($"r={r}");
+    // Console.WriteLine($"Thread id after await: {Thread.CurrentThread.ManagedThreadId}");
+
+    /*
+    The Task.Run in ManualSwitchThread will cause switch thread
+    */
+    Console.WriteLine($"Thread id before await: {Thread.CurrentThread.ManagedThreadId}");
+    var r = await (ManualSwitchThread(50000));
+    Console.WriteLine($"r={r}");
+    Console.WriteLine($"Thread id after await: {Thread.CurrentThread.ManagedThreadId}");
   }
 
   static async Task WrongUsage()
@@ -106,5 +122,33 @@ internal class Program
     await File.WriteAllTextAsync("./test.txt", sb.ToString());
     // get current thread id after await, the thread id will be the same because the write is quick
     Console.WriteLine(Thread.CurrentThread.ManagedThreadId);
+  }
+
+  static async Task<double> StayInTheSameThreadAsync(int n)
+  {
+    Console.WriteLine($"StayInTheSameThreadAsync: {Thread.CurrentThread.ManagedThreadId}");
+    double result = 0;
+    Random random = new Random();
+    for (var i = 0; i < n * n; i++)
+    {
+      result += random.NextDouble();
+    }
+    return result;
+  }
+
+  static async Task<double> ManualSwitchThread(int n)
+  {
+    // Task.Run will use new thread
+    return await Task.Run(() =>
+    {
+      Console.WriteLine();
+      double result = 0;
+      Random random = new Random();
+      for (var i = 0; i < n * n; i++)
+      {
+        result += random.NextDouble();
+      }
+      return result;
+    });
   }
 }
