@@ -38,6 +38,7 @@ internal class Program
     // Console.WriteLine("------- q is pressed -------");
     // cts.Cancel();
 
+    // await WhenAllDemo();
   }
 
   static async Task WrongUsage()
@@ -234,5 +235,25 @@ internal class Program
         break;
       }
     }
+  }
+
+  static async Task<int> ReadCharsCount(string fileName)
+  {
+    string s = await File.ReadAllTextAsync(fileName);
+    return s.Length;
+  }
+
+  static async Task WhenAllDemo()
+  {
+    string[] files = Directory.GetFiles("./");
+    Task<int>[] countTasks = new Task<int>[files.Length];
+    for (int i = 0; i < files.Length; i++)
+    {
+      Task<int> t = ReadCharsCount(files[i]);
+      countTasks[i] = t;
+    }
+    int[] counts = await Task.WhenAll(countTasks);
+    int c = counts.Sum();
+    Console.WriteLine(c);
   }
 }
