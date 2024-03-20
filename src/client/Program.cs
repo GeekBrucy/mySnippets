@@ -27,6 +27,17 @@ internal class Program
     // Console.WriteLine($"Thread id after await: {Thread.CurrentThread.ManagedThreadId}");
 
     // await NoAsyncKeyword(1);
+    // CancellationTokenSource cts = new CancellationTokenSource();
+    // cts.CancelAfter(5000);
+    // await DemoCancellationToken("https://books.toscrape.com/", 100, cts.Token);
+
+    // CancellationTokenSource cts = new CancellationTokenSource();
+    // CancellationToken cToken = cts.Token;
+    // CancelOnKeyPress("https://books.toscrape.com/", 100, cts.Token);
+    // while (Console.ReadLine() != "q") { }
+    // Console.WriteLine("------- q is pressed -------");
+    // cts.Cancel();
+
   }
 
   static async Task WrongUsage()
@@ -185,5 +196,43 @@ internal class Program
     // Thread.Sleep(3000);
     await Task.Delay(3000);
     string s2 = await httpClient.GetStringAsync("https://www.google.com.au");
+  }
+
+  /// <summary>
+  /// CancellationToken is used to terminate the request
+  /// </summary>
+  /// <returns></returns>
+  static async Task DemoCancellationToken(string url, int n, CancellationToken cancellationToken)
+  {
+    using HttpClient httpClient = new HttpClient();
+
+    for (var i = 0; i < n; i++)
+    {
+      var resp = await httpClient.GetAsync(url, cancellationToken);
+      string html = await resp.Content.ReadAsStringAsync();
+      Console.WriteLine($"{DateTime.Now}: {html.Substring(0, 20)}");
+      if (cancellationToken.IsCancellationRequested)
+      {
+        Console.WriteLine("Request cancelled");
+        break;
+      }
+    }
+  }
+
+  static async Task CancelOnKeyPress(string url, int n, CancellationToken cancellationToken)
+  {
+    using HttpClient httpClient = new HttpClient();
+
+    for (var i = 0; i < n; i++)
+    {
+      var resp = await httpClient.GetAsync(url, cancellationToken);
+      string html = await resp.Content.ReadAsStringAsync();
+      Console.WriteLine($"{DateTime.Now}: {html.Substring(0, 20)}");
+      if (cancellationToken.IsCancellationRequested)
+      {
+        Console.WriteLine("Request cancelled");
+        break;
+      }
+    }
   }
 }
