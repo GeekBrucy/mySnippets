@@ -171,4 +171,19 @@ internal class Program
         throw new ArgumentException();
     }
   }
+
+  /// <summary>
+  /// If need to wait, try use Task.Delay() 
+  /// rather than Tread.Sleep(), because sleep will block thread
+  /// </summary>
+  /// <returns></returns>
+  static async Task UseDelayNoSleep()
+  {
+    using HttpClient httpClient = new HttpClient();
+    string s = await httpClient.GetStringAsync("https://azure.microsoft.com/en-au");
+    // Thread.Sleep will freeze the application
+    // Thread.Sleep(3000);
+    await Task.Delay(3000);
+    string s2 = await httpClient.GetStringAsync("https://www.google.com.au");
+  }
 }
