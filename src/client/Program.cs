@@ -39,6 +39,16 @@ internal class Program
     // cts.Cancel();
 
     // await WhenAllDemo();
+
+    // foreach (var s in YieldDemo())
+    // {
+    //   Console.WriteLine(s);
+    // }
+
+    await foreach (var s in YieldAsyncDemo())
+    {
+      Console.WriteLine(s);
+    }
   }
 
   static async Task WrongUsage()
@@ -255,5 +265,23 @@ internal class Program
     int[] counts = await Task.WhenAll(countTasks);
     int c = counts.Sum();
     Console.WriteLine(c);
+  }
+
+  /// <summary>
+  /// yield can improve performance
+  /// </summary>
+  /// <returns></returns>
+  static IEnumerable<string> YieldDemo()
+  {
+    yield return "test1";
+    yield return "test2";
+    yield return "test3";
+  }
+
+  static async IAsyncEnumerable<string> YieldAsyncDemo()
+  {
+    yield return "Async test1";
+    yield return "Async test2";
+    yield return "Async test3";
   }
 }
