@@ -13,9 +13,24 @@ public class HomeController : Controller
         _logger = logger;
     }
 
-    public IActionResult Index()
+    // the cancellationToken is from the framework
+    public async Task<IActionResult> Index(CancellationToken cancellationToken)
     {
+        // close tab or leave the index page, the cancellation token will be triggered
+        await Download("https://books.toscrape.com/", 100, cancellationToken);
         return View();
+    }
+
+    static async Task Download(string url, int n, CancellationToken cancellationToken)
+    {
+        using HttpClient httpClient = new HttpClient();
+
+        for (var i = 0; i < n; i++)
+        {
+            var resp = await httpClient.GetAsync(url, cancellationToken);
+            string html = await resp.Content.ReadAsStringAsync();
+            Debug.WriteLine(html.Substring(0, 20));
+        }
     }
 
     public IActionResult Privacy()
