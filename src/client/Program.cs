@@ -21,10 +21,12 @@ internal class Program
     /*
     The Task.Run in ManualSwitchThread will cause switch thread
     */
-    Console.WriteLine($"Thread id before await: {Thread.CurrentThread.ManagedThreadId}");
-    var r = await (ManualSwitchThread(50000));
-    Console.WriteLine($"r={r}");
-    Console.WriteLine($"Thread id after await: {Thread.CurrentThread.ManagedThreadId}");
+    // Console.WriteLine($"Thread id before await: {Thread.CurrentThread.ManagedThreadId}");
+    // var r = await (ManualSwitchThread(50000));
+    // Console.WriteLine($"r={r}");
+    // Console.WriteLine($"Thread id after await: {Thread.CurrentThread.ManagedThreadId}");
+
+    // await NoAsyncKeyword(1);
   }
 
   static async Task WrongUsage()
@@ -150,5 +152,23 @@ internal class Program
       }
       return result;
     });
+  }
+
+  /// <summary>
+  /// The function returns task but there is no async
+  /// </summary>
+  /// <returns></returns>
+  static Task<string> NoAsyncKeyword(int num)
+  {
+
+    switch (num)
+    {
+      case 1:
+        return File.ReadAllTextAsync("./1.txt");
+      case 2:
+        return File.ReadAllTextAsync("./2.txt");
+      default:
+        throw new ArgumentException();
+    }
   }
 }
