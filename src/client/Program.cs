@@ -1,7 +1,11 @@
-﻿internal class Program
+﻿using client.Delegates;
+
+internal class Program
 {
   private static void Main(string[] args)
   {
-    Console.WriteLine("Hello, World!");
+    DelegateDemo.Run();
+    ActionDemo.Run();
+    FuncDemo.Run();
   }
 }
