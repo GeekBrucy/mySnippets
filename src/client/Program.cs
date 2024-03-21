@@ -1,5 +1,6 @@
 ﻿using client.Delegates;
 using client.Lambda;
+using client.LINQ;
 
 internal class Program
 {
@@ -9,6 +10,7 @@ internal class Program
     // ActionDemo.Run();
     // FuncDemo.Run();
 
-    LambdaDemo.Run();
+    // LambdaDemo.Run();
+    MyBasicLINQ.Run();
   }
 }
