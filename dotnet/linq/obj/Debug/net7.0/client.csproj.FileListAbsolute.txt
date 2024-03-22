@@ -1,0 +1,15 @@
+F:\MyProj\mySnippets\src\client\bin\Debug\net7.0\client.exe
+F:\MyProj\mySnippets\src\client\bin\Debug\net7.0\client.deps.json
+F:\MyProj\mySnippets\src\client\bin\Debug\net7.0\client.runtimeconfig.json
+F:\MyProj\mySnippets\src\client\bin\Debug\net7.0\client.dll
+F:\MyProj\mySnippets\src\client\bin\Debug\net7.0\client.pdb
+F:\MyProj\mySnippets\src\client\obj\Debug\net7.0\client.csproj.AssemblyReference.cache
+F:\MyProj\mySnippets\src\client\obj\Debug\net7.0\client.GeneratedMSBuildEditorConfig.editorconfig
+F:\MyProj\mySnippets\src\client\obj\Debug\net7.0\client.AssemblyInfoInputs.cache
+F:\MyProj\mySnippets\src\client\obj\Debug\net7.0\client.AssemblyInfo.cs
+F:\MyProj\mySnippets\src\client\obj\Debug\net7.0\client.csproj.CoreCompileInputs.cache
+F:\MyProj\mySnippets\src\client\obj\Debug\net7.0\client.dll
+F:\MyProj\mySnippets\src\client\obj\Debug\net7.0\refint\client.dll
+F:\MyProj\mySnippets\src\client\obj\Debug\net7.0\client.pdb
+F:\MyProj\mySnippets\src\client\obj\Debug\net7.0\client.genruntimeconfig.cache
+F:\MyProj\mySnippets\src\client\obj\Debug\net7.0\ref\client.dll
