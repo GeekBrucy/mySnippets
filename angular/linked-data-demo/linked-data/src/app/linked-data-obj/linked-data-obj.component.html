@@ -1,0 +1,65 @@
+<div class="d-flex p-3 text-white align-items-center flex-wrap" style="gap: 15px">
+  <ng-container *ngFor="let node of sortedData; let i = index">
+    <mat-card
+      class="p-2"
+      [ngClass]="{'virtual-node border border-3 rounded-2 border-warning': node.isNew}"
+    >
+      <mat-card-header>
+        <mat-card-title>{{ node.desc }}</mat-card-title>
+        <mat-card-subtitle>Current Value: {{ node.current }}</mat-card-subtitle>
+        <mat-card-subtitle>Next Value: {{ node.next }}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-actions>
+        <button *ngIf="node.isNew else editNode" mat-raised-button color="accent" (click)="create(node)">
+          Create
+        </button>
+        <ng-template #editNode>
+          <button
+            mat-raised-button
+            color="primary"
+            (click)="edit(node)"
+          >
+            Edit
+          </button>
+        </ng-template>
+      </mat-card-actions>
+    </mat-card>
+    <mat-icon class="text-dark" *ngIf="node.next">arrow_right_alt</mat-icon>
+  </ng-container>
+</div>
+<div>
+  <h5>Orphaned Node</h5>
+  <div class="d-flex p-3 text-white">
+    <mat-card class="p-2" *ngFor="let node of orphanedData; let i = index">
+      <mat-card-header>
+        <mat-card-title>{{ node.desc }}</mat-card-title>
+        <mat-card-subtitle>Current Value: {{ node.current }}</mat-card-subtitle>
+        <mat-card-subtitle>Next Value: {{ node.next }}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-actions>
+        <button mat-raised-button color="primary" (click)="edit(node)">
+          Edit
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>
+<div class="p-3">
+  <form [formGroup]="form" class="d-flex flex-column">
+    <h5 *ngIf="id">Editing {{ id }}</h5>
+    <mat-form-field>
+      <mat-label>Current</mat-label>
+      <input formControlName="current" matInput>
+      <mat-error>Required</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Next</mat-label>
+      <input formControlName="next" matInput>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Desc</mat-label>
+      <input formControlName="desc" matInput>
+    </mat-form-field>
+  </form>
+  <button mat-raised-button color="primary" (click)="addNode()">Add Node</button>
+</div>
