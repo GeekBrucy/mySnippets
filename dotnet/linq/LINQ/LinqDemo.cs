@@ -25,7 +25,10 @@ public static class LinqDemo
     // DemoMultipleOrder(testData);
     // DemoSkipTake(testData);
     // DemoAvg(testData);
-    DemoGroupBy(testData);
+    // DemoGroupBy(testData);
+    // DemoProjection(testData);
+    // DemoProjectionWithAnonymousType(testData);
+    DemoProjectionIntegrated(testData);
   }
 
   private static void Print(IEnumerable<Employee> testData)
@@ -163,5 +166,49 @@ public static class LinqDemo
       Console.WriteLine("***********");
     }
 
+  }
+
+  static void DemoProjection(IEnumerable<Employee> testData)
+  {
+    var ages = testData.Select(e => e.Age);
+    foreach (var a in ages)
+    {
+      Console.WriteLine(a);
+    }
+  }
+  static void DemoProjectionWithAnonymousType(IEnumerable<Employee> testData)
+  {
+    // with anonymous projection (new {}), only `var` can be used
+    var anonymous = testData.Select
+    (
+      e => new
+      {
+        testName = e.Name,
+        testAge = e.Age,
+        testSalary = e.Salary
+      }
+    );
+    foreach (var item in anonymous)
+    {
+      Console.WriteLine($"testAge = {item.testAge}, testName = {item.testName}, testSalary = {item.testSalary}");
+    }
+  }
+  static void DemoProjectionIntegrated(IEnumerable<Employee> testData)
+  {
+    // with anonymous projection (new {}), only `var` can be used
+    var anonymous = testData.GroupBy(e => e.Age).Select
+    (
+      g => new
+      {
+        Age = g.Key,
+        MaxSalary = g.Max(e => e.Salary),
+        MinSalary = g.Min(e => e.Salary),
+        Total = g.Count()
+      }
+    ).OrderBy(e => e.Age);
+    foreach (var item in anonymous)
+    {
+      Console.WriteLine($"Age Group = {item.Age}, Max Salary = {item.MaxSalary}, Min Salary = {item.MinSalary}, Total = {item.Total}");
+    }
   }
 }
