@@ -23,15 +23,21 @@ public static class LinqDemo
     // DemoOrderBy(testData);
     // DemoOrderByDescending(testData);
     // DemoMultipleOrder(testData);
-    DemoSkipTake(testData);
+    // DemoSkipTake(testData);
+    // DemoAvg(testData);
+    DemoGroupBy(testData);
   }
 
-  private static void PrintList(IEnumerable<Employee> testData)
+  private static void Print(IEnumerable<Employee> testData)
   {
     foreach (var item in testData)
     {
       Console.WriteLine(item);
     }
+  }
+  private static void Print(Employee testData)
+  {
+    Console.WriteLine(testData);
   }
 
   static void DemoWhere(IEnumerable<Employee> testData)
@@ -123,12 +129,39 @@ public static class LinqDemo
   static void DemoMultipleOrder(IEnumerable<Employee> testData)
   {
     var ordered = testData.OrderBy(e => e.Age).ThenBy(e => e.Salary);
-    PrintList(ordered);
+    Print(ordered);
   }
 
   static void DemoSkipTake(IEnumerable<Employee> testData)
   {
     var data = testData.Skip(3).Take(2);
-    PrintList(data);
+    Print(data);
+  }
+
+  static void DemoMax(IEnumerable<Employee> testData)
+  {
+    var data = testData.Max(e => e.Age); // Max return the target field type
+    Console.WriteLine(data);
+
+  }
+  static void DemoAvg(IEnumerable<Employee> testData)
+  {
+    var data = testData.Average(e => e.Salary); // Max return the target field type
+    Console.WriteLine(data);
+  }
+  static void DemoGroupBy(IEnumerable<Employee> testData)
+  {
+    var grouping = testData.GroupBy(e => e.Age); // GroupBy here return IEnumerable<IGrouping<int, Employee>> type
+    foreach (IGrouping<int, Employee> g in grouping)
+    {
+      Console.WriteLine(g.Key);
+      Console.WriteLine("Max Salary: " + g.Max(e => e.Salary));
+      foreach (var item in g)
+      {
+        Console.WriteLine(item);
+      }
+      Console.WriteLine("***********");
+    }
+
   }
 }
