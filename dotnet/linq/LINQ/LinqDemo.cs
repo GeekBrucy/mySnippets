@@ -28,7 +28,8 @@ public static class LinqDemo
     // DemoGroupBy(testData);
     // DemoProjection(testData);
     // DemoProjectionWithAnonymousType(testData);
-    DemoProjectionIntegrated(testData);
+    // DemoProjectionIntegrated(testData);
+    DemoPractice();
   }
 
   private static void Print(IEnumerable<Employee> testData)
@@ -209,6 +210,22 @@ public static class LinqDemo
     foreach (var item in anonymous)
     {
       Console.WriteLine($"Age Group = {item.Age}, Max Salary = {item.MaxSalary}, Min Salary = {item.MinSalary}, Total = {item.Total}");
+    }
+  }
+
+  static void DemoPractice()
+  {
+    // get occurrence of a character (case in-sensitive)
+    string s = "hello world, Haha, hehehehseh";
+    var res = s.Where(c => char.IsLetter(c))
+      .Select(c => char.ToLower(c))
+      .GroupBy(c => c)
+      .Select(g => new { g.Key, Count = g.Count() })
+      .OrderByDescending(c => c.Count)
+      .Where(c => c.Count > 2);
+    foreach (var r in res)
+    {
+      Console.WriteLine(r);
     }
   }
 }
