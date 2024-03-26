@@ -12,7 +12,11 @@ internal class Program
 
     // DemoWithDI.RunWithSingleton();
 
-    DemoWithDI.RunWithScoped();
+    // DemoWithDI.RunWithScoped();
 
+    var testWithInterface = new DemoWithDI_Interface_Oriented();
+
+    // testWithInterface.Run();
+    testWithInterface.RunWithMultipleServices();
   }
 }
