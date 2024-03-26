@@ -4,8 +4,15 @@ internal class Program
 {
   private static void Main(string[] args)
   {
-    DemoWIthoutDI.RunWithTestServiceImpl();
+    // DemoWIthoutDI.RunWithTestServiceImpl();
 
-    DemoWithDI.RunWithDI();
+    // DemoWithDI.RunWithDI();
+
+    // DemoWithDI.RunWithTransient();
+
+    // DemoWithDI.RunWithSingleton();
+
+    DemoWithDI.RunWithScoped();
+
   }
 }
