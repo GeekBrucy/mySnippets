@@ -14,9 +14,11 @@ internal class Program
 
     // DemoWithDI.RunWithScoped();
 
-    var testWithInterface = new DemoWithDI_Interface_Oriented();
+    // var testWithInterface = new DemoWithDI_Interface_Oriented();
 
     // testWithInterface.Run();
-    testWithInterface.RunWithMultipleServices();
+    // testWithInterface.RunWithMultipleServices();
+
+    DemoDIInfectious.Run();
   }
 }

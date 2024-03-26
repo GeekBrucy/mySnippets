@@ -1,5 +1,7 @@
 # Dependency Injection
 
+In dotnet, by default, the DI is done in the constructor
+
 ## Vanilla dotnet
 
 1. Install package `Microsoft.Extensions.DependencyInjection`
