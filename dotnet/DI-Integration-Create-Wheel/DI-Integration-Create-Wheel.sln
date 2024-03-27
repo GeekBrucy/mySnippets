@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleMailClient", "Consol
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogServices", "LogServices\LogServices.csproj", "{6EB2DA4D-1B5D-4087-9D23-38405ABEDA1F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MailServices", "MailServices\MailServices.csproj", "{1B84D3B4-4597-454E-8FB4-6066B3F6E495}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{6EB2DA4D-1B5D-4087-9D23-38405ABEDA1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6EB2DA4D-1B5D-4087-9D23-38405ABEDA1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6EB2DA4D-1B5D-4087-9D23-38405ABEDA1F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B84D3B4-4597-454E-8FB4-6066B3F6E495}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B84D3B4-4597-454E-8FB4-6066B3F6E495}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B84D3B4-4597-454E-8FB4-6066B3F6E495}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B84D3B4-4597-454E-8FB4-6066B3F6E495}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
