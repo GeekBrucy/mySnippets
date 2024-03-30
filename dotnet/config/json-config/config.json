@@ -1,4 +1,7 @@
 {
   "name": "test",
-  "age": 19
+  "age": 19,
+  "proxy": {
+    "address": "aaa"
+  }
 }
