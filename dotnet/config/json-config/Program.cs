@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using json_config.Models;
+using Microsoft.Extensions.Configuration;
 
 internal class Program
 {
@@ -17,5 +18,12 @@ internal class Program
     Console.WriteLine(configRoot["proxy:address"]);
     string address = configRoot.GetSection("proxy:address").Value;
     Console.WriteLine(address);
+
+    Proxy proxy = configRoot.GetSection("proxy").Get<Proxy>();
+    Console.WriteLine($"{proxy.Address}:{proxy.Port}");
+
+    Config config = configRoot.Get<Config>();
+
+    Console.WriteLine("Name={0}, Age={1}, Proxy.Address={2}, Proxy.Port={3}", config.Name, config.Age, config.Proxy.Address, config.Proxy.Port);
   }
 }
