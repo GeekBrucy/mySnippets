@@ -2,6 +2,7 @@
   "name": "test",
   "age": 19,
   "proxy": {
-    "address": "aaa"
+    "address": "aaa",
+    "port": "80"
   }
 }
