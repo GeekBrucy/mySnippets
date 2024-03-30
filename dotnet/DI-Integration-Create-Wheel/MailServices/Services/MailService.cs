@@ -11,9 +11,10 @@ namespace MailServices.Services;
 public class MailService : IMailService
 {
   private readonly ILogProvider _logProvider;
-  private readonly IConfigService _config;
+  // private readonly IConfigService _config;
+  private readonly IConfigReader _config;
 
-  public MailService(ILogProvider logProvider, IConfigService config)
+  public MailService(ILogProvider logProvider, IConfigReader config)
   {
     _logProvider = logProvider;
     _config = config;

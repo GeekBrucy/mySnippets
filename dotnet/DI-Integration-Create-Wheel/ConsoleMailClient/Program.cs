@@ -15,7 +15,9 @@ internal class Program
     ServiceCollection services = new ServiceCollection();
     // services.AddScoped<IConfigService, EnvVarConfigService>();
     // services.AddScoped<IConfigService>(s => new IniFileConfigService { FilePath = "./ConsoleMailClient/mail.ini" });
+    services.AddScoped<IConfigService, EnvVarConfigService>();
     services.AddIniFileConfigService("./ConsoleMailClient/mail.ini");
+    services.AddLayeredConfig();
     services.AddScoped<IMailService, MailService>();
     // services.AddScoped<ILogProvider, ConsoleLogProvider>();
     services.AddConsoleLogService();
