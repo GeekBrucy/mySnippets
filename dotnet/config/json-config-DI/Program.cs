@@ -20,14 +20,18 @@ internal class Program
 
     // this is the key step of binding config to class and inject
     services.AddOptions()
-      .Configure<Config>(e => configRoot.Bind(e));
+      .Configure<Config>(e => configRoot.Bind(e))
+      .Configure<Proxy>(e => configRoot.GetSection("proxy").Bind(e));
 
     services.AddScoped<TestController>();
+    services.AddScoped<Test2Controller>();
 
     using var sp = services.BuildServiceProvider();
 
     var testController = sp.GetRequiredService<TestController>();
+    var test2Controller = sp.GetRequiredService<Test2Controller>();
 
     testController.Test();
+    test2Controller.Test();
   }
 }
