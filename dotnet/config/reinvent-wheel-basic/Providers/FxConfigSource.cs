@@ -10,6 +10,7 @@ public class FxConfigSource : FileConfigurationSource
 {
   public override IConfigurationProvider Build(IConfigurationBuilder builder)
   {
+    EnsureDefaults(builder); // handle file path default value
     return new FxConfigProvider(this);
   }
 }

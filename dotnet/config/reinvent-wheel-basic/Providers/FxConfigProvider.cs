@@ -15,7 +15,8 @@ public class FxConfigProvider : FileConfigurationProvider
 
   public override void Load(Stream stream)
   {
-    var data = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+    // use parent data
+    Data = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
     XmlDocument xmlDoc = new XmlDocument();
     xmlDoc.Load(stream);
     var connectionStringNodes = xmlDoc.SelectNodes("/configuration/connectionStrings/add");
@@ -23,12 +24,12 @@ public class FxConfigProvider : FileConfigurationProvider
     {
       string name = xmlNode.Attributes["name"].Value;
       string connectionString = xmlNode.Attributes["connectionString"].Value;
-      data[$"{name}:connectionString"] = connectionString;
+      Data[$"{name}:connectionString"] = connectionString;
 
       var attrProviderName = xmlNode.Attributes["providerName"];
       if (attrProviderName != null)
       {
-        data[$"{name}:providerName"] = attrProviderName.Value;
+        Data[$"{name}:providerName"] = attrProviderName.Value;
       }
     }
 
@@ -38,7 +39,7 @@ public class FxConfigProvider : FileConfigurationProvider
       string key = xmlNode.Attributes["key"].Value;
       key = key.Replace(".", ":");
       string value = xmlNode.Attributes["value"].Value;
-      data[key] = value;
+      Data[key] = value;
     }
   }
 }
