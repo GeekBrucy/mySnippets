@@ -101,4 +101,6 @@ Binder package allows to bind the config to a class
 
 `Microsoft.Extensions.Configuration.EnvironmentVariables` for environment variable config
 
+# dotnet EF Core
+
 [dotnet EF Core](./dotnet/Entity-Framework-Core/README.md)
