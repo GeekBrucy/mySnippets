@@ -11,4 +11,5 @@ public class Book
   public string Title { get; set; }
   public DateTime PubTime { get; set; }
   public double Price { get; set; }
+  public string Author { get; set; }
 }
