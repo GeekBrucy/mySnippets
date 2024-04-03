@@ -1,5 +1,10 @@
 [Back](../../README.md)
 
+# Dotnet EF Core Table of Contents
+
+1. [Setup Steps](#setup)
+2. [Fluent API](./README_EFCoreFluentAPI.md)
+
 # Setup
 
 ## Step 1
@@ -26,6 +31,8 @@ NOTE: Installing this package will trigger lots of other packages to be installe
 
 ## Step 3 (optional)
 
+### Fluent API
+
 Create Config class that inherits from `IEntityTypeConfiguration<TargetModel>`
 
 ```c#
@@ -36,6 +43,40 @@ public class BookConfig : IEntityTypeConfiguration<Book>
     builder.ToTable("T_Books"); // specify table name
   }
 }
+```
+
+NOTE: there are other ways to do the configuration
+
+### In OnModelCreating() in DbContext
+
+```c#
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+  base.OnModelCreating(modelBuilder);
+  modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly); // load all IEntityTypeConfiguration
+
+  modelBuilder.Entity<Book>().ToTable("T_Books");
+}
+```
+
+### Use data annotation in the model
+
+```c#
+[Table("T_Books")]
+public class Book
+{
+  public long Id { get; set; }
+  public string Title { get; set; }
+  public DateTime PubTime { get; set; }
+  public double Price { get; set; }
+  public string Author { get; set; }
+
+  public override string ToString()
+  {
+    return $"Id={Id}, Title={Title}, PubTime={PubTime}, Price={Price}, Author={Author}";
+  }
+}
+
 ```
 
 ## Step 4
@@ -80,3 +121,5 @@ After running the command, you will find there is a new folder `Migrations` is c
 ## Step 6
 
 Run `dotnet ef database update` to apply the migration
+
+[back to top](#dotnet-ef-core-table-of-contents)
