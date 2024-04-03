@@ -12,4 +12,9 @@ public class Book
   public DateTime PubTime { get; set; }
   public double Price { get; set; }
   public string Author { get; set; }
+
+  public override string ToString()
+  {
+    return $"Id={Id}, Title={Title}, PubTime={PubTime}, Price={Price}, Author={Author}";
+  }
 }
