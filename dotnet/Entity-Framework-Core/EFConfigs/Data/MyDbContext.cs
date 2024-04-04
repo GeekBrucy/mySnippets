@@ -4,11 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using EFConfigs.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace EFConfigs.Data;
 
 public class MyDbContext : DbContext
 {
+  private static ILoggerFactory _loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
   public DbSet<Book> Books { get; set; }
   public DbSet<Person> Persons { get; set; }
   public DbSet<Rabbit> Rabbits { get; set; }
@@ -16,6 +18,11 @@ public class MyDbContext : DbContext
   {
     base.OnConfiguring(optionsBuilder);
     optionsBuilder.UseMySQL("Server=localhost;Database=EFCoreTute;Uid=root;Pwd=root;");
+    // optionsBuilder.UseLoggerFactory(_loggerFactory);
+    // optionsBuilder.LogTo(msg =>
+    // {
+    //   Console.WriteLine(msg);
+    // });
   }
 
   protected override void OnModelCreating(ModelBuilder modelBuilder)
