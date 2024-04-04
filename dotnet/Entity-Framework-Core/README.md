@@ -6,6 +6,7 @@
 2. [Fluent API](./README_EFCoreFluentAPI.md)
 3. [Something about PK](#something-about-pk)
 4. [Something about migrations](./README_EFCoreMigration.md)
+5. [EF Core Reverse Engineering](./README_EFCoreReverseEngineering.md)
 
 # Setup
 
