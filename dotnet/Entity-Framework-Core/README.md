@@ -4,6 +4,7 @@
 
 1. [Setup Steps](#setup)
 2. [Fluent API](./README_EFCoreFluentAPI.md)
+3. [Something about PK](#something-about-pk)
 
 # Setup
 
@@ -123,3 +124,19 @@ After running the command, you will find there is a new folder `Migrations` is c
 Run `dotnet ef database update` to apply the migration
 
 [back to top](#dotnet-ef-core-table-of-contents)
+
+# Something about PK
+
+EF Core supported PK:
+
+- Auto Incremental
+  - Cannot manually assign value to PK
+  - PK will be assigned automatically after save
+- GUID
+  - Cannot set the PK as clustered index
+    - clustered index is an index which defines the physical order in which table records are stored in a database
+- Hi/Lo Algorithm (check if the target DB supports this before use)
+  - Optimize auto incremental
+- Hybrid (auto incremental + GUID)
+  - Auto incremental as physical PK
+  - GUID as logical PK
