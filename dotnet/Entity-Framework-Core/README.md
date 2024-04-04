@@ -5,6 +5,7 @@
 1. [Setup Steps](#setup)
 2. [Fluent API](./README_EFCoreFluentAPI.md)
 3. [Something about PK](#something-about-pk)
+4. [Something about migrations](./README_EFCoreMigration.md)
 
 # Setup
 
