@@ -9,7 +9,8 @@ internal class Program
     // await DemoSave(ctx);
     // DemoQuery(ctx);
     // await DemoUpdate(ctx);
-    await DemoDelete(ctx);
+    // await DemoDelete(ctx);
+    await DemoCreateWithGUID(ctx);
   }
   static async Task DemoSave(MyDbContext ctx)
   {
@@ -50,5 +51,17 @@ internal class Program
     await ctx.SaveChangesAsync();
 
     Console.WriteLine("Deleted");
+  }
+
+  static async Task DemoCreateWithGUID(MyDbContext ctx)
+  {
+    Rabbit r = new Rabbit
+    {
+      Name = "rabbit"
+    };
+    Console.WriteLine(r.Id);
+    ctx.Rabbits.Add(r);
+    await ctx.SaveChangesAsync();
+    Console.WriteLine(r.Id);
   }
 }
