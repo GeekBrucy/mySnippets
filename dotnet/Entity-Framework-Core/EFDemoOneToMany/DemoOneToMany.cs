@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using EFConfigs.Data;
 using EFConfigs.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace EFDemoOneToMany;
 
@@ -34,5 +35,20 @@ public class DemoOneToMany
     ctx.Add(article);
 
     await ctx.SaveChangesAsync();
+  }
+
+  public static void DemoFetchParent()
+  {
+    using MyDbContext ctx = new MyDbContext();
+    var article = ctx.Articles.Include(a => a.Comments).First(a => a.Id == 1);
+
+    Console.WriteLine(article);
+  }
+
+  public static void DemoFetchChildWithParent()
+  {
+    using MyDbContext ctx = new MyDbContext();
+    var comment = ctx.Comments.Include(c => c.Article).First(c => c.Id == 1);
+    Console.WriteLine(comment);
   }
 }

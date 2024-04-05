@@ -11,4 +11,9 @@ public class Article
   public string Title { get; set; }
   public string Content { get; set; }
   public List<Comment> Comments = new List<Comment>();
+
+  public override string ToString()
+  {
+    return $"Id={Id}, Title={Title}, Content={Content}, Comments={string.Join(Environment.NewLine, Comments)}";
+  }
 }
