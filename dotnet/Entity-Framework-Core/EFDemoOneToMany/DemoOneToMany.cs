@@ -9,7 +9,7 @@ namespace EFDemoOneToMany;
 
 public class DemoOneToMany
 {
-  public static async Task Basic()
+  public static async Task BasicInsert()
   {
     using MyDbContext ctx = new MyDbContext();
 
