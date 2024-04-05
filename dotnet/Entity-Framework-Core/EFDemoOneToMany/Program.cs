@@ -1,9 +1,10 @@
-﻿using EFConfigs.Data;
-using EFConfigs.Models;
+﻿
+using EFDemoOneToMany;
 
 internal class Program
 {
-  private static void Main(string[] args)
+  private static async Task Main(string[] args)
   {
+    await DemoOneToMany.Basic();
   }
 }
