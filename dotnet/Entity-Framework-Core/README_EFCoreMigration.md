@@ -6,6 +6,7 @@
 2. [Migration Up and Down](#migration-up-and-Down)
 3. [Remove migration](#remove-migration)
 4. [Generate SQL Script](#generate-sql-script)
+5. [Caution]()
 
 # Official Doc
 
@@ -33,3 +34,11 @@ Remove last migration
 # Generate SQL Script
 
 `dotnet ef migrations script -o [file name]`
+
+# Caution
+
+Same migration may not be compatible among the databases. For example, the migrations generated for Sql Server are not compatible to MySql.
+
+## Solution
+
+Use `-o` to output the migration files to different directory. For example, you can generate Sql Server migrations to `migrations/SqlServer` directory, MySql migrations to `migrations/MySql` directory.

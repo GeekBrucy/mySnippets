@@ -17,7 +17,8 @@ public class MyDbContext : DbContext
   protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
   {
     base.OnConfiguring(optionsBuilder);
-    optionsBuilder.UseMySQL("Server=localhost;Database=EFCoreTute;Uid=root;Pwd=root;");
+    var serverVersion = new MySqlServerVersion(new Version());
+    optionsBuilder.UseMySql("Server=localhost;Database=EFCoreTute;Uid=root;Pwd=root;", serverVersion);
     // optionsBuilder.UseLoggerFactory(_loggerFactory);
     // optionsBuilder.LogTo(msg =>
     // {
