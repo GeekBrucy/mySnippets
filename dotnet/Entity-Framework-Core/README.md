@@ -7,7 +7,8 @@
 3. [Something about PK](#something-about-pk)
 4. [Something about migrations](./README_EFCoreMigration.md)
 5. [EF Core Reverse Engineering](./README_EFCoreReverseEngineering.md)
-6. [Nuget Packages]
+6. [Relationships](./README_EFCoreRelationship.md)
+7. [Nuget Packages](#nuget-packages)
 
 # Setup
 
