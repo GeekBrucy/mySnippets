@@ -7,6 +7,7 @@
 3. [Something about PK](#something-about-pk)
 4. [Something about migrations](./README_EFCoreMigration.md)
 5. [EF Core Reverse Engineering](./README_EFCoreReverseEngineering.md)
+6. [Nuget Packages]
 
 # Setup
 
@@ -142,3 +143,10 @@ EF Core supported PK:
 - Hybrid (auto incremental + GUID)
   - Auto incremental as physical PK
   - GUID as logical PK
+
+# Nuget Packages
+
+PostgresSQL: Npgsql.EntityFrameworkCore.PostgresSQL
+MySql: Pomelo.EntityFrameworkCore.MySql
+SqlServer: Microsoft.EntityFrameworkCore.SqlServer
+Oracle: Oracle.EntityFrameworkCore
