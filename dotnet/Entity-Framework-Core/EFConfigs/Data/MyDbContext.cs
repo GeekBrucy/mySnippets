@@ -16,6 +16,8 @@ public class MyDbContext : DbContext
   public DbSet<Rabbit> Rabbits { get; set; }
   public DbSet<Article> Articles { get; set; }
   public DbSet<Comment> Comments { get; set; }
+  public DbSet<User> Users { get; set; }
+  public DbSet<UserRequest> UserRequests { get; set; }
   protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
   {
     base.OnConfiguring(optionsBuilder);
