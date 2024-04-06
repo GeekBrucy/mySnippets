@@ -13,6 +13,6 @@ public class CommentConfig : IEntityTypeConfiguration<Comment>
   public void Configure(EntityTypeBuilder<Comment> builder)
   {
     builder.Property(a => a.Content).IsRequired().IsUnicode();
-    builder.HasOne<Article>(c => c.Article).WithMany(a => a.Comments);
+    builder.HasOne<Article>(c => c.Article).WithMany(a => a.Comments).HasForeignKey(c => c.ArticleId).IsRequired();
   }
 }

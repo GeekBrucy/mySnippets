@@ -51,4 +51,11 @@ public class Demo
     var comment = ctx.Comments.Include(c => c.Article).First(c => c.Id == 1);
     Console.WriteLine(comment);
   }
+
+  public static void DemoFetchForeignKey()
+  {
+    using MyDbContext ctx = new MyDbContext();
+    var comment = ctx.Comments.Select(c => new { Id = c.Id, Content = c.Content, ArticleId = c.ArticleId }).First(c => c.Id == 1);
+    Console.WriteLine($"Id = {comment.Id}, Content = {comment.Content}, ArticleId = {comment.ArticleId}");
+  }
 }
