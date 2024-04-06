@@ -14,5 +14,8 @@ public class ArticleConfig : IEntityTypeConfiguration<Article>
   {
     builder.Property(a => a.Content).IsRequired().IsUnicode();
     builder.Property(a => a.Title).IsRequired().IsUnicode().HasMaxLength(255);
+    // Setup relationship to Comments.
+    // Note: if the relationship is setup in Comments, it is not needed in the Article here
+    // builder.HasMany<Comment>(a => a.Comments).WithOne(c => c.Article);
   }
 }
