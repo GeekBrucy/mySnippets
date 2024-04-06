@@ -8,6 +8,7 @@ internal class Program
     // await Demo.BasicInsert();
     // Demo.DemoFetchParent();
     // Demo.DemoFetchChildWithParent();
-    Demo.DemoFetchForeignKey();
+    // Demo.DemoFetchForeignKey();
+    await Demo.DemoInsertSingleDirectionRef();
   }
 }

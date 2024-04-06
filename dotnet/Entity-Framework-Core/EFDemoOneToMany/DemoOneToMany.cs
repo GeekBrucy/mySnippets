@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using EFConfigs.Data;
 using EFConfigs.Models;
+using EFConfigs.Models.Enums;
 using Microsoft.EntityFrameworkCore;
 
 namespace EFDemoOneToMany;
@@ -57,5 +58,27 @@ public class Demo
     using MyDbContext ctx = new MyDbContext();
     var comment = ctx.Comments.Select(c => new { Id = c.Id, Content = c.Content, ArticleId = c.ArticleId }).First(c => c.Id == 1);
     Console.WriteLine($"Id = {comment.Id}, Content = {comment.Content}, ArticleId = {comment.ArticleId}");
+  }
+
+  public static void DemoQuerySingleDirectionRef()
+  {
+    using MyDbContext ctx = new MyDbContext();
+
+  }
+
+  public static async Task DemoInsertSingleDirectionRef()
+  {
+    using MyDbContext ctx = new MyDbContext();
+    User requester = new User { Name = "Demo Requester" };
+    UserRequest request = new UserRequest
+    {
+      Comments = "Test Leave request",
+      Type = UserRequestType.Leave,
+      Status = UserRequestStatus.Pending,
+      RequestedBy = requester
+    };
+
+    ctx.UserRequests.Add(request);
+    await ctx.SaveChangesAsync();
   }
 }
