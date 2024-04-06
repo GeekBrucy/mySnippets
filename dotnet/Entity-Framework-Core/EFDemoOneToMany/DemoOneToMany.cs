@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EFDemoOneToMany;
 
-public class DemoOneToMany
+public class Demo
 {
   public static async Task BasicInsert()
   {
