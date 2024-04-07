@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFClient", "EFClient\EFClie
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFDemoOneToMany", "EFDemoOneToMany\EFDemoOneToMany.csproj", "{112F6AD6-8953-42D2-B581-095F59E41047}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFDemoSelfRef", "EFDemoSelfRef\EFDemoSelfRef.csproj", "{4D2AEB38-A5AC-4CDF-91B9-B2A60D4F5B63}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{112F6AD6-8953-42D2-B581-095F59E41047}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{112F6AD6-8953-42D2-B581-095F59E41047}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{112F6AD6-8953-42D2-B581-095F59E41047}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D2AEB38-A5AC-4CDF-91B9-B2A60D4F5B63}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D2AEB38-A5AC-4CDF-91B9-B2A60D4F5B63}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D2AEB38-A5AC-4CDF-91B9-B2A60D4F5B63}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D2AEB38-A5AC-4CDF-91B9-B2A60D4F5B63}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

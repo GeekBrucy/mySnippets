@@ -18,6 +18,7 @@ public class MyDbContext : DbContext
   public DbSet<Comment> Comments { get; set; }
   public DbSet<User> Users { get; set; }
   public DbSet<UserRequest> UserRequests { get; set; }
+  public DbSet<OrgUnit> OrgUnits { get; set; }
   protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
   {
     base.OnConfiguring(optionsBuilder);
