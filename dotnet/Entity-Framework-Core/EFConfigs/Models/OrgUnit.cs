@@ -11,4 +11,9 @@ public class OrgUnit
   public string Name { get; set; }
   public OrgUnit? Parent { get; set; }
   public List<OrgUnit> Children { get; set; } = new List<OrgUnit>();
+
+  public override string ToString()
+  {
+    return $"Id={Id}, Name={Name}";
+  }
 }
