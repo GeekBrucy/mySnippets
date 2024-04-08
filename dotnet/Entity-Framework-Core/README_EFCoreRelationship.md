@@ -2,6 +2,10 @@
 
 # EF Core Relationship Table of Contents
 
+# Official Doc
+
+https://learn.microsoft.com/en-us/ef/core/modeling/relationships
+
 # One to Many Config
 
 `HasOne(...).WithMany(...);`
@@ -42,6 +46,8 @@ Apply one to many config to `Article`
 # One to One Config
 
 `HasOne(...).WithOne(...);`
+
+## Self reference
 
 # Many to Many Config
 
