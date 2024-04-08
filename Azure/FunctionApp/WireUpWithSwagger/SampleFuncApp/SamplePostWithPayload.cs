@@ -9,6 +9,8 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using SampleFuncApp.Models;
 using AzureFunctions.Extensions.Swashbuckle.Attribute;
+using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
 
 namespace SampleFuncApp
 {
@@ -20,19 +22,17 @@ namespace SampleFuncApp
             [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req,
             ILogger log)
         {
-            log.LogInformation("C# HTTP trigger function processed a request.");
+            var bodyStr = await req.ReadAsStringAsync();
+            var obj = JsonConvert.DeserializeObject<Person>(bodyStr);
+            var results = new List<ValidationResult>();
+            var isValid = Validator.TryValidateObject(obj, new ValidationContext(obj, null, null), results, true);
 
-            string name = req.Query["name"];
+            if (isValid)
+            {
+                return new OkObjectResult(obj);
+            }
 
-            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-            dynamic data = JsonConvert.DeserializeObject(requestBody);
-            name = name ?? data?.name;
-
-            string responseMessage = string.IsNullOrEmpty(name)
-                ? "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response."
-                : $"Hello, {name}. This HTTP triggered function executed successfully.";
-
-            return new OkObjectResult(responseMessage);
+            return new BadRequestObjectResult(results);
         }
     }
 }
