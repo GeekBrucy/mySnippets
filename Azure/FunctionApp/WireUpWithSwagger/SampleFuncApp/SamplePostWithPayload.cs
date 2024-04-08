@@ -7,16 +7,17 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using SampleFuncApp.Models;
 using AzureFunctions.Extensions.Swashbuckle.Attribute;
 
 namespace SampleFuncApp
 {
-    public static class SampleFunc
+    public static class SamplePostWithPayload
     {
-        [FunctionName("SampleFunc")]
-        [QueryStringParameter("name", "this is name", DataType = typeof(string), Required = false)]
+        [FunctionName("SamplePostWithPayload")]
         public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req,
+            [RequestBodyType(typeof(Person), "The Person To Create")] // Describes the Body
+            [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req,
             ILogger log)
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
