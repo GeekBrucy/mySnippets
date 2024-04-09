@@ -21,6 +21,8 @@ public class MyDbContext : DbContext
   public DbSet<OrgUnit> OrgUnits { get; set; }
   public DbSet<Order> Orders { get; set; }
   public DbSet<Delivery> Deliveries { get; set; }
+  public DbSet<Student> Students { get; set; }
+  public DbSet<Teacher> Teachers { get; set; }
   protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
   {
     base.OnConfiguring(optionsBuilder);
