@@ -47,6 +47,41 @@ Apply one to many config to `Article`
 
 `HasOne(...).WithOne(...);`
 
+NOTE: A foreign key property must be explicitly declared in one of the entities
+
+```c#
+public class Order
+{
+  public long Id { get; set; }
+  public string Name { get; set; }
+  public string Address { get; set; }
+  public Delivery Delivery { get; set; }
+}
+
+```
+
+```c#
+public class Delivery
+{
+  public long Id { get; set; }
+  public string CompanyName { get; set; }
+  public string Number { get; set; }
+  public Order Order { get; set; }
+  public long OrderId { get; set; }
+}
+```
+
+```c#
+public class OrderConfig : IEntityTypeConfiguration<Order>
+{
+  public void Configure(EntityTypeBuilder<Order> builder)
+  {
+    builder.HasOne<Delivery>(o => o.Delivery).WithOne(d => d.Order)
+      .HasForeignKey<Delivery>(d => d.OrderId); // this must be declared
+  }
+}
+```
+
 ## Self reference
 
 # Many to Many Config
