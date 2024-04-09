@@ -84,6 +84,36 @@ public class OrderConfig : IEntityTypeConfiguration<Order>
 
 ## Self reference
 
-# Many to Many Config
+# Many to Many Config (available in EF Core 5.0 or later version)
 
 `HasMany(...).WithMany(...);`
+
+```c#
+public class Student
+{
+  public long Id { get; set; }
+  public string Name { get; set; }
+  public List<Teacher> Teachers { get; set; } = new List<Teacher>();
+}
+
+```
+
+```c#
+public class Teacher
+{
+  public long Id { get; set; }
+  public string Name { get; set; }
+  public List<Student> Students { get; set; } = new List<Student>();
+}
+```
+
+```c#
+public class StudentConfig : IEntityTypeConfiguration<Student>
+{
+  public void Configure(EntityTypeBuilder<Student> builder)
+  {
+    builder.HasMany<Teacher>(s => s.Teachers).WithMany(t => t.Students);
+    // .UsingEntity(r => r.ToTable("R_Students_Teachers"))
+  }
+}
+```

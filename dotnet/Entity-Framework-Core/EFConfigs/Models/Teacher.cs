@@ -10,4 +10,8 @@ public class Teacher
   public long Id { get; set; }
   public string Name { get; set; }
   public List<Student> Students { get; set; } = new List<Student>();
+  public override string ToString()
+  {
+    return $"Teacher: Id={Id}, Name={Name}";
+  }
 }
