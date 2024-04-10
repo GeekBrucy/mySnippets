@@ -1,6 +1,11 @@
-﻿internal class Program
+﻿using EFDemoOneToOne;
+
+internal class Program
 {
   private static void Main(string[] args)
   {
+    using var demo = new Demo();
+
+    demo.Query();
   }
 }
