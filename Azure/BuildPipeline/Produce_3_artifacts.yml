@@ -1,0 +1,86 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'build'
+    projects: 'SampleFuncApp'
+  displayName: "Build SampleFuncApp"
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'publish'
+    publishWebProjects: false
+    projects: 'SampleFuncApp'
+    arguments: '--output $(build.artifactstagingdirectory)/SampleFuncApp'
+    modifyOutputPath: false
+  displayName: "Publish SampleFuncApp"
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/SampleFuncApp'
+    ArtifactName: 'SampleFuncApp'
+    publishLocation: 'Container'
+  displayName: "Publish SampleFuncApp Artifact"
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'build'
+    projects: 'SampleWebApi1'
+  displayName: "Build SampleWebApi1"
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'publish'
+    publishWebProjects: false
+    projects: 'SampleWebApi1'
+    arguments: '--output $(build.artifactstagingdirectory)/SampleWebApi1'
+    modifyOutputPath: false
+  displayName: "Publish SampleWebApi1"
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/SampleWebApi1'
+    ArtifactName: 'SampleWebApi1'
+    publishLocation: 'Container'
+  displayName: "Publish SampleWebApi1 Artifact"
+- task: NodeTool@0
+  inputs:
+    versionSource: 'spec'
+    versionSpec: '20.x'
+    checkLatest: true
+  displayName: "Get Node"
+
+- script: |
+    cd FrontEnd/AngularUI1/
+    npm install -g @angular/cli
+    npm install
+    ng build
+  displayName: 'npm install and build AngularUI1'
+  workingDirectory: '$(Build.SourcesDirectory)'
+# - task: Npm@1
+#   inputs:
+#     command: 'custom'
+#     workingDir: 'FrontEnd/AngularUI1'
+#     customCommand: 'run build'
+#     customRegistry: 'useFeed'
+#     customFeed: 'cbf27cca-ce09-43c1-a52c-a2fa267900eb'
+#   displayName: "Build AngularUI1"
+- task: ArchiveFiles@2
+  displayName: 'Archive and Zip Angular'
+  inputs:
+    rootFolderOrFile: '$(System.DefaultWorkingDirectory)/FrontEnd/AngularUI1/dist/angular-ui1/browser'
+    includeRootFolder: false
+    archiveType: zip
+    archiveFile: $(Build.ArtifactStagingDirectory)/FrontEnd/AngularUI1/AngularUI1.zip
+    replaceExistingArchive: true
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/FrontEnd/AngularUI1/AngularUI1.zip'
+    ArtifactName: 'FrontEnd/AngularUI1'
+    publishLocation: 'Container'
+  displayName: "Publish AngularUI1 Artifact"
