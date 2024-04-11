@@ -14,6 +14,6 @@ public class Article
 
   public override string ToString()
   {
-    return $"Id={Id}, Title={Title}, Content={Content}, Comments={string.Join(Environment.NewLine, Comments)}";
+    return $"Id={Id}, Title={Title}, Content={Content}, Comments=({string.Join(", ", Comments)})";
   }
 }
