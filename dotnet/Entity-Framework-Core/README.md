@@ -9,6 +9,7 @@
 5. [EF Core Reverse Engineering](./README_EFCoreReverseEngineering.md)
 6. [Relationships](./README_EFCoreRelationship.md)
 7. [Nuget Packages](#nuget-packages)
+8. [Logging](./EFCoreLogging.md)
 
 # Setup
 
