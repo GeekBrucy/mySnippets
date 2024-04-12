@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFDemoComplexQuery", "EFDem
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFDemoPagination", "EFDemoPagination\EFDemoPagination.csproj", "{6174DC66-C40E-4760-8430-E744C9B465B2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFDemoRawSQL", "EFDemoRawSQL\EFDemoRawSQL.csproj", "{DFB23835-3180-4AAE-9A23-01EE339B6262}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -60,5 +62,9 @@ Global
 		{6174DC66-C40E-4760-8430-E744C9B465B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6174DC66-C40E-4760-8430-E744C9B465B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6174DC66-C40E-4760-8430-E744C9B465B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DFB23835-3180-4AAE-9A23-01EE339B6262}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DFB23835-3180-4AAE-9A23-01EE339B6262}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DFB23835-3180-4AAE-9A23-01EE339B6262}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DFB23835-3180-4AAE-9A23-01EE339B6262}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
