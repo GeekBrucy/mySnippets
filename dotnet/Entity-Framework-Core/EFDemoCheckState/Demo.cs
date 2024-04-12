@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using EFConfigs.Models;
 using EFConfigs.Models.Shared;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace EFDemoCheckState;
@@ -11,6 +12,26 @@ namespace EFDemoCheckState;
 public class Demo : BaseDemo
 {
   public override void Run()
+  {
+    // PrintStates();
+    NoTracking();
+  }
+
+  private void NoTracking()
+  {
+    // if the entity is only used for display, there is no point to store the snapshot of it
+    // hence AsNoTracking can be used
+    var articles = _ctx.Articles.AsNoTracking().Take(3).ToList();
+    foreach (var a in articles)
+    {
+      Console.WriteLine(a);
+      Console.WriteLine(_ctx.Entry(a).State); // Detached
+      a.Title = "This hsould not be changed";
+    }
+    _ctx.SaveChanges();
+  }
+
+  private void PrintStates()
   {
     var articles = _ctx.Articles.Take(3).ToList();
     var a1 = articles[0];
