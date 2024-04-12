@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFDemoPagination", "EFDemoP
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFDemoRawSQL", "EFDemoRawSQL\EFDemoRawSQL.csproj", "{DFB23835-3180-4AAE-9A23-01EE339B6262}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFDemoCheckState", "EFDemoCheckState\EFDemoCheckState.csproj", "{14C8C1AD-9AE0-4BAE-8DBE-55658CC6C6FF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -66,5 +68,9 @@ Global
 		{DFB23835-3180-4AAE-9A23-01EE339B6262}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DFB23835-3180-4AAE-9A23-01EE339B6262}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DFB23835-3180-4AAE-9A23-01EE339B6262}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14C8C1AD-9AE0-4BAE-8DBE-55658CC6C6FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14C8C1AD-9AE0-4BAE-8DBE-55658CC6C6FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14C8C1AD-9AE0-4BAE-8DBE-55658CC6C6FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14C8C1AD-9AE0-4BAE-8DBE-55658CC6C6FF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

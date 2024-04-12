@@ -10,6 +10,7 @@
 6. [Relationships](./README_EFCoreRelationship.md)
 7. [Nuget Packages](#nuget-packages)
 8. [Logging](./EFCoreLogging.md)
+9. [How does EF Core know which property is changed](#how-does-ef-core-know-which-property-is-changed)
 
 # Setup
 
@@ -152,3 +153,17 @@ PostgresSQL: Npgsql.EntityFrameworkCore.PostgresSQL
 MySql: Pomelo.EntityFrameworkCore.MySql
 SqlServer: Microsoft.EntityFrameworkCore.SqlServer
 Oracle: Oracle.EntityFrameworkCore
+
+# How does EF Core know which property is changed
+
+[official doc](https://learn.microsoft.com/en-us/ef/core/change-tracking/change-detection)
+
+## Entity States
+
+- Added
+- Unchanged
+- Modified
+- Deleted
+- Detached
+
+There is something called `INotifyPropertyChanged` that was used in other dotnet lib
