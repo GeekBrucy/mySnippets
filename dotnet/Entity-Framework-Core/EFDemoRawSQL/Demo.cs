@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EFConfigs.Models;
 using EFConfigs.Models.Shared;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
@@ -12,7 +13,8 @@ public class Demo : BaseDemo
 {
   public override async Task RunAsync()
   {
-    await DemoInsert();
+    // await DemoInsert();
+    await DemoRawlQueryWithEntity();
   }
   private async Task DemoInsert()
   {
@@ -29,5 +31,14 @@ public class Demo : BaseDemo
     Console.WriteLine(sql.Format);
     Console.WriteLine(string.Join(", ", sql.GetArguments()));
     await _ctx.Database.ExecuteSqlInterpolatedAsync(sql);
+  }
+
+  private async Task DemoRawlQueryWithEntity()
+  {
+    IQueryable<Article> articles = _ctx.Articles.FromSqlInterpolated(@$"select * from articles order by rand() limit 10");
+    await foreach (var a in articles.AsAsyncEnumerable())
+    {
+      Console.WriteLine(a);
+    }
   }
 }
