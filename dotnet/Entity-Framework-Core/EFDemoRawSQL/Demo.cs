@@ -14,7 +14,7 @@ public class Demo : BaseDemo
   public override async Task RunAsync()
   {
     // await DemoInsert();
-    await DemoRawlQueryWithEntity();
+    await DemoRawQueryWithEntity();
   }
   private async Task DemoInsert()
   {
@@ -33,7 +33,7 @@ public class Demo : BaseDemo
     await _ctx.Database.ExecuteSqlInterpolatedAsync(sql);
   }
 
-  private async Task DemoRawlQueryWithEntity()
+  private async Task DemoRawQueryWithEntity()
   {
     IQueryable<Article> articles = _ctx.Articles.FromSqlInterpolated(@$"select * from articles order by rand() limit 10");
     await foreach (var a in articles.AsAsyncEnumerable())
