@@ -17,5 +17,7 @@ public class ArticleConfig : IEntityTypeConfiguration<Article>
     // Setup relationship to Comments.
     // Note: if the relationship is setup in Comments, it is not needed in the Article here
     // builder.HasMany<Comment>(a => a.Comments).WithOne(c => c.Article);
+
+    builder.HasQueryFilter(a => a.IsDeleted == false); // Global query filter to ignore deleted records
   }
 }

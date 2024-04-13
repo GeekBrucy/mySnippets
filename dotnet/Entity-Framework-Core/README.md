@@ -11,6 +11,7 @@
 7. [Nuget Packages](#nuget-packages)
 8. [Logging](./EFCoreLogging.md)
 9. [How does EF Core know which property is changed](#how-does-ef-core-know-which-property-is-changed)
+10. [Global Filter](./README_EFCoreGlobalFilter.md)
 
 # Setup
 
