@@ -14,7 +14,8 @@ public class Demo : BaseDemo
   public override void Run()
   {
     // PrintStates();
-    NoTracking();
+    // NoTracking();
+    ModifyState();
   }
 
   private void NoTracking()
@@ -28,6 +29,23 @@ public class Demo : BaseDemo
       Console.WriteLine(_ctx.Entry(a).State); // Detached
       a.Title = "This hsould not be changed";
     }
+    _ctx.SaveChanges();
+  }
+
+  /// <summary>
+  /// Not recommended to use
+  /// </summary>
+  private void ModifyState()
+  {
+    Article a = new Article { Id = 1, Title = "Modify state, title" };
+    var articleEntry = _ctx.Entry(a);
+    articleEntry.Property(nameof(a.Title)).IsModified = true;
+    /*
+      // the following state change can delete the article record with id 2    
+      Article a2 = new Article { Id = 2 };
+      _ctx.Entry(a).State = EntityState.Deleted;
+      _ctx.SaveChanges();
+    */
     _ctx.SaveChanges();
   }
 
