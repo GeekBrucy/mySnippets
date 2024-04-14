@@ -11,6 +11,7 @@ public class Article
   public string Title { get; set; }
   public string Content { get; set; }
   public List<Comment> Comments = new List<Comment>();
+  public long ThumbUp { get; set; }
   public bool IsDeleted { get; set; }
   public override string ToString()
   {
