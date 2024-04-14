@@ -27,6 +27,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFDemoBulkOperation", "EFDe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFDemoGlobalFilter", "EFDemoGlobalFilter\EFDemoGlobalFilter.csproj", "{5841CDC2-418D-477E-97DA-F154D65CFC27}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFDemoConcurrency", "EFDemoConcurrency\EFDemoConcurrency.csproj", "{51FEADC0-7B7D-465A-B9A0-1F9C676E4643}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -84,5 +86,9 @@ Global
 		{5841CDC2-418D-477E-97DA-F154D65CFC27}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5841CDC2-418D-477E-97DA-F154D65CFC27}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5841CDC2-418D-477E-97DA-F154D65CFC27}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51FEADC0-7B7D-465A-B9A0-1F9C676E4643}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51FEADC0-7B7D-465A-B9A0-1F9C676E4643}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51FEADC0-7B7D-465A-B9A0-1F9C676E4643}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51FEADC0-7B7D-465A-B9A0-1F9C676E4643}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
