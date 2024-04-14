@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EFConfigs.Models;
 using EFConfigs.Models.Shared;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,7 +13,8 @@ public class Demo : BaseDemo
   public override void Run()
   {
     // Problem();
-    Pessimistic();
+    // Pessimistic();
+    OptimisticConcurrencyToken();
   }
 
   /// <summary>
@@ -48,5 +50,43 @@ public class Demo : BaseDemo
     Console.WriteLine($"[{DateTime.Now}] Article id = {article.Id}' thumb up is updated to {article.ThumbUp}");
     transaction.Commit();
     Console.ReadLine();
+  }
+
+  private void OptimisticConcurrencyToken()
+  {
+    Console.WriteLine("Enter your name to occupy the equipment");
+    string name = Console.ReadLine();
+    var equipment = _ctx.RareEquipments.Where(r => r.Id == 1).First();
+    // clear Owner field before test
+    equipment.Owner = null;
+    _ctx.SaveChanges();
+    if (!string.IsNullOrEmpty(equipment.Owner))
+    {
+      if (equipment.Owner == name)
+      {
+        Console.WriteLine($"[{DateTime.Now}] You are the owner of equipment [{equipment.Name}] already.");
+      }
+      else
+      {
+        Console.WriteLine($"[{DateTime.Now}] The equipment [{equipment.Name}] belongs to {equipment.Owner}.");
+      }
+      return;
+    }
+    equipment.Owner = name;
+    Thread.Sleep(5000);
+    try
+    {
+      _ctx.SaveChanges();
+      Console.WriteLine($"[{DateTime.Now}] You now own the equipment [{equipment.Name}]!!");
+    }
+    catch (DbUpdateConcurrencyException ex)
+    {
+      var entry = ex.Entries.First();
+
+      string newVal = entry.GetDatabaseValues().GetValue<string>(nameof(RareEquipment.Owner)); // GetDatabaseValues has async version, try to use that instead
+      Console.WriteLine($"[{DateTime.Now}] The value is updated to [{newVal}], please try again later");
+    }
+
+    Console.ReadKey();
   }
 }
