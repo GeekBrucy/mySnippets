@@ -4,6 +4,10 @@
     <ProjectReference Include="..\EFConfigs\EFConfigs.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="ExpressionTreeToString" Version="3.4.71" />
+  </ItemGroup>
+
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net7.0</TargetFramework>
