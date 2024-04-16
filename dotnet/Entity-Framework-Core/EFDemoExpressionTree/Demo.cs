@@ -31,7 +31,7 @@ public class Demo : BaseDemo
     Console.WriteLine(expThumbUpNotZero.ToString("Object notation", "C#"));
   }
 
-  private void DynamicallyConstructExpressionTree()
+  private void DynamicallyConstructExpressionTreeBasic()
   {
     ParameterExpression paramExprA = Expression.Parameter(typeof(Article), "a");
     ConstantExpression constExpr5 = Expression.Constant((long)0, typeof(long));
@@ -45,9 +45,35 @@ public class Demo : BaseDemo
     }
   }
 
+  private void FlexibleConstructExpressionTree()
+  {
+    Console.WriteLine("Choose operator: 1. Greater Than. 2. Less than");
+    string s = Console.ReadLine();
+
+    ParameterExpression paramExprA = Expression.Parameter(typeof(Article), "a");
+    ConstantExpression constExpr5 = Expression.Constant((long)0, typeof(long));
+    MemberExpression memExprThumbUp = Expression.MakeMemberAccess(paramExprA, typeof(Article).GetProperty("ThumbUp"));
+    BinaryExpression binExpCompare;
+    if (s == "1")
+    {
+      binExpCompare = Expression.GreaterThan(memExprThumbUp, constExpr5);
+    }
+    else
+    {
+      binExpCompare = Expression.LessThan(memExprThumbUp, constExpr5);
+    }
+    Expression<Func<Article, bool>> exprRoot = Expression.Lambda<Func<Article, bool>>(binExpCompare, paramExprA);
+
+    foreach (var a in _ctx.Articles.Where(exprRoot))
+    {
+      Console.WriteLine(a);
+    }
+  }
+
   public override void Run()
   {
     // ViewExpressionTree();
-    DynamicallyConstructExpressionTree();
+    // DynamicallyConstructExpressionTreeBasic();
+    // FlexibleConstructExpressionTree();
   }
 }
