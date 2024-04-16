@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection.Metadata;
 using System.Threading.Tasks;
 using EFConfigs.Models;
 using EFConfigs.Models.Shared;
@@ -29,6 +30,7 @@ public class Demo : BaseDemo
   private void ViewExpressionTree()
   {
     Console.WriteLine(expThumbUpNotZero.ToString("Object notation", "C#"));
+    Console.WriteLine(expThumbUpNotZero.ToString("Factory methods", "C#"));
   }
 
   private void DynamicallyConstructExpressionTreeBasic()
@@ -70,10 +72,45 @@ public class Demo : BaseDemo
     }
   }
 
+  private IEnumerable<Article> DynamicallyConstructExpressionTree(string propertyName, object value)
+  {
+    Type valueType = typeof(Article).GetProperty(propertyName).PropertyType;
+    Expression<Func<Article, bool>> lambda;
+
+    var param = Expression.Parameter(typeof(Article), "e");
+
+    var constant = Expression.Constant(Convert.ChangeType(value, valueType));
+
+    var memberAccess = Expression.MakeMemberAccess(param, typeof(Article).GetProperty(propertyName));
+
+    Expression expressionBody;
+    if (valueType.IsPrimitive)
+    {
+      expressionBody = Expression.Equal(
+        memberAccess,
+        constant
+      );
+    }
+    else
+    {
+      expressionBody = Expression.MakeBinary(
+        ExpressionType.Equal,
+        memberAccess,
+        constant,
+        false,
+        typeof(string).GetMethod("op_Equality")
+      );
+    }
+    lambda = Expression.Lambda<Func<Article, bool>>(expressionBody, param);
+    return _ctx.Articles.Where(lambda).ToList();
+  }
+
   public override void Run()
   {
     // ViewExpressionTree();
     // DynamicallyConstructExpressionTreeBasic();
     // FlexibleConstructExpressionTree();
+    var res = DynamicallyConstructExpressionTree("ThumbUp", 0);
+    Console.WriteLine(res.Count());
   }
 }
