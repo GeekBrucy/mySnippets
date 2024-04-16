@@ -105,12 +105,34 @@ public class Demo : BaseDemo
     return _ctx.Articles.Where(lambda).ToList();
   }
 
+  private IEnumerable<object[]> SimpleDynamicSelect<T>(params string[] propertyNames) where T : class
+  {
+    ParameterExpression exprParam = Expression.Parameter(typeof(Article));
+    List<Expression> exprList = new List<Expression>();
+    foreach (var propName in propertyNames)
+    {
+      Expression propExpr = Expression.Convert(
+        Expression.MakeMemberAccess(exprParam, typeof(T).GetProperty(propName)),
+        typeof(object)
+      );
+      exprList.Add(propExpr);
+    }
+
+    var newArrExpr = Expression.NewArrayInit(typeof(object), exprList.ToArray());
+    var selectExpression = Expression.Lambda<Func<T, object[]>>(newArrExpr, exprParam);
+
+    return _ctx.Set<T>().Select(selectExpression).ToList();
+  }
+
   public override void Run()
   {
     // ViewExpressionTree();
     // DynamicallyConstructExpressionTreeBasic();
     // FlexibleConstructExpressionTree();
-    var res = DynamicallyConstructExpressionTree("ThumbUp", 0);
+    // var res = DynamicallyConstructExpressionTree("ThumbUp", 0);
+    // Console.WriteLine(res.Count());
+
+    var res = SimpleDynamicSelect<Article>("Title", "ThumbUp", "Content");
     Console.WriteLine(res.Count());
   }
 }
