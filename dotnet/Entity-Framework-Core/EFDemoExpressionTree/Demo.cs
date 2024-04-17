@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Reflection.Metadata;
 using System.Threading.Tasks;
@@ -122,6 +123,47 @@ public class Demo : BaseDemo
     var selectExpression = Expression.Lambda<Func<T, object[]>>(newArrExpr, exprParam);
 
     return _ctx.Set<T>().Select(selectExpression).ToList();
+  }
+
+  private IEnumerable<Article> UseIQueryableReplaceExpressionTree(string title, long? thumbUp, string content, short orderType)
+  {
+    IQueryable<Article> articles = _ctx.Articles;
+    if (string.IsNullOrEmpty(title) != false)
+    {
+      articles.Where(a => a.Title == title);
+    }
+
+    if (thumbUp != null)
+    {
+      articles.Where(a => a.ThumbUp == thumbUp);
+    }
+
+    if (string.IsNullOrEmpty(content) != false)
+    {
+      articles.Where(a => a.Content == content);
+    }
+
+    switch (orderType)
+    {
+      case 1:
+        articles.OrderBy(a => a.Title);
+        break;
+      case 2:
+        articles.OrderByDescending(a => a.Title);
+        break;
+    }
+
+    return articles.ToList();
+  }
+
+  /// <summary>
+  /// Demo System.Linq.Dynamic.Core
+  /// This can build dynamic query
+  /// </summary>
+  /// <returns></returns>
+  public IEnumerable<Article> LinqDynamicCore()
+  {
+    return _ctx.Articles.Where("Title = 'Test'").Select("ThumbUp").ToDynamicList<Article>();
   }
 
   public override void Run()
