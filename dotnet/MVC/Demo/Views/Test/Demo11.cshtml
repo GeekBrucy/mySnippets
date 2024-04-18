@@ -1,0 +1,4 @@
+@model Demo.Models.Person
+<div>Name: @Model.Name</div>
+<div>@(Model.IsVIP ? "VIP" : "Normal User")</div>
+<div>Register Time: @Model.CreatedTime</div>
