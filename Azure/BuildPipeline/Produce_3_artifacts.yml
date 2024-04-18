@@ -10,12 +10,51 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
+- task: PowerShell@2
+  inputs:
+    targetType: 'inline' # Optional. Options: filePath, inline
+    script: 'Get-ChildItem SampleFuncApp -Recurse -File| get-filehash | select-object -Property hash | out-file $(Agent.TempDirectory)/SampleFuncApp.hash' # Required when targetType == Inline
+    pwsh: true # Optional
+- task: PowerShell@2
+  inputs:
+    targetType: 'inline' # Optional. Options: filePath, inline
+    script: 'Get-ChildItem SampleWebApi1 -Recurse -File| get-filehash | select-object -Property hash | out-file $(Agent.TempDirectory)/SampleWebApi1.hash' # Required when targetType == Inline
+    pwsh: true # Optional
+- task: PowerShell@2
+  inputs:
+    targetType: 'inline' # Optional. Options: filePath, inline
+    script: 'Get-ChildItem FrontEnd/AngularUI1 -Recurse -File| get-filehash | select-object -Property hash | out-file $(Agent.TempDirectory)/AngularUI1.hash' # Required when targetType == Inline
+    pwsh: true # Optional
+- task: Cache@2
+  inputs:
+    key: '$(Agent.TempDirectory)/SampleFuncApp.hash'
+    path: '$(Build.ArtifactStagingDirectory)/SampleFuncApp'
+    cacheHitVar: SampleFuncApp_UNCHANGED
+  displayName: Check if SampleFuncApp changed
+
+- task: Cache@2
+  inputs:
+    key: '$(Agent.TempDirectory)/SampleWebApi1.hash'
+    path: '$(build.artifactstagingdirectory)/SampleWebApi1'
+    cacheHitVar: SampleWebApi1_UNCHANGED
+  displayName: Check if SampleWebApi1 changed
+
+- task: Cache@2
+  inputs:
+    key: '$(Agent.TempDirectory)/AngularUI1.hash'
+    path: '$(Build.ArtifactStagingDirectory)/FrontEnd/AngularUI1'
+    cacheHitVar: AngularUI1_UNCHANGED
+  displayName: Check if AngularUI1 changed
+
 - task: DotNetCoreCLI@2
+  condition: ne(variables.SampleFuncApp_UNCHANGED, 'true')
   inputs:
     command: 'build'
     projects: 'SampleFuncApp'
   displayName: "Build SampleFuncApp"
+
 - task: DotNetCoreCLI@2
+  condition: ne(variables.SampleFuncApp_UNCHANGED, 'true')
   inputs:
     command: 'publish'
     publishWebProjects: false
@@ -24,17 +63,20 @@ steps:
     modifyOutputPath: false
   displayName: "Publish SampleFuncApp"
 - task: PublishBuildArtifacts@1
+  condition: ne(variables.SampleFuncApp_UNCHANGED, 'true')
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)/SampleFuncApp'
     ArtifactName: 'SampleFuncApp'
     publishLocation: 'Container'
   displayName: "Publish SampleFuncApp Artifact"
 - task: DotNetCoreCLI@2
+  condition: ne(variables.SampleWebApi1_UNCHANGED, 'true')
   inputs:
     command: 'build'
     projects: 'SampleWebApi1'
   displayName: "Build SampleWebApi1"
 - task: DotNetCoreCLI@2
+  condition: ne(variables.SampleWebApi1_UNCHANGED, 'true')
   inputs:
     command: 'publish'
     publishWebProjects: false
@@ -43,6 +85,7 @@ steps:
     modifyOutputPath: false
   displayName: "Publish SampleWebApi1"
 - task: PublishBuildArtifacts@1
+  condition: ne(variables.SampleWebApi1_UNCHANGED, 'true')
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)/SampleWebApi1'
     ArtifactName: 'SampleWebApi1'
@@ -71,6 +114,7 @@ steps:
 #     customFeed: 'cbf27cca-ce09-43c1-a52c-a2fa267900eb'
 #   displayName: "Build AngularUI1"
 - task: ArchiveFiles@2
+  condition: ne(variables.AngularUI1_UNCHANGED, 'true')
   displayName: 'Archive and Zip Angular'
   inputs:
     rootFolderOrFile: '$(System.DefaultWorkingDirectory)/FrontEnd/AngularUI1/dist/angular-ui1/browser'
@@ -79,6 +123,7 @@ steps:
     archiveFile: $(Build.ArtifactStagingDirectory)/FrontEnd/AngularUI1/AngularUI1.zip
     replaceExistingArchive: true
 - task: PublishBuildArtifacts@1
+  condition: ne(variables.AngularUI1_UNCHANGED, 'true')
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)/FrontEnd/AngularUI1/AngularUI1.zip'
     ArtifactName: 'FrontEnd/AngularUI1'
