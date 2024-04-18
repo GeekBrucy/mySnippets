@@ -14,7 +14,7 @@ steps:
   inputs:
     targetType: 'inline' # Optional. Options: filePath, inline
     script: 'Get-ChildItem SampleFuncApp -Recurse -File| get-filehash | select-object -Property hash | out-file $(Agent.TempDirectory)/SampleFuncApp.hash' # Required when targetType == Inline
-    pwsh: true # Optional
+    pwsh: true # Optional If this is true, then tasks running on Windows agents will use pwsh.exe from your path instead of powershell.exe.
 - task: PowerShell@2
   inputs:
     targetType: 'inline' # Optional. Options: filePath, inline
