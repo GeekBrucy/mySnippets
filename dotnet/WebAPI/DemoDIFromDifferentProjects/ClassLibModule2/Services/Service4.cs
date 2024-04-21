@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ClassLibModule2.Services;
 
-public class Service2
+public class Service4
 {
   public string RunService2()
   {
