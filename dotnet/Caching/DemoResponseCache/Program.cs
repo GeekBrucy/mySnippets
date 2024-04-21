@@ -19,7 +19,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
-
+app.UseResponseCaching(); // enable server side cache
 app.MapControllers();
 
 app.Run();
