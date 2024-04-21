@@ -11,6 +11,7 @@ builder.Services.AddSwaggerGen();
 
 // DI services
 builder.Services.AddScoped<BasicMeaninglessService>();
+builder.Services.AddScoped<SlowService>(); // demo only, if the service takes time to construct, consider singleton
 
 var app = builder.Build();
 
