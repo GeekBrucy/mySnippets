@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace DemoResponseCache.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/[controller]/[action]")]
 public class TestController : ControllerBase
 {
   [HttpGet]
