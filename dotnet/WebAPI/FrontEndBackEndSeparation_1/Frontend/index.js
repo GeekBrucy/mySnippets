@@ -12,7 +12,11 @@ submitBtn.addEventListener("click", (e) => {
     password
   })
   .then(function (response) {
-    console.log(response);
+    if (response.data.ok) {
+      alert("Login successfully");
+    } else {
+      alert("Login failed");
+    }
   })
   .catch(function (error) {
     console.log(error);
