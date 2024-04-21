@@ -11,6 +11,7 @@ namespace DemoResponseCache.Controllers;
 public class TestController : ControllerBase
 {
   [HttpGet]
+  [ResponseCache(Duration = 20)]
   public DateTime Now()
   {
     return DateTime.Now;
