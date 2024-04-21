@@ -15,7 +15,14 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseCors(x =>
+{
+    var origins = builder.Configuration.GetSection("AllowedHosts").Value;
+    x.WithOrigins(origins);
+    x.AllowAnyHeader();
+    x.AllowAnyMethod();
+    x.SetIsOriginAllowed(origin => true);
+});
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
