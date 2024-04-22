@@ -75,4 +75,70 @@ public class DemoController : ControllerBase
     }
     return b;
   }
+
+  [HttpGet]
+  public async Task<ActionResult<Book?>> SetAbsoluteExpiration(long id)
+  {
+    Console.WriteLine($"Start GetOrCreateAsync, id = {id}");
+    Book? b = await _memoryCache.GetOrCreateAsync("Book " + id, async (e) =>
+    {
+      Console.WriteLine($"Cache not found, check data source for id = {id}");
+      Console.WriteLine($"Set cache at {DateTime.Now}");
+
+      e.AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(10); // cache for 10 seconds
+
+      return await FakeDbContext.GetByIdAsync(id);
+    });
+    Console.WriteLine($"End GetOrCreateAsync result = {b}");
+    if (b == null)
+    {
+      return NotFound($"Cannot find book with id {id}");
+    }
+
+    return b;
+  }
+
+  [HttpGet]
+  public async Task<ActionResult<Book?>> SetSlidingExpiration(long id)
+  {
+    Console.WriteLine($"Start GetOrCreateAsync, id = {id}");
+    Book? b = await _memoryCache.GetOrCreateAsync("Book " + id, async (e) =>
+    {
+      Console.WriteLine($"Cache not found, check data source for id = {id}");
+      Console.WriteLine($"Set cache at {DateTime.Now}");
+
+      e.SlidingExpiration = TimeSpan.FromSeconds(10); // as long as the cache is hit within the time span, the expiration time will be extended
+
+      return await FakeDbContext.GetByIdAsync(id);
+    });
+    Console.WriteLine($"End GetOrCreateAsync result = {b}");
+    if (b == null)
+    {
+      return NotFound($"Cannot find book with id {id}");
+    }
+
+    return b;
+  }
+  [HttpGet]
+  public async Task<ActionResult<Book?>> MixOfAbsoluteAndSlidingExpiration(long id)
+  {
+    Console.WriteLine($"Start GetOrCreateAsync, id = {id}");
+    Book? b = await _memoryCache.GetOrCreateAsync("Book " + id, async (e) =>
+    {
+      Console.WriteLine($"Cache not found, check data source for id = {id}");
+      Console.WriteLine($"Set cache at {DateTime.Now}");
+
+      e.AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(30);
+      e.SlidingExpiration = TimeSpan.FromSeconds(10);
+
+      return await FakeDbContext.GetByIdAsync(id);
+    });
+    Console.WriteLine($"End GetOrCreateAsync result = {b}");
+    if (b == null)
+    {
+      return NotFound($"Cannot find book with id {id}");
+    }
+
+    return b;
+  }
 }
