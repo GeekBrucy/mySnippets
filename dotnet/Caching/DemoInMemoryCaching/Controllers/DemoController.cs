@@ -57,4 +57,22 @@ public class DemoController : ControllerBase
 
     return b;
   }
+
+  [HttpGet]
+  public ActionResult<Book?> BadKeySelection(long id)
+  {
+    // it will cause problem if the key is not unique
+    Console.WriteLine($"Start GetOrCreateAsync, id = {id}");
+    Book? b = _memoryCache.GetOrCreate("Bad Key", (e) =>
+    {
+      Console.WriteLine($"Cache not found, check data source for id = {id}");
+      return FakeDbContext.GetById(id);
+    });
+    Console.WriteLine($"End GetOrCreateAsync result = {b}");
+    if (b == null)
+    {
+      return NotFound($"Cannot find book with id {id}");
+    }
+    return b;
+  }
 }
