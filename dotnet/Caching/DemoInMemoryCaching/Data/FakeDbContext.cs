@@ -17,5 +17,10 @@ namespace Data
     {
       return Books.FirstOrDefault(b => b.Id == id);
     }
+
+    public static Task<Book?> GetByIdAsync(long id)
+    {
+      return Task.FromResult(Books.FirstOrDefault(b => b.Id == id));
+    }
   }
 }

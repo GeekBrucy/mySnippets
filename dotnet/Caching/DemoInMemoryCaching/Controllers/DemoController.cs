@@ -14,10 +14,12 @@ namespace DemoInMemoryCaching.Controllers;
 public class DemoController : ControllerBase
 {
   private readonly IMemoryCache _memoryCache;
+  private readonly ILogger<DemoController> _logger;
 
-  public DemoController(IMemoryCache memoryCache)
+  public DemoController(IMemoryCache memoryCache, ILogger<DemoController> logger)
   {
     _memoryCache = memoryCache;
+    _logger = logger;
   }
 
   [HttpGet]
@@ -31,5 +33,28 @@ public class DemoController : ControllerBase
     }
 
     return result;
+  }
+
+  [HttpGet]
+  public async Task<ActionResult<Book?>> GetBookByIdWithCacheAsync(long id)
+  {
+    /*
+    GetOrCreateAsync
+    1. Get data from Cache
+    2. Fetch data from data source and return to caller
+    */
+    Console.WriteLine($"Start GetOrCreateAsync, id = {id}");
+    Book? b = await _memoryCache.GetOrCreateAsync("Book " + id, async (e) =>
+    {
+      Console.WriteLine($"Cache not found, check data source for id = {id}");
+      return await FakeDbContext.GetByIdAsync(id);
+    });
+    Console.WriteLine($"End GetOrCreateAsync result = {b}");
+    if (b == null)
+    {
+      return NotFound($"Cannot find book with id {id}");
+    }
+
+    return b;
   }
 }
