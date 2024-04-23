@@ -1,3 +1,6 @@
+using DemoInMemoryCaching.Helpers;
+using DemoInMemoryCaching.Interfaces;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -7,7 +10,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddMemoryCache(); // register memory cache service
-
+builder.Services.AddScoped<IMemoryCacheHelper, MemoryCacheHelper>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
