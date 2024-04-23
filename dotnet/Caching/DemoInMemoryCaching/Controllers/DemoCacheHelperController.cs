@@ -44,6 +44,7 @@ public class DemoCacheHelperController : ControllerBase
     yield return 5;
   }
 
+  [HttpGet]
   public async Task<ActionResult<Book?>> CacheHelper(long id)
   {
     Book? b = await _memoryCacheHelper.GetOrCreateAsync("Book " + id, async (e) =>
