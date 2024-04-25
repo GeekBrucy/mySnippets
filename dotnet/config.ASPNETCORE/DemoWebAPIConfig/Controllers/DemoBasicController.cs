@@ -12,6 +12,11 @@ namespace DemoWebAPIConfig.Controllers;
 [Route("api/[controller]/[action]")]
 public class DemoBasicController : ControllerBase
 {
+  private readonly IWebHostEnvironment _webEnv;
+  public DemoBasicController(IWebHostEnvironment webEnv)
+  {
+    _webEnv = webEnv;
+  }
   [HttpGet]
   public IDictionary<string, string> GetSystemEnvVar()
   {
@@ -27,5 +32,19 @@ public class DemoBasicController : ControllerBase
   {
     var val = Environment.GetEnvironmentVariable("TEST");
     return val;
+  }
+
+  [HttpGet]
+  public IDictionary<string, string> GetAppEnvVar()
+  {
+    IDictionary<string, string> envVars = new Dictionary<string, string>
+    {
+        { nameof(_webEnv.ApplicationName), _webEnv.ApplicationName },
+        { nameof(_webEnv.EnvironmentName), _webEnv.EnvironmentName },
+        { nameof(_webEnv.ContentRootPath), _webEnv.ContentRootPath },
+        { nameof(_webEnv.WebRootPath), _webEnv.WebRootPath }
+    };
+
+    return envVars;
   }
 }
