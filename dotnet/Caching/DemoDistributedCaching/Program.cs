@@ -1,3 +1,6 @@
+using DemoDistributedCaching.Helpers;
+using DemoDistributedCaching.Interfaces;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -11,6 +14,7 @@ builder.Services.AddStackExchangeRedisCache(options =>
     options.Configuration = "localhost";
     options.InstanceName = "demo_distributed_";
 });
+builder.Services.AddScoped<IDistributedCacheHelper, DistributedCacheHelper>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
