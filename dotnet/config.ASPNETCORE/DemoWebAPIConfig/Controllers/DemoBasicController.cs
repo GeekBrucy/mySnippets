@@ -4,7 +4,10 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Threading.Tasks;
+using DemoWebAPIConfig.Data;
+using DemoWebAPIConfig.Models.Settings;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 
 namespace DemoWebAPIConfig.Controllers;
 
@@ -13,9 +16,11 @@ namespace DemoWebAPIConfig.Controllers;
 public class DemoBasicController : ControllerBase
 {
   private readonly IWebHostEnvironment _webEnv;
-  public DemoBasicController(IWebHostEnvironment webEnv)
+  private readonly Smtp _smtp;
+  public DemoBasicController(IWebHostEnvironment webEnv, IOptionsSnapshot<Smtp> smtpOpt)
   {
     _webEnv = webEnv;
+    _smtp = smtpOpt.Value;
   }
   [HttpGet]
   public IDictionary<string, string> GetSystemEnvVar()
@@ -46,5 +51,19 @@ public class DemoBasicController : ControllerBase
     };
 
     return envVars;
+  }
+
+  [HttpGet]
+  public Smtp GetAppSettingsFromDb()
+  {
+    if (_smtp == null)
+    {
+      Console.WriteLine("no config");
+    }
+    else
+    {
+      Console.WriteLine(_smtp);
+    }
+    return _smtp;
   }
 }
