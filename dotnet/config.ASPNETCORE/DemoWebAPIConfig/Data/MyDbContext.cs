@@ -22,7 +22,7 @@ public class MyDbContext : DbContext, IGetAppSettingsFromDb
 
   public IDictionary<string, string?> GetSettings()
   {
-    return AppSettings.ToDictionary(a => a.Name, a => a.Value, StringComparer.OrdinalIgnoreCase);
+    return AppSettings.AsNoTracking().ToList().ToDictionary(a => a.Name, a => a.Value, StringComparer.OrdinalIgnoreCase);
   }
 
   public DbSet<AppSetting> AppSettings => Set<AppSetting>();

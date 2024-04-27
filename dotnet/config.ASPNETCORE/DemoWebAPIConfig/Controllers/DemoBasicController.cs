@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using DemoWebAPIConfig.Data;
 using DemoWebAPIConfig.Models.Settings;
@@ -17,10 +18,12 @@ public class DemoBasicController : ControllerBase
 {
   private readonly IWebHostEnvironment _webEnv;
   private readonly Smtp _smtp;
-  public DemoBasicController(IWebHostEnvironment webEnv, IOptionsSnapshot<Smtp> smtpOpt)
+  private readonly MyDbContext _myDbContext;
+  public DemoBasicController(IWebHostEnvironment webEnv, IOptionsSnapshot<Smtp> smtpOpt, MyDbContext myDbContext)
   {
     _webEnv = webEnv;
     _smtp = smtpOpt.Value;
+    _myDbContext = myDbContext;
   }
   [HttpGet]
   public IDictionary<string, string> GetSystemEnvVar()
@@ -65,5 +68,15 @@ public class DemoBasicController : ControllerBase
       Console.WriteLine(_smtp);
     }
     return _smtp;
+  }
+
+  [HttpPost]
+  public async Task<ActionResult<Smtp>> UpdateSmtp(Smtp smtp)
+  {
+    var smtpSetting = _myDbContext.AppSettings.First(a => a.Name == "Smtp");
+    smtpSetting.Value = JsonSerializer.Serialize(smtp);
+    await _myDbContext.SaveChangesAsync();
+
+    return smtp;
   }
 }
