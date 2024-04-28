@@ -1,3 +1,4 @@
+using System.Reflection;
 using EntityLib.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,10 +10,17 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+/*
+AddDbContext is Scoped mode (AKA, per request. Once the request is finished, the db context will be disposed)
+consider AddDbContextPool, but it has limitation:
+* AddDbContextPool is almost equivalent to Singleton, so it cannot accept short lived injection
+*/
 builder.Services.AddDbContext<MyDbContext>(opt =>
 {
     var connStr = builder.Configuration.GetConnectionString("postgres");
-    opt.UseNpgsql(connStr);
+
+    opt.UseNpgsql(connStr, x => x.MigrationsAssembly(Assembly.GetExecutingAssembly().GetName().Name));
 });
 var app = builder.Build();
 
