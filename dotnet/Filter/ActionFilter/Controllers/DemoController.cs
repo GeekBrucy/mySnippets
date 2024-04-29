@@ -10,5 +10,9 @@ namespace ActionFilter.Controllers;
 [Route("api/[controller]/[action]")]
 public class DemoController : ControllerBase
 {
-
+  [HttpGet]
+  public string Test()
+  {
+    return "Ran";
+  }
 }
