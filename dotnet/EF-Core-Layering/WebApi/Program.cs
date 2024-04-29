@@ -11,17 +11,22 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+Action<DbContextOptionsBuilder> dbContextBuilder = opt =>
+{
+    var connStr = builder.Configuration.GetConnectionString("postgres");
+
+    opt.UseNpgsql(connStr, x => x.MigrationsAssembly(Assembly.GetExecutingAssembly().GetName().Name));
+};
 /*
 AddDbContext is Scoped mode (AKA, per request. Once the request is finished, the db context will be disposed)
 consider AddDbContextPool, but it has limitation:
 * AddDbContextPool is almost equivalent to Singleton, so it cannot accept short lived injection
 */
-builder.Services.AddDbContext<MyDbContext>(opt =>
-{
-    var connStr = builder.Configuration.GetConnectionString("postgres");
+builder.Services.AddDbContext<MyDbContext>(dbContextBuilder);
 
-    opt.UseNpgsql(connStr, x => x.MigrationsAssembly(Assembly.GetExecutingAssembly().GetName().Name));
-});
+builder.Services.AddDbContext<AnotherDbContext>(dbContextBuilder); // when running `dotnet ef migrations add {migration_name}`, need to specify which context the migration will run against
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
