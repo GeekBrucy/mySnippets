@@ -10,5 +10,10 @@ namespace ExceptionFilter.Controllers;
 [Route("api/[controller]/[action]")]
 public class DemoController : ControllerBase
 {
-
+  [HttpGet]
+  public string UnhandledException()
+  {
+    string s = System.IO.File.ReadAllText("./test.txt");
+    return s;
+  }
 }
