@@ -22,3 +22,7 @@ Change your target project to the migrations project by using the Package Manage
 ```
 
 NOTE: Nuget package: `Microsoft.EntityFrameworkCore.Design` is needed in the main project (not db context project)
+
+## Multiple Contexts
+
+- Check Nuget package `Zack.Infrastructure` ([source code](https://github.com/yangzhongke/NETBookMaterials/blob/main/%E6%9C%80%E5%90%8E%E5%A4%A7%E9%A1%B9%E7%9B%AE%E4%BB%A3%E7%A0%81/YouZack-VNext/Zack.Infrastructure/EFCore/EFCoreExtensions.cs))
