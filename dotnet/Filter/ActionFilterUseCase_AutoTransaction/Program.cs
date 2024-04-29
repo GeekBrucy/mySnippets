@@ -1,4 +1,6 @@
 using ActionFilterUseCase_AutoTransaction.Data;
+using ActionFilterUseCase_AutoTransaction.Filters;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,7 +15,10 @@ builder.Services.AddDbContext<MyDbContext>(opt =>
 {
     opt.UseNpgsql("User ID=postgres;Password=postgrespw;Host=localhost;Port=5432;Database=DotnetConfigDemo;");
 });
-
+builder.Services.Configure<MvcOptions>(opt =>
+{
+    opt.Filters.Add<TransactionScopeFilter>();
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
