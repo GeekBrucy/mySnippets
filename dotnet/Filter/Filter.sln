@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActionFilter", "ActionFilte
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActionFilterUseCase_AutoTransaction", "ActionFilterUseCase_AutoTransaction\ActionFilterUseCase_AutoTransaction.csproj", "{5FB453BD-1627-40FB-8F1E-0CDC0DA7CDA7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActionFilterUseCase_RequestThrottle", "ActionFilterUseCase_RequestThrottle\ActionFilterUseCase_RequestThrottle.csproj", "{968DBFD8-F113-40A2-AB2D-CAFC2CFD8566}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{5FB453BD-1627-40FB-8F1E-0CDC0DA7CDA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5FB453BD-1627-40FB-8F1E-0CDC0DA7CDA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5FB453BD-1627-40FB-8F1E-0CDC0DA7CDA7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{968DBFD8-F113-40A2-AB2D-CAFC2CFD8566}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{968DBFD8-F113-40A2-AB2D-CAFC2CFD8566}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{968DBFD8-F113-40A2-AB2D-CAFC2CFD8566}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{968DBFD8-F113-40A2-AB2D-CAFC2CFD8566}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
