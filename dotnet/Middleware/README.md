@@ -15,3 +15,7 @@ Chain multiple request delegates together
 ## Run
 
 Run delegates don't receive a next parameter. The first Run delegate is always terminal and terminates the pipeline. Run is a convention. Some middleware components may expose Run[Middleware] methods that run at the end of the pipeline:
+
+# Diff with ActionFilter
+
+[doc](https://stackoverflow.com/questions/42582758/asp-net-core-middleware-vs-filters)
