@@ -116,4 +116,41 @@ public class DemoController : ControllerBase
     }
 
   }
+  [HttpPost]
+  public async Task<ActionResult> ResetPasswordRequest(string userName)
+  {
+    CustomUser user = await _userManager.FindByNameAsync(userName);
+    if (user == null)
+    {
+      return NotFound($"No user with name '{userName}'"); // not found will introduce security issue, do not use in production
+    }
+
+    string token = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+    Console.WriteLine($"reset token: {token}");
+
+    return Ok();
+  }
+
+  [HttpPut]
+  public async Task<ActionResult> ResetPassword(string userName, string token, string newPassword)
+  {
+    CustomUser user = await _userManager.FindByNameAsync(userName);
+    if (user == null)
+    {
+      return NotFound($"No user with name '{userName}'"); // not found will introduce security issue, do not use in production
+    }
+
+    var result = await _userManager.ResetPasswordAsync(user, token, newPassword);
+    if (result.Succeeded)
+    {
+      await _userManager.ResetAccessFailedCountAsync(user);
+      return Ok("Password is reset");
+    }
+    else
+    {
+      await _userManager.AccessFailedAsync(user);
+      return BadRequest("Reset fail");
+    }
+  }
 }

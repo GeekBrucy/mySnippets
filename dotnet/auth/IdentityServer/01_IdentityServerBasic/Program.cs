@@ -25,7 +25,7 @@ builder.Services.AddIdentityCore<CustomUser>(opt =>
     opt.Password.RequireNonAlphanumeric = false;
     opt.Password.RequireUppercase = false;
     opt.Password.RequiredLength = 6;
-    opt.Tokens.PasswordResetTokenProvider = TokenOptions.DefaultEmailProvider;
+    opt.Tokens.PasswordResetTokenProvider = TokenOptions.DefaultEmailProvider; // without this, the token will be very long
     opt.Tokens.EmailConfirmationTokenProvider = TokenOptions.DefaultEmailProvider;
 });
 var idBuilder = new IdentityBuilder(typeof(CustomUser), typeof(CustomRole), builder.Services);
