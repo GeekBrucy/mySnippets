@@ -151,7 +151,7 @@ namespace _01_IdentityServerBasic.Migrations
                         .IsUnique()
                         .HasDatabaseName("RoleNameIndex");
 
-                    b.ToTable("AspNetRoles", (string)null);
+                    b.ToTable("CustomRoles", (string)null);
                 });
 
             modelBuilder.Entity("_01_IdentityServerBasic.Models.CustomUser", b =>

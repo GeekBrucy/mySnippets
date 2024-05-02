@@ -12,7 +12,7 @@ using _01_IdentityServerBasic.Data;
 namespace _01_IdentityServerBasic.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20240501135642_init_db")]
+    [Migration("20240502120753_init_db")]
     partial class init_db
     {
         /// <inheritdoc />
@@ -154,7 +154,7 @@ namespace _01_IdentityServerBasic.Migrations
                         .IsUnique()
                         .HasDatabaseName("RoleNameIndex");
 
-                    b.ToTable("AspNetRoles", (string)null);
+                    b.ToTable("CustomRoles", (string)null);
                 });
 
             modelBuilder.Entity("_01_IdentityServerBasic.Models.CustomUser", b =>
