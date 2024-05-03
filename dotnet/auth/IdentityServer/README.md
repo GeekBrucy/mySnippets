@@ -16,3 +16,9 @@
 Normally, create a custom User/Role model and inherit from `IdentityUser`/`IdentityRole`
 
 Inherit custom DbContext from `IdentityDbContext`
+
+## JWT
+
+- header: algorithm
+- payload: username, role
+- signature: header + payload + key (only server knows)
