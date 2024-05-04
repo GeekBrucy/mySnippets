@@ -1,5 +1,6 @@
 using System.Reflection;
 using IdentityServerConfig.Extensions;
+using IdentityServerConfig.Helpers;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -28,6 +29,14 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    try
+    {
+        await DbInitializer.InitDbAndSeedUser(app.Services);
+    }
+    catch (Exception e)
+    {
+        Console.WriteLine(e);
+    }
 }
 
 app.UseHttpsRedirection();
