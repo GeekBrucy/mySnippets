@@ -22,3 +22,9 @@ Inherit custom DbContext from `IdentityDbContext`
 - header: algorithm
 - payload: username, role
 - signature: header + payload + key (only server knows)
+
+### Nuget Package
+
+- `System.IdentityModel.Tokens.Jwt`
+
+### Use JwtSecurityTokenHandler to decode JWT
