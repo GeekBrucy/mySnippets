@@ -15,3 +15,9 @@ create table Config (
 	Value varchar not null
 )
 ```
+
+# Reset auto increment
+
+```sql
+truncate "AspNetUsers" restart identity cascade
+```
