@@ -1,11 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using IdentityServerConfig.Data;
 using IdentityServerConfig.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 
 namespace IdentityServerConfig.Extensions;
 
@@ -31,6 +35,27 @@ public static class IdentityCoreConfigExtensions
         .AddDefaultTokenProviders()
         .AddRoleManager<RoleManager<CustomRole>>()
         .AddUserManager<UserManager<CustomUser>>();
+    return services;
+  }
+
+  public static IServiceCollection AddJwtConfig(this IServiceCollection services, IConfigurationSection jwtConfigSection)
+  {
+    services.Configure<JwtSettings>(jwtConfigSection);
+    services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+      .AddJwtBearer(opt =>
+      {
+        var jwtSettings = jwtConfigSection.Get<JwtSettings>();
+        byte[] keyBytes = Encoding.UTF8.GetBytes(jwtSettings.SecKey);
+        var secKey = new SymmetricSecurityKey(keyBytes);
+        opt.TokenValidationParameters = new()
+        {
+          ValidateIssuer = false,
+          ValidateAudience = false,
+          ValidateLifetime = true,
+          ValidateIssuerSigningKey = true,
+          IssuerSigningKey = secKey
+        };
+      });
     return services;
   }
 }
