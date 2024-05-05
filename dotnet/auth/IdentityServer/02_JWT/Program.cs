@@ -21,6 +21,7 @@ Action<DbContextOptionsBuilder> dbContextBuilder = opt =>
 builder.Services
     .AddDbContextConfig(dbContextBuilder)
     .AddIdentityCoreServices()
+    .AddJwtConfig(builder.Configuration.GetSection("JWT"))
     ;
 var app = builder.Build();
 
@@ -40,6 +41,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 
