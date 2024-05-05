@@ -26,5 +26,6 @@ Inherit custom DbContext from `IdentityDbContext`
 ### Nuget Package
 
 - `System.IdentityModel.Tokens.Jwt`
+- `Microsoft.AspNetCore.Authentication.JwtBearer`
 
 ### Use JwtSecurityTokenHandler to decode JWT

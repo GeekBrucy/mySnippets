@@ -58,3 +58,17 @@ public class DbContextDesignTimeFactory : IDesignTimeDbContextFactory<MyDbContex
   }
 }
 ```
+
+# JWT Token keeps returning 401
+
+## Possible cause 1
+
+Wrong credentials or invalid user
+
+## Possible cause 2
+
+Wrong JWT format.
+
+## Possible cause 3
+
+Compromised security key
