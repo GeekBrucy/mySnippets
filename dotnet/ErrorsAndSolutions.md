@@ -72,3 +72,21 @@ Wrong JWT format.
 ## Possible cause 3
 
 Compromised security key
+
+# Azure durable function deadlock
+
+The durable function will apply lease some file in storage account. Sometimes, there will be some conflicts when acquiring lease.
+
+## Possible cause 1
+
+- Lease management
+
+## Possible cause 2
+
+- Multiple function apps associate with same storage account
+
+## Solution
+
+- Try to implement 1 storage account per function app
+- Upgrade durable function nuget package
+- Upgrade storage account sdk
