@@ -1,6 +1,8 @@
 using System.Reflection;
+using _02_JWT.Filters;
 using IdentityServerConfig.Extensions;
 using IdentityServerConfig.Helpers;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
@@ -33,7 +35,10 @@ Action<DbContextOptionsBuilder> dbContextBuilder = opt =>
 
     opt.UseNpgsql(connStr, x => x.MigrationsAssembly(Assembly.GetExecutingAssembly().GetName().Name));
 };
-
+builder.Services.Configure<MvcOptions>(opt =>
+{
+    opt.Filters.Add<JwtVersionCheckFilter>();
+});
 builder.Services
     .AddDbContextConfig(dbContextBuilder)
     .AddIdentityCoreServices()
