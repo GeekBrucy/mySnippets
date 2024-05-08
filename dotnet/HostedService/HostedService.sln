@@ -5,6 +5,8 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01_HostedServiceBasic", "01_HostedServiceBasic\01_HostedServiceBasic.csproj", "{EAD57136-B713-44A7-A6A1-CB021AF23634}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "02_hostedservice_export_data_interval", "02_hostedservice_export_data_interval\02_hostedservice_export_data_interval.csproj", "{982226A6-679F-49F8-A988-C2B6DBBECC7C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{EAD57136-B713-44A7-A6A1-CB021AF23634}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EAD57136-B713-44A7-A6A1-CB021AF23634}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EAD57136-B713-44A7-A6A1-CB021AF23634}.Release|Any CPU.Build.0 = Release|Any CPU
+		{982226A6-679F-49F8-A988-C2B6DBBECC7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{982226A6-679F-49F8-A988-C2B6DBBECC7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{982226A6-679F-49F8-A988-C2B6DBBECC7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{982226A6-679F-49F8-A988-C2B6DBBECC7C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
