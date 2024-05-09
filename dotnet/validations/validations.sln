@@ -5,6 +5,8 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01_BuiltInValidation", "01_BuiltInValidation\01_BuiltInValidation.csproj", "{A8C69148-9907-4135-8AE6-81440C37632B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "02_fluent_validation", "02_fluent_validation\02_fluent_validation.csproj", "{7255A164-EC9B-4759-B1D6-659403F4C3AB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{A8C69148-9907-4135-8AE6-81440C37632B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A8C69148-9907-4135-8AE6-81440C37632B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A8C69148-9907-4135-8AE6-81440C37632B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7255A164-EC9B-4759-B1D6-659403F4C3AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7255A164-EC9B-4759-B1D6-659403F4C3AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7255A164-EC9B-4759-B1D6-659403F4C3AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7255A164-EC9B-4759-B1D6-659403F4C3AB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
