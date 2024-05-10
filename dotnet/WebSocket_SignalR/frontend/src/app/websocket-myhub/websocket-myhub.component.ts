@@ -13,8 +13,11 @@ import * as signalR from '@microsoft/signalr';
 export class WebsocketMyhubComponent implements OnInit {
   msg: string = "";
   messages: string[] = [];
+  // skipNegotiation and open websocket to the server directly
+  // this is to avoid issues in distributed servers
+  connectionOptions = {skipNegotiation: true, transport: signalR.HttpTransportType.WebSockets}
   connection: signalR.HubConnection = new signalR.HubConnectionBuilder()
-    .withUrl('http://localhost:5071/myHub')
+    .withUrl('http://localhost:5071/myHub', this.connectionOptions)
     .withAutomaticReconnect()
     .build();
 
