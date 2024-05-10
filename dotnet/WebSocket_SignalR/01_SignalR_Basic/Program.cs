@@ -12,7 +12,7 @@ builder.Services.AddSignalR();
 builder.Services.AddCors(opt =>
 {
     opt.AddDefaultPolicy(builder => builder
-        .WithOrigins("http://localhost:3000")
+        .WithOrigins("http://localhost:4200")
         .AllowAnyMethod()
         .AllowAnyHeader()
         .AllowCredentials()
@@ -26,7 +26,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseCors();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
