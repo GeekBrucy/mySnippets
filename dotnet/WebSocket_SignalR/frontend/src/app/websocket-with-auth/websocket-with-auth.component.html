@@ -1,0 +1,21 @@
+<app-login
+  *ngIf="!token else startChat"
+  [loginEndpoint]="baseUrl + '/api/Demo/Login'"
+  (returnToken)="setToken($event)"
+></app-login>
+
+<ng-template #startChat>
+  <div>
+    <label>Enter your message: </label>
+    <input type="text" [(ngModel)]="msg" (keyup)="onKeyUp($event)">
+  </div>
+  <div>
+    <ul>
+      @for (item of messages; track item) {
+        <li>{{ item }}</li>
+      } @empty {
+      <li>There are no messages.</li>
+      }
+    </ul>
+  </div>
+</ng-template>
