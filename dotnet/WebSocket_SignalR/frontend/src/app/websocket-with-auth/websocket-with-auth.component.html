@@ -18,4 +18,20 @@
       }
     </ul>
   </div>
+  <hr>
+  <div>
+    <label>Enter username you want to send to: </label>
+    <input type="text" [(ngModel)]="targetUsername" required>
+  </div>
+  <div>
+    <label>Enter your private message: </label>
+    <input type="text" [(ngModel)]="privateMessage" (keyup)="onPrivateMessageKeyUp($event)">
+  </div>
+  <ul>
+    @for (item of privateMessages; track item) {
+      <li>{{ item }}</li>
+    } @empty {
+    <li>There are no messages.</li>
+    }
+  </ul>
 </ng-template>

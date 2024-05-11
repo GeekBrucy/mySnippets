@@ -23,6 +23,11 @@ export class WebsocketWithAuthComponent {
     transport: this.connectionTransport
   }
   connection: signalR.HubConnection | null = null;
+
+  targetUsername: string = "";
+  privateMessage: string = "";
+
+  privateMessages: string[] = [];
   async setToken(token: string) {
     if (!token) {
       return;
@@ -39,7 +44,11 @@ export class WebsocketWithAuthComponent {
     await this.connection.start();
     this.connection.on('PublicMsgReceived', msg => {
       this.messages.push(msg);
-    })
+    });
+    this.connection.on('PrivateMsgReceived', msg => {
+      console.log(msg)
+      this.privateMessages.push(msg);
+    });
   }
 
   async onKeyUp(event: KeyboardEvent) {
@@ -51,5 +60,17 @@ export class WebsocketWithAuthComponent {
     }
     await this.connection.invoke("SendPublicMsg", this.msg); // the function name in the MyHub class
     this.msg = "";
+  }
+
+  async onPrivateMessageKeyUp(event: KeyboardEvent) {
+    if (!this.connection) {
+      return;
+    }
+    if (keycode.isEventKey(event, 'enter') === false) {
+      return;
+    }
+
+    await this.connection.invoke("SendPrivateMessage", this.targetUsername, this.privateMessage);
+    this.privateMessage = "";
   }
 }
