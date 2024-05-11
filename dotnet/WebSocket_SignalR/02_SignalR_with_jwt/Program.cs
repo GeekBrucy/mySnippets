@@ -30,6 +30,17 @@ builder.Services
     })
     .AddIdentityCoreServices()
     .AddJwtConfig(jwtSettings);
+
+builder.Services.AddCors(opt =>
+{
+    opt.AddDefaultPolicy(builder => builder
+        .WithOrigins("http://localhost:4200")
+        .AllowAnyMethod()
+        .AllowAnyHeader()
+        .AllowCredentials()
+    );
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -38,7 +49,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseCors();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
