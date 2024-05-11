@@ -42,9 +42,21 @@ public static class IdentityCoreConfigExtensions
   {
     services.Configure<JwtSettings>(jwtConfigSection);
     services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-      .AddJwtBearer(opt =>
+      .AddJwtBearer(SetupJwtConfig(jwtConfigSection.Get<JwtSettings>()));
+    return services;
+  }
+
+  public static IServiceCollection AddJwtConfig(this IServiceCollection services, JwtSettings jwtSettings)
+  {
+    services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+      .AddJwtBearer(SetupJwtConfig(jwtSettings));
+    return services;
+  }
+
+  private static Action<JwtBearerOptions> SetupJwtConfig(JwtSettings jwtSettings)
+  {
+    return opt =>
       {
-        var jwtSettings = jwtConfigSection.Get<JwtSettings>();
         byte[] keyBytes = Encoding.UTF8.GetBytes(jwtSettings.SecKey);
         var secKey = new SymmetricSecurityKey(keyBytes);
         opt.TokenValidationParameters = new()
@@ -55,7 +67,6 @@ public static class IdentityCoreConfigExtensions
           ValidateIssuerSigningKey = true,
           IssuerSigningKey = secKey
         };
-      });
-    return services;
+      };
   }
 }
