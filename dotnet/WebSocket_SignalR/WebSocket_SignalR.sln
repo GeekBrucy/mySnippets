@@ -5,6 +5,8 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01_SignalR_Basic", "01_SignalR_Basic\01_SignalR_Basic.csproj", "{BBD044BC-0F23-4863-AFCA-E24586585D25}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "02_SignalR_with_jwt", "02_SignalR_with_jwt\02_SignalR_with_jwt.csproj", "{66E856C4-C04A-4C24-BA8F-CAFF474D525F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{BBD044BC-0F23-4863-AFCA-E24586585D25}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BBD044BC-0F23-4863-AFCA-E24586585D25}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BBD044BC-0F23-4863-AFCA-E24586585D25}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66E856C4-C04A-4C24-BA8F-CAFF474D525F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66E856C4-C04A-4C24-BA8F-CAFF474D525F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66E856C4-C04A-4C24-BA8F-CAFF474D525F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66E856C4-C04A-4C24-BA8F-CAFF474D525F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
