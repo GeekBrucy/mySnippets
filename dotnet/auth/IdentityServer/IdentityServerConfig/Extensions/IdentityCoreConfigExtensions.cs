@@ -67,6 +67,34 @@ public static class IdentityCoreConfigExtensions
           ValidateIssuerSigningKey = true,
           IssuerSigningKey = secKey
         };
+        if (string.IsNullOrEmpty(jwtSettings.HubUrl) == false)
+        {
+          opt.Events = SetupJwtBearerEvents(jwtSettings.HubUrl);
+        }
       };
+  }
+  /// <summary>
+  /// For signalR authentication
+  /// </summary>
+  /// <param name="hubUrl"></param>
+  /// <returns></returns>
+  private static JwtBearerEvents SetupJwtBearerEvents(string hubUrl)
+  {
+    return new JwtBearerEvents
+    {
+      OnMessageReceived = context =>
+      {
+        // websocket doesn't support custom header, so include the access_token (aka JWT token) in the query string
+        var accessToken = context.Request.Query["access_token"];
+        var path = context.HttpContext.Request.Path;
+        if (!string.IsNullOrEmpty(accessToken) &&
+          path.StartsWithSegments(hubUrl)
+        )
+        {
+          context.Token = accessToken;
+        }
+        return Task.CompletedTask;
+      }
+    };
   }
 }
