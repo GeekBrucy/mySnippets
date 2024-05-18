@@ -10,9 +10,15 @@ namespace _01_Basic.Controllers;
 [Route("api/[controller]/[action]")]
 public class Demo1Controller : ControllerBase
 {
+  private readonly ILogger _logger;
+  public Demo1Controller(ILogger<Demo1Controller> logger)
+  {
+    _logger = logger;
+  }
   [HttpGet]
   public ActionResult TestDemo1()
   {
+    _logger.LogInformation("Test Demo1");
     return Ok();
   }
 }
