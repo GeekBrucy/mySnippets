@@ -120,6 +120,20 @@ Contains the logics that across multiple aggregation and systems outside of aggr
 
 - A class has properties, fields and methods
 
+### EF Core Rich Domain Model Requirements
+
+- Some properties may be readonly or only can be modified internally
+- Define constructor that requires arguments
+- Need to map private fields that don't have corresponding properties to the database
+- Some properties don't need to be saved to database
+
+#### Some Tips
+
+- If in a model, all constructors have arguments and you need EF Core to initialize the properties from arguments value, the arguments name MUST be the same as the properties
+- You can also define a private constructor that has no argument, this will be only for EF
+- Map private field to column: `builder.Property("Your_Private_Field_Name")`
+- For readonly property, EF has a feature called "backing field". In model config, use `HasField("readonly_field_Name")`
+
 # DDD Classic Use Case Process
 
 1. Prepare business logic data
