@@ -76,3 +76,68 @@ Aggregate root act as a manager in the aggregation
 - Entity only has minimum properties
 
 Small aggregation is more micro-service friendly
+
+## Entity Code
+
+- Entity creation
+- Entity state
+- ...
+
+## Domain Service (biggest module)
+
+Contains business logics of aggregation
+
+## Application Service
+
+Contains the logics that across multiple aggregation and systems outside of aggregation
+
+## Responsibilities
+
+- Domain model will not directly interact with external systems (Domain service will not involve database operations)
+- Domain service contains business logic
+- Application service will interact with external systems
+- Domain service is not 100% necessary, like simple CRUD. In this case, application service is responsible for everything.
+
+## Repository
+
+- fetch data
+- save data
+
+## Unit of Work
+
+- Multiple related operations in an aggregation is called unit of work.
+- All succeed or all fail
+
+## Domain Event
+
+## Integration Event
+
+## Anemic Domain Model (贫血模型)
+
+- A class only has properties or fields, no methods
+
+## Rich Domain Model (充血模型)
+
+- A class has properties, fields and methods
+
+# DDD Classic Use Case Process
+
+1. Prepare business logic data
+
+```c#
+Person p = new Person();
+p.Init() // some init code
+ctx.Persons.Add(p);
+```
+
+2. Execute one or more operations that alter the entity state
+
+```c#
+p.Age++;
+```
+
+3. Apply the changes to external system
+
+```c#
+ctx.SaveChanges();
+```
