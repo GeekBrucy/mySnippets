@@ -21,3 +21,7 @@ Alternatively, cd to the target directory, and do
 ## Run a project at solution root level
 
 `dotnet run --project YourProjectName`
+
+## Add development certificate
+
+`dotnet dev-certs https`
