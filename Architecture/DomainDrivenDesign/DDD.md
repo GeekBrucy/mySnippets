@@ -120,7 +120,7 @@ Contains the logics that across multiple aggregation and systems outside of aggr
 
 - A class has properties, fields and methods
 
-### EF Core Rich Domain Model Requirements
+### EF Core Rich Domain Model Features
 
 - Some properties may be readonly or only can be modified internally
 - Define constructor that requires arguments
