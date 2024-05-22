@@ -15,7 +15,9 @@ public class User
   public string UserName { get; private set; }
   public int Credits { get; private set; }
   private string? passwordHash; // need to be mapped to db but no access in the app
-  public string Remark { get; }
+
+  private string? remark;
+  public string? Remark { get { return remark; } }
   public string? Tag { get; set; } // not mapped to db
 
   private User() // empty constructor for EF Core
