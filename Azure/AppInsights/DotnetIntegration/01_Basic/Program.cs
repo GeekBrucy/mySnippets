@@ -1,5 +1,7 @@
+using _01_Basic.Data;
 using _01_Basic.Middlewares;
 using Microsoft.ApplicationInsights.AspNetCore.Extensions;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging.ApplicationInsights;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +13,12 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddDbContext<MyDbContext>(opt =>
+{
+    var connStr = builder.Configuration.GetConnectionString("sql_conn_str");
+
+    opt.UseSqlServer(connStr);
+});
 // https://learn.microsoft.com/en-us/azure/azure-monitor/app/ilogger?tabs=dotnet6#aspnet-core-applications
 // builder.Logging.AddApplicationInsights(
 //     configureTelemetryConfiguration: (config) =>
