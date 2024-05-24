@@ -12,7 +12,7 @@ using _01_DDD_Feature_Demo.Data;
 namespace _01_DDD_Feature_Demo.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20240523140433_add_blog")]
+    [Migration("20240524115411_add_blog")]
     partial class add_blog
     {
         /// <inheritdoc />
@@ -120,7 +120,7 @@ namespace _01_DDD_Feature_Demo.Migrations
                                 .HasColumnType("text");
 
                             b1.Property<string>("English")
-                                .HasColumnType("varchar(max)");
+                                .HasColumnType("text");
 
                             b1.HasKey("BlogId");
 
@@ -140,7 +140,8 @@ namespace _01_DDD_Feature_Demo.Migrations
                                 .HasColumnType("character varying(255)");
 
                             b1.Property<string>("English")
-                                .HasColumnType("varchar(255)");
+                                .HasMaxLength(255)
+                                .HasColumnType("character varying(255)");
 
                             b1.HasKey("BlogId");
 

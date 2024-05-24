@@ -15,11 +15,8 @@ public class BlogConfig : IEntityTypeConfiguration<Blog>
     builder.OwnsOne(e => e.Title, opt =>
     {
       opt.Property(o => o.Chinese).HasMaxLength(255);
-      opt.Property(o => o.English).HasColumnType("varchar(255)");
+      opt.Property(o => o.English).HasMaxLength(255);
     });
-    builder.OwnsOne(e => e.Body, opt =>
-    {
-      opt.Property(o => o.English).HasColumnType("varchar(max)");
-    });
+    builder.OwnsOne(e => e.Body);
   }
 }

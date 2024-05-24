@@ -117,7 +117,7 @@ namespace _01_DDD_Feature_Demo.Migrations
                                 .HasColumnType("text");
 
                             b1.Property<string>("English")
-                                .HasColumnType("varchar(max)");
+                                .HasColumnType("text");
 
                             b1.HasKey("BlogId");
 
@@ -137,7 +137,8 @@ namespace _01_DDD_Feature_Demo.Migrations
                                 .HasColumnType("character varying(255)");
 
                             b1.Property<string>("English")
-                                .HasColumnType("varchar(255)");
+                                .HasMaxLength(255)
+                                .HasColumnType("character varying(255)");
 
                             b1.HasKey("BlogId");
 

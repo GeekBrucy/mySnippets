@@ -18,9 +18,9 @@ namespace _01_DDD_Feature_Demo.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Title_Chinese = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
-                    Title_English = table.Column<string>(type: "varchar(255)", nullable: true),
+                    Title_English = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
                     Body_Chinese = table.Column<string>(type: "text", nullable: true),
-                    Body_English = table.Column<string>(type: "varchar(max)", nullable: true)
+                    Body_English = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
