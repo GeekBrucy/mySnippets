@@ -20,25 +20,40 @@ public class CatchTheFlagController : ControllerBase
   [HttpPost]
   public async Task<ActionResult<Flag>> AddFlag(string value)
   {
-    var flag = new Flag
+    try
     {
-      Value = value
-    };
+      var flag = new Flag
+      {
+        Value = value
+      };
 
-    _myDbContext.Flags.Add(flag);
+      _myDbContext.Flags.Add(flag);
 
-    await _myDbContext.SaveChangesAsync();
+      await _myDbContext.SaveChangesAsync();
 
-    return new OkObjectResult(flag);
+      return new OkObjectResult(flag);
+    }
+    catch (Exception ex)
+    {
+      return new BadRequestObjectResult(ex);
+    }
+
   }
 
   [HttpGet]
   public async Task<ActionResult<Flag>> CatchFlag(int? id)
   {
-    id = id ?? 1;
+    try
+    {
+      id = id ?? 1;
 
-    var flag = await _myDbContext.Flags.FindAsync(id);
+      var flag = await _myDbContext.Flags.FindAsync(id);
 
-    return new OkObjectResult(flag);
+      return new OkObjectResult(flag);
+    }
+    catch (Exception ex)
+    {
+      return new BadRequestObjectResult(ex);
+    }
   }
 }
