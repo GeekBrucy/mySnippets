@@ -1,5 +1,6 @@
 using _01_Basic.Data;
 using _01_Basic.Middlewares;
+using _01_Basic.Models;
 using Microsoft.ApplicationInsights.AspNetCore.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging.ApplicationInsights;
@@ -12,7 +13,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
+builder.Services.Configure<AzureSearch>(builder.Configuration.GetSection("AzureSearch"));
 builder.Services.AddDbContext<MyDbContext>(opt =>
 {
     var connStr = builder.Configuration.GetConnectionString("sql_conn_str");
