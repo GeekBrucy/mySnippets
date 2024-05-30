@@ -21,6 +21,7 @@ Replace the connection string with:
 ## Connect Azure Web App to Azure SQL
 
 0. Provision Azure web app service and Azure SQL
+
    0.1 Deploy a solution to Azure Web app service that performs simple CRUD to the Azure SQL
 
 ### Networking
@@ -54,3 +55,8 @@ GO
 6. Test local:
    6.1 For VS Code + command line: run `az login` in the command line, then spin up a local instance, you should get the data after sending a request
    6.2 For VS Code and run project in VS Code: Install Azure extension and login
+
+#### Managed Identity Issues
+
+- Login failed for user '<token-identified principal>'. The server is not currently configured to accept this token
+- Invalid value for key 'authentication'.
