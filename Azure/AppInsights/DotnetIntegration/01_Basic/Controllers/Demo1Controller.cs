@@ -11,14 +11,22 @@ namespace _01_Basic.Controllers;
 public class Demo1Controller : ControllerBase
 {
   private readonly ILogger _logger;
-  public Demo1Controller(ILogger<Demo1Controller> logger)
+  private readonly IWebHostEnvironment _env;
+
+  public Demo1Controller(ILogger<Demo1Controller> logger, IWebHostEnvironment env)
   {
     _logger = logger;
+    _env = env;
   }
   [HttpGet]
   public ActionResult TestDemo1()
   {
     _logger.LogInformation("Test Demo1");
     return Ok();
+  }
+  [HttpGet]
+  public ActionResult GetEnvironment()
+  {
+    return new OkObjectResult(_env.EnvironmentName);
   }
 }
