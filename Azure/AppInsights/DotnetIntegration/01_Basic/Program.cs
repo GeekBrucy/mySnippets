@@ -1,4 +1,5 @@
 using _01_Basic.Data;
+using _01_Basic.Helpers;
 using _01_Basic.Middlewares;
 using _01_Basic.Models;
 using Azure.Identity;
@@ -30,7 +31,11 @@ builder.Services.AddAzureClients(clientBuilder =>
 });
 
 // integrate key vault with configuration
-builder.Configuration.AddAzureKeyVault(new Uri("https://padil-poc-key-vault.vault.azure.net/"), new DefaultAzureCredential());
+builder.Configuration.AddAzureKeyVault(
+    new Uri("https://padil-poc-key-vault.vault.azure.net/"),
+    new DefaultAzureCredential(),
+    KeyVaultConfigGenerator.ReloadInterval(TimeSpan.FromMinutes(1))
+);
 // https://learn.microsoft.com/en-us/azure/azure-monitor/app/ilogger?tabs=dotnet6#aspnet-core-applications
 // builder.Logging.AddApplicationInsights(
 //     configureTelemetryConfiguration: (config) =>
