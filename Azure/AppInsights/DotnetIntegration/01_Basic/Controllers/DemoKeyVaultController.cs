@@ -12,13 +12,21 @@ namespace _01_Basic.Controllers;
 public class DemoKeyVaultController : ControllerBase
 {
   private readonly SecretClient _secretClient;
-  public DemoKeyVaultController(SecretClient secretClient)
+  private readonly IConfiguration _config;
+  public DemoKeyVaultController(SecretClient secretClient, IConfiguration config)
   {
     _secretClient = secretClient;
+    _config = config;
   }
   [HttpGet]
   public ActionResult GetSecret(string key)
   {
     return new OkObjectResult(_secretClient.GetSecret(key).Value);
+  }
+
+  [HttpGet]
+  public ActionResult GetSecretFromConfig(string key)
+  {
+    return new OkObjectResult(_config[key]);
   }
 }

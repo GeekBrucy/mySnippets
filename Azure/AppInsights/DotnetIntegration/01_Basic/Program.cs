@@ -28,6 +28,9 @@ builder.Services.AddAzureClients(clientBuilder =>
     clientBuilder.AddSecretClient(new Uri("https://padil-poc-key-vault.vault.azure.net/"));
     clientBuilder.UseCredential(new DefaultAzureCredential());
 });
+
+// integrate key vault with configuration
+builder.Configuration.AddAzureKeyVault(new Uri("https://padil-poc-key-vault.vault.azure.net/"), new DefaultAzureCredential());
 // https://learn.microsoft.com/en-us/azure/azure-monitor/app/ilogger?tabs=dotnet6#aspnet-core-applications
 // builder.Logging.AddApplicationInsights(
 //     configureTelemetryConfiguration: (config) =>
