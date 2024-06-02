@@ -60,11 +60,14 @@ GO
 
 - Login failed for user '<token-identified principal>'. The server is not currently configured to accept this token
 
-  Tried to run `CREATE USER [user email] FROM EXTERNAL PROVIDER;` in the database, but got this error: `Failed to execute query. Error: Server identity does not have Azure Active Directory Readers permission. Please follow the steps here : https://docs.microsoft.com/azure/azure-sql/database/authentication-aad-service-principal`
+  ~~Tried to run `CREATE USER [user email] FROM EXTERNAL PROVIDER;` in the database, but got this error: `Failed to execute query. Error: Server identity does not have Azure Active Directory Readers permission. Please follow the steps here : https://docs.microsoft.com/azure/azure-sql/database/authentication-aad-service-principal`~~
 
-  Relevant docs:
-  https://learn.microsoft.com/en-us/answers/questions/1161482/login-creation-failed-while-using-service-principa provides this doc:
-  https://learn.microsoft.com/en-us/azure/azure-sql/database/authentication-azure-ad-user-assigned-managed-identity?view=azuresql#grant-permissions
+  ~~Relevant docs:~~
+  ~~https://learn.microsoft.com/en-us/answers/questions/1161482/login-creation-failed-while-using-service-principa provides this doc:~~
+  ~~https://learn.microsoft.com/en-us/azure/azure-sql/database/authentication-azure-ad-user-assigned-managed-identity?view=azuresql#grant-permissions~~
+
+  Solution:
+  After `az login`, run `az account set --subscription {target subscription}`
 
 - Invalid value for key 'authentication'.
   This might just be old version of ef core and sql driver
