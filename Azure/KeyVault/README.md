@@ -37,3 +37,9 @@ builder.Services.AddAzureClients(clientBuilder =>
 });
 
 ```
+
+# Errors
+
+Local development instance, getting AKV10032
+
+This is cross-tenant issue
