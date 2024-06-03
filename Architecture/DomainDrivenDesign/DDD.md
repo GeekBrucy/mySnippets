@@ -155,3 +155,20 @@ p.Age++;
 ```c#
 ctx.SaveChanges();
 ```
+
+# DDD Strong-typed Id
+
+```c#
+class OrderId
+{
+   public long id { get; set; }
+}
+
+class Order
+{
+   public OrderId id { get; set; }
+   // ...other property
+}
+```
+
+But EF Core doesn't seem support this very well.
