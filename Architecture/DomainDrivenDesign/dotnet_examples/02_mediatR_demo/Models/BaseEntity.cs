@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 using _02_mediatR_demo.Interfaces;
@@ -9,6 +10,7 @@ namespace _02_mediatR_demo.Models;
 
 public abstract class BaseEntity : IDomainEvents
 {
+  [NotMapped] // this doesn't need to be saved to db or tracked
   private readonly IList<INotification> _events = new List<INotification>();
   public void AddDomainEvent(INotification eventItem)
   {
