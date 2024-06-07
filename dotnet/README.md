@@ -6,6 +6,8 @@ https://learn.microsoft.com/en-us/dotnet/architecture/microservices/
 
 ## Database options for development
 
+https://learn.microsoft.com/en-us/ef/core/providers/in-memory/?tabs=dotnet-core-cli
+
 - In Memory Database: Nuget package `Microsoft.EntityFrameworkCore.InMemory` (no migration needed)
 
 ## EF Core TransactionScope
