@@ -172,3 +172,36 @@ class Order
 ```
 
 But EF Core doesn't seem support this very well.
+
+# Domain Events
+
+## Option 1: C# Event
+
+```c#
+var bl = new ProcessBusinessLogic();
+bl.ProcessCompleted += bl_ProcessCompleted;
+bl.StartProcess();
+```
+
+## Option 2: MediatR - One publisher VS. One subscriber / One publisher VS. multiple subscribers
+
+Package: `MediatR.Extensions.Microsoft.DependencyInjection`
+Register service: `builder.Services.AddMediatR(Assembly.GetExecutingAssembly());`
+
+---
+
+## When to publish domain events
+
+eShopOnContainers - Delay the event publish until the context is changed. Only register an event in the entity
+
+Create an `IDomainEvents` interface, and let all aggregate root inherit from it
+
+```c#
+public interface IDomainEvents
+{
+  IEnumerable<INotification> GetDomainEvents();
+  void AddDomainEvent(INotification eventItem);
+  void AddDomainEventIfAbsent(INotification eventItem);
+  void ClearDomainEvents();
+}
+```
