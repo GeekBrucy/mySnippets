@@ -1,0 +1,9 @@
+services:
+  redis:
+    image: rabbitmq:3-management-alpine
+    ports:
+      - 5672:5672
+      - 15672:15672
+    volumes:
+      - ${DATA_PATH}:/var/lib/rabbitmq/
+      - ${LOG_PATH}:/var/log/rabbitmq
