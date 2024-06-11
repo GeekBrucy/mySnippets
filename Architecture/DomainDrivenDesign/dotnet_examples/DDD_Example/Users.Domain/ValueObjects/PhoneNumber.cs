@@ -5,4 +5,4 @@ using System.Threading.Tasks;
 
 namespace Users.Domain.ValueObjects;
 
-public record PhoneNumber(int RegionNumber, string Number);
+public record PhoneNumber(int RegionCode, string Number);
