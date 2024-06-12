@@ -44,3 +44,15 @@ Query Key (it is an array)
 ```
 
 To check return value: https://learn.microsoft.com/en-us/rest/api/searchmanagement/query-keys/list-by-search-service?view=rest-searchmanagement-2023-11-01&tabs=HTTP
+
+## Reference output from a template
+
+```
+"[reference('template_name').outputs.nic_id.value]"
+```
+
+## Reference network interface from a private endpoint
+
+```
+"[reference(resourceId('Microsoft.Network/privateEndpoints', parameters('private_endpoint_name')), '2023-04-01').networkInterfaces[0].id]"
+```
