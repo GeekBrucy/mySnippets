@@ -1,0 +1,31 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "private_dns_zone_name": {
+      "type": "string"
+    },
+    "ip_configuration": {
+      "type": "object"
+    }
+  },
+  "functions": [],
+  "variables": {},
+  "resources": [
+    {
+      "type": "Microsoft.Network/privateDnsZones/A",
+      "name": "[concat(parameters('private_dns_zone_name'),'/', split(parameters('ip_configuration').properties.privateLinkConnectionProperties.fqdns[copyIndex()], '.')[0])]",
+      "location": "global",
+      "apiVersion": "2018-09-01",
+      "properties": {
+        "aRecords": "[concat(json(concat('[{\"ipv4Address\":\"', parameters('ip_configuration').properties.privateIPAddress,'\"}]')))]",
+        "ttl": 3600
+      },
+      "copy": {
+        "name": "fqdnCopy",
+        "count": "[length(parameters('ip_configuration').properties.privateLinkConnectionProperties.fqdns)]"
+      }
+    }
+  ],
+  "outputs": {}
+}

@@ -1,0 +1,40 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "private_dns_zone_name": {
+      "type": "string"
+    },
+    "ip_configurations": {
+      "type": "array"
+    },
+    "dns_entries_template_uri": {
+      "type": "string"
+    }
+  },
+  "functions": [],
+  "variables": {},
+  "resources": [
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2019-10-01",
+      "name": "[concat('PrivateDnsFQDN', copyIndex(1))]",
+      "properties": {
+        "mode": "Incremental",
+        "parameters":{
+          "private_dns_zone_name": {"value": "[parameters('private_dns_zone_name')]"},
+          "ip_configuration": {"value": "[parameters('ip_configurations')[copyIndex()]]"}
+        },
+        "templateLink":{
+          "uri": "[parameters('dns_entries_template_uri')]"
+        }
+      },
+      "copy": {
+        "name": "ipconfigCopy",
+        "count": "[length(parameters('ip_configurations'))]",
+        "mode": "parallel"
+      }
+    }
+  ],
+  "outputs": {}
+}

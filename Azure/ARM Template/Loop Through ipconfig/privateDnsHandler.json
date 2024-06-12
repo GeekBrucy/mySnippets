@@ -1,0 +1,38 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "nic_id": {
+      "type": "string"
+    },
+    "private_dns_zone_name": {
+      "type": "string"
+    },
+    "dns_entries_handler_template_uri": {
+      "type": "string"
+    },
+    "dns_entries_template_uri": {
+      "type": "string"
+    }
+  },
+  "functions": [],
+  "variables": {},
+  "resources": [
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2022-09-01",
+      "name": "privateDnsEntriesHandler",
+      "properties": {
+        "mode": "Incremental",
+        "parameters":{
+          "private_dns_zone_name": {"value": "[parameters('private_dns_zone_name')]"},
+          "ip_configurations": {"value": "[reference(parameters('nic_id'), '2022-09-01').ipConfigurations]"},
+          "dns_entries_template_uri": {"value": "[parameters('dns_entries_template_uri')]"}
+        },
+        "templateLink":{
+          "uri": "[parameters('dns_entries_handler_template_uri')]"
+        }
+      }
+    }
+  ]
+}
