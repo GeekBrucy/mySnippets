@@ -19,7 +19,7 @@ public record UserLoginHistory : IAggregateRoot
   {
     UserId = userId;
     PhoneNumber = phoneNumber;
-    CreatedDateTime = DateTime.Now;
+    CreatedDateTime = DateTime.UtcNow;
     Message = message;
   }
 }

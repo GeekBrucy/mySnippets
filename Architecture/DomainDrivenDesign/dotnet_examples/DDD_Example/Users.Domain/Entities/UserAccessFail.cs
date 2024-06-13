@@ -34,7 +34,7 @@ public record UserAccessFail
     if (AccessFailedCount >= 3)
     {
       isLockOut = true;
-      LockoutEnd = DateTime.Now.AddMinutes(5);
+      LockoutEnd = DateTime.UtcNow.AddMinutes(5);
     }
   }
 
@@ -42,7 +42,7 @@ public record UserAccessFail
   {
     if (!isLockOut) return false;
 
-    if (LockoutEnd >= DateTime.Now)
+    if (LockoutEnd >= DateTime.UtcNow)
     {
       return true;
     }
