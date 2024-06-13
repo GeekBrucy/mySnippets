@@ -10,7 +10,7 @@ public record UserAccessFail
   public Guid Id { get; init; }
   public Guid UserId { get; init; }
   public User User { get; init; }
-  private bool lockOut;
+  private bool isLockOut;
   public DateTime? LockoutEnd { get; private set; }
   public int AccessFailedCount { get; private set; }
   private UserAccessFail() { } // For EF Core use
@@ -22,7 +22,7 @@ public record UserAccessFail
 
   public void Reset()
   {
-    lockOut = false;
+    isLockOut = false;
     LockoutEnd = null;
     AccessFailedCount = 0;
   }
@@ -33,14 +33,14 @@ public record UserAccessFail
 
     if (AccessFailedCount >= 3)
     {
-      lockOut = true;
+      isLockOut = true;
       LockoutEnd = DateTime.Now.AddMinutes(5);
     }
   }
 
   public bool IsLockOut()
   {
-    if (!lockOut) return false;
+    if (!isLockOut) return false;
 
     if (LockoutEnd >= DateTime.Now)
     {
