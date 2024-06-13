@@ -205,3 +205,37 @@ public interface IDomainEvents
   void ClearDomainEvents();
 }
 ```
+
+# Integrated Event (Cross Services) - Event Bus
+
+- Redis
+- RabbitMQ (popular)
+- Kafka
+- ActiveMQ
+
+## RabbitMQ
+
+Package:
+
+- `RabbitMQ.Client`
+- `MassTransit.RabbitMQ`
+
+### Channel
+
+### Queue
+
+### exchange
+
+### Patterns
+
+#### Routing
+
+# Onion Architecture
+
+## ACL Anti Corruption Layer
+
+# DDD Layering guide
+
+- Domain: Entity classes, events, ACL interfaces, Repository, Domain Services
+- Infrastructure: Entity Configs, DbContext, ACL implementation, Repository implementation
+- WebAPI: Controllers, Events response class
