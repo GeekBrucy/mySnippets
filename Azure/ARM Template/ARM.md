@@ -4,7 +4,9 @@
 az deployment group what-if --resource-group testrg --name rollout01 --template-uri https://myresource/azuredeploy.json --parameters @myparameters.json
 ```
 
-# reference() function limitations
+# limitations
+
+## reference() function
 
 Cannot use `reference()` in the following cases:
 
@@ -13,6 +15,10 @@ Cannot use `reference()` in the following cases:
 - Inside variables or parameters sections
 - Nested inside another reference() function
 - Inside ARM functions
+
+## Key Vault
+
+- Vault Name length: 3-24 characters
 
 # Get key from service
 
