@@ -2,17 +2,25 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using WebAPI.Controllers;
 using WebAPI.Core.Dtos;
 using WebAPI.Core.Interfaces;
 using WebAPI.Core.Model;
+using Xunit.Abstractions;
 
 namespace WebAPI.Tests.Tests;
 
 public class HomeControllerTests
 {
+  private readonly ITestOutputHelper _output;
+  public HomeControllerTests(ITestOutputHelper output)
+  {
+    // in unit test, this seems to be the only way to output messages
+    _output = output;
+  }
   private List<BrainstormSession> GetTestSessions()
   {
     var sessions = new List<BrainstormSession>();
@@ -51,5 +59,26 @@ public class HomeControllerTests
     );
 
     Assert.Equal(2, model.Count());
+  }
+
+  [Fact]
+  public async Task AddNewSessionFail_WhenModelStateIsInvalid()
+  {
+    // Arrange
+    var mockRepo = new Mock<IBrainstormSessionRepository>();
+    mockRepo.Setup(repo => repo.ListAsync())
+      .ReturnsAsync(GetTestSessions());
+
+    var controller = new HomeController(mockRepo.Object);
+    var newSession = new NewSessionModel("");
+    // model state is not validated in unit test, has to be added manually
+    controller.ModelState.AddModelError("SessionName", "Required");
+
+    // Act
+    var result = await controller.AddNewSession(newSession);
+    // Assert
+    var response = Assert.IsType<BadRequestObjectResult>(result);
+
+    Assert.IsType<BadRequestObjectResult>(response);
   }
 }
