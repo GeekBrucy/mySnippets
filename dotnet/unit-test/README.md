@@ -13,3 +13,4 @@ https://learn.microsoft.com/en-us/dotnet/core/testing/#testing-tools
 # Useful tools/packages
 
 - Moq: Github https://github.com/devlooped/moq, Nuget: https://www.nuget.org/packages/Moq/
+- FluentAssertions
