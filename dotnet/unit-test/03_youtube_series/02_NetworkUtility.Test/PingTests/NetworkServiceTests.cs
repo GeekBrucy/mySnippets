@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.Threading.Tasks;
+using _02_NetworkUtility.DNS;
 using _02_NetworkUtility.Ping;
+using FakeItEasy;
 using FluentAssertions;
 using FluentAssertions.Extensions;
 using Xunit;
@@ -13,21 +15,23 @@ namespace _02_NetworkUtility.Test.PingTests;
 public class NetworkServiceTests
 {
     private readonly NetworkService _networkService;
+    private readonly IDNS _dnsService;
 
     public NetworkServiceTests()
     {
+        // Dependencies
+        _dnsService = A.Fake<IDNS>();
         // SUT
-        _networkService = new NetworkService();
+        _networkService = new NetworkService(_dnsService);
     }
 
     [Fact]
     public void NetworkService_SendPing_ReturnString()
     {
         // arrange  - variables, classes, mocks
-        var pingService = new NetworkService();
-
+        A.CallTo(() => _dnsService.SendDNS()).Returns(true);
         // act
-        var result = pingService.SendPing();
+        var result = _networkService.SendPing();
 
         // assert
         result.Should().NotBeNullOrWhiteSpace();
@@ -41,10 +45,9 @@ public class NetworkServiceTests
     public void NetworkService_PingTimeout_ReturnInt(int a, int b, int expected)
     {
         // arrange
-        var pingService = new NetworkService();
 
         // act
-        var actual = pingService.PingTimeout(a, b);
+        var actual = _networkService.PingTimeout(a, b);
         // assert
         actual.Should().Be(expected);
         actual.Should().BeGreaterThanOrEqualTo(a + b);
