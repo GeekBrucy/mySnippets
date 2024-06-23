@@ -6,10 +6,11 @@ using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using Microsoft.Extensions.Options;
 using MVC.Helpers;
+using MVC.Interfaces;
 
 namespace MVC.Services;
 
-public class PhotoService
+public class PhotoService : IPhotoService
 {
   private readonly Cloudinary _cloundinary;
 
