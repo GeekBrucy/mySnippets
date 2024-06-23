@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 
 namespace MVC.Models;
 
-public class AppUser
+public class AppUser : IdentityUser
 {
   public int? Pace { get; set; }
   public int? Mileage { get; set; }

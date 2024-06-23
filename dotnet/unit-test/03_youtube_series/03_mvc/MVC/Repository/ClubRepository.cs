@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using MVC.Data;
 using MVC.Data.Enum;
 using MVC.Interfaces;
@@ -11,94 +12,94 @@ namespace MVC.Repository;
 
 public class ClubRepository : IClubRepository
 {
-  private readonly DummyContext _context;
-  public ClubRepository(DummyContext context)
+  private readonly AppDbContext _context;
+
+  public ClubRepository(AppDbContext context)
   {
     _context = context;
   }
 
   public bool Add(Club club)
   {
-    _context.Clubs.Add(club);
-
-    return true;
+    _context.Add(club);
+    return Save();
   }
 
   public bool Delete(Club club)
   {
-    _context.Clubs.Remove(club);
-
-    return true;
+    _context.Remove(club);
+    return Save();
   }
 
   public async Task<IEnumerable<Club>> GetAll()
   {
-    return await Task.FromResult(_context.Clubs);
-  }
-
-  public async Task<List<City>> GetAllCitiesByState(string state)
-  {
-    return await Task.FromResult(_context.Cities.ToList());
+    return await _context.Clubs.ToListAsync();
   }
 
   public async Task<List<State>> GetAllStates()
   {
-    return await Task.FromResult(_context.States.ToList());
-  }
-
-  public async Task<Club?> GetByIdAsync(int id)
-  {
-    return await Task.FromResult(_context.Clubs.FirstOrDefault(c => c.Id == id));
-  }
-
-  public async Task<Club?> GetByIdAsyncNoTracking(int id)
-  {
-    return await Task.FromResult(_context.Clubs.FirstOrDefault(c => c.Id == id));
-  }
-
-  public async Task<IEnumerable<Club>> GetClubByCity(string city)
-  {
-    return await Task.FromResult(_context.Clubs.Where(c => c.Address.City.Contains(city)).Distinct());
-  }
-
-  public async Task<IEnumerable<Club>> GetClubsByCategoryAndSliceAsync(ClubCategory category, int offset, int size)
-  {
-    return await Task.FromResult
-    (
-      _context.Clubs
-        .Where(c => c.ClubCategory == category)
-        .Skip(offset)
-        .Take(size)
-    );
-  }
-
-  public async Task<IEnumerable<Club>> GetClubsByState(string state)
-  {
-    return await Task.FromResult(_context.Clubs.Where(c => c.Address.State.Contains(state)));
-  }
-
-  public async Task<int> GetCountAsync()
-  {
-    return await Task.FromResult(_context.Clubs.Count);
-  }
-
-  public async Task<int> GetCountByCategoryAsync(ClubCategory category)
-  {
-    return await Task.FromResult(_context.Clubs.Count(c => c.ClubCategory == category));
+    return await _context.States.ToListAsync();
   }
 
   public async Task<IEnumerable<Club>> GetSliceAsync(int offset, int size)
   {
-    return await Task.FromResult(_context.Clubs.Skip(offset).Take(size));
+    return await _context.Clubs.Include(i => i.Address).Skip(offset).Take(size).ToListAsync();
+  }
+
+  public async Task<IEnumerable<Club>> GetClubsByCategoryAndSliceAsync(ClubCategory category, int offset, int size)
+  {
+    return await _context.Clubs
+        .Include(i => i.Address)
+        .Where(c => c.ClubCategory == category)
+        .Skip(offset)
+        .Take(size)
+        .ToListAsync();
+  }
+
+  public async Task<int> GetCountByCategoryAsync(ClubCategory category)
+  {
+    return await _context.Clubs.CountAsync(c => c.ClubCategory == category);
+  }
+
+  public async Task<Club?> GetByIdAsync(int id)
+  {
+    return await _context.Clubs.Include(i => i.Address).FirstOrDefaultAsync(i => i.Id == id);
+  }
+
+  public async Task<Club?> GetByIdAsyncNoTracking(int id)
+  {
+    return await _context.Clubs.Include(i => i.Address).AsNoTracking().FirstOrDefaultAsync(i => i.Id == id);
+  }
+
+  public async Task<IEnumerable<Club>> GetClubByCity(string city)
+  {
+    return await _context.Clubs.Where(c => c.Address.City.Contains(city)).Distinct().ToListAsync();
   }
 
   public bool Save()
   {
-    return true;
+    var saved = _context.SaveChanges();
+    return saved > 0;
   }
 
   public bool Update(Club club)
   {
-    return true;
+    _context.Update(club);
+    return Save();
+  }
+
+  public async Task<int> GetCountAsync()
+  {
+    return await _context.Clubs.CountAsync();
+  }
+
+  public async Task<IEnumerable<Club>> GetClubsByState(string state)
+  {
+    return await _context.Clubs.Where(c => c.Address.State.Contains(state)).ToListAsync();
+  }
+
+  public async Task<List<City>> GetAllCitiesByState(string state)
+  {
+    return await _context.Cities.Where(c => c.StateCode.Contains(state)).ToListAsync();
   }
 }
