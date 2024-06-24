@@ -5,6 +5,8 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureADWebApp", "AzureADWebApp\AzureADWebApp.csproj", "{E8715180-05A9-4CA8-BC1D-6E96BEC3D396}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureADWebAPI", "AzureADWebAPI\AzureADWebAPI.csproj", "{0F43C3E5-FDA3-4392-9451-7D4D80103BCD}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -30,5 +32,17 @@ Global
 		{E8715180-05A9-4CA8-BC1D-6E96BEC3D396}.Release|x64.Build.0 = Release|Any CPU
 		{E8715180-05A9-4CA8-BC1D-6E96BEC3D396}.Release|x86.ActiveCfg = Release|Any CPU
 		{E8715180-05A9-4CA8-BC1D-6E96BEC3D396}.Release|x86.Build.0 = Release|Any CPU
+		{0F43C3E5-FDA3-4392-9451-7D4D80103BCD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F43C3E5-FDA3-4392-9451-7D4D80103BCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F43C3E5-FDA3-4392-9451-7D4D80103BCD}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{0F43C3E5-FDA3-4392-9451-7D4D80103BCD}.Debug|x64.Build.0 = Debug|Any CPU
+		{0F43C3E5-FDA3-4392-9451-7D4D80103BCD}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{0F43C3E5-FDA3-4392-9451-7D4D80103BCD}.Debug|x86.Build.0 = Debug|Any CPU
+		{0F43C3E5-FDA3-4392-9451-7D4D80103BCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F43C3E5-FDA3-4392-9451-7D4D80103BCD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F43C3E5-FDA3-4392-9451-7D4D80103BCD}.Release|x64.ActiveCfg = Release|Any CPU
+		{0F43C3E5-FDA3-4392-9451-7D4D80103BCD}.Release|x64.Build.0 = Release|Any CPU
+		{0F43C3E5-FDA3-4392-9451-7D4D80103BCD}.Release|x86.ActiveCfg = Release|Any CPU
+		{0F43C3E5-FDA3-4392-9451-7D4D80103BCD}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
