@@ -12,8 +12,29 @@ https://learn.microsoft.com/en-us/entra/identity-platform/tutorial-web-app-dotne
 
 - What is the `Consent on behalf of your organization` when first time connecting to the app registration?
 
+- What is the consent for in the add scope page?
+
 # Handy commands
 
 ## Create dotnet project with auth template:
 
 `dotnet new webapp -o YourAppName --auth SingleOrg`
+
+# Authenticate with OAuth 2.0 Authentication in Postman
+
+1. Select OAuth 2.0 in Postman
+2. In Configure New Token
+
+   2.1 Select `Authorization Code` for Grant Type
+
+   2.2 Check `Authorize using browser`
+
+   2.3 Enter `https://login.microsoftonline.com/{tenant id}/oauth2/v2.0/authorize` for Auth URL (can find it from app registration -> Overview -> Endpoints)
+
+   2.4 Enter `https://login.microsoftonline.com/{tenant id}/oauth2/v2.0/token` for access token URL (can find it from app registration -> Overview -> Endpoints)
+
+   2.5 Client ID for Client ID
+
+   2.6 Client Secret Value for Client Secret
+
+   2.7 `api://xxxxxx` to Scope (Can generate from Expose an API)
