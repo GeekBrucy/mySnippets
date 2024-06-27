@@ -12,7 +12,11 @@ https://learn.microsoft.com/en-us/entra/identity-platform/tutorial-web-app-dotne
 
 - What is the `Consent on behalf of your organization` when first time connecting to the app registration?
 
+Consent is the process of a user granting authorization to an application to access protected resources on their behalf. An admin or user can be asked for consent to allow access to their organization/individual data.
+
 - What is the consent for in the add scope page?
+
+- What is the scope / API permissions?
 
 # Handy commands
 
