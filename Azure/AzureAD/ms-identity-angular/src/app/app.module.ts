@@ -9,17 +9,28 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
-import { MsalGuardConfiguration, MsalInterceptorConfiguration, MsalModule, MsalRedirectComponent } from "@azure/msal-angular";
-import { PublicClientApplication } from "@azure/msal-browser";
+import { MsalGuard, MsalGuardConfiguration, MsalInterceptor, MsalInterceptorConfiguration, MsalModule, MsalRedirectComponent } from "@azure/msal-angular";
+import { InteractionType, PublicClientApplication } from "@azure/msal-browser";
 import { HomeComponent } from './home/home.component';
 import { ProfileComponent } from './profile/profile.component';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 const isIE =
   window.navigator.userAgent.indexOf("MSIE ") > -1 ||
   window.navigator.userAgent.indexOf("Trident/") > -1;
 
-const guardConfig = {} as MsalGuardConfiguration
-const interceptionConfig = {} as MsalInterceptorConfiguration
+const guardConfig = {
+  interactionType: InteractionType.Redirect,
+  authRequest: {
+    scopes: ["user.read"]
+  }
+} as MsalGuardConfiguration
+const interceptionConfig = {
+  interactionType: InteractionType.Redirect,
+  protectedResourceMap: new Map([
+    ["https://graph.microsoft.com/v1.0/me", ["user.read"]],
+  ])
+} as MsalInterceptorConfiguration
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,6 +38,7 @@ const interceptionConfig = {} as MsalInterceptorConfiguration
     ProfileComponent
   ],
   imports: [
+    HttpClientModule,
     BrowserModule,
     AppRoutingModule,
     MatButtonModule,
@@ -50,7 +62,13 @@ const interceptionConfig = {} as MsalInterceptorConfiguration
     ),
   ],
   providers: [
-    provideAnimationsAsync()
+    provideAnimationsAsync(),
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: MsalInterceptor,
+      multi: true
+    },
+    MsalGuard
   ],
   // bootstrap: [AppComponent]
   bootstrap: [AppComponent, MsalRedirectComponent]

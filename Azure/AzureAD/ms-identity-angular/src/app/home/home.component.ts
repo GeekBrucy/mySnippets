@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MsalBroadcastService, MsalService } from '@azure/msal-angular';
-import { EventMessage, EventType } from '@azure/msal-browser';
+import { EventMessage, EventType, InteractionStatus } from '@azure/msal-browser';
 import { filter } from 'rxjs';
 
 @Component({
@@ -9,8 +9,9 @@ import { filter } from 'rxjs';
   styleUrl: './home.component.scss'
 })
 export class HomeComponent implements OnInit {
-  constructor(private authService: MsalService, private msalBroadcastService: MsalBroadcastService) {
-  }
+  loginDisplay = false;
+
+  constructor(private authService: MsalService, private msalBroadcastService: MsalBroadcastService) { }
 
   ngOnInit(): void {
     this.msalBroadcastService.msalSubject$
@@ -20,6 +21,19 @@ export class HomeComponent implements OnInit {
       .subscribe((result: EventMessage) => {
         console.log(result);
       });
+
+    this.msalBroadcastService.inProgress$
+      .pipe(
+        filter((status: InteractionStatus) => status === InteractionStatus.None)
+      )
+      .subscribe(() => {
+        this.setLoginDisplay();
+      })
+  }
+
+  setLoginDisplay() {
+    this.loginDisplay = this.authService.instance.getAllAccounts().length > 0;
+    console.log(this.authService.instance.getAllAccounts());
   }
 
 
