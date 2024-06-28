@@ -30,7 +30,7 @@ export class AppComponent implements OnInit, OnDestroy {
         takeUntil(this._destroying$)
       )
       .subscribe(() => {
-        this.setLoginDisplay
+        this.setLoginDisplay()
       });
   }
 
@@ -49,7 +49,6 @@ export class AppComponent implements OnInit, OnDestroy {
     this.authService.logoutRedirect({
       postLogoutRedirectUri: 'http://localhost:4200'
     });
-    this.setLoginDisplay()
   }
 
   logout() { // Add log out function here
