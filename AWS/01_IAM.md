@@ -131,6 +131,39 @@ Secret Access Key ~= password
 
 https://github.com/aws/aws-cli
 
+# IAM Roles for Services
+
+- Some AWS service will need to perform actions on your behalf
+- To do so, we will assign permissions to AWS services with IAM roles
+
+## Common roles:
+
+- EC2 instance roles
+- Lambda Function Roles
+- Roles for CloudFormation
+
+# IAM Security Tools
+
+## IAM Credentials Report (account-level)
+
+A Report that lists all your account's users and the status of their various credentials
+
+## IAM Access Advisor (user-level)
+
+Access advisor shows the service permissions granted to a user and when those services were last accessed
+
+# Best Practices
+
+- Don't use the root account except for AWS account setup
+- One physical user = one AWS user
+- Assign users to groups and assign permissions to groups
+- Create a strong password policy
+- Use and enforce the user of MFA
+- Create and use Roles for giving permissions to AWS services
+- User Access Keys for Programmatic Access (CLI/SDK)
+- Audit permissions of your account using IAM Credentials Report & IAM Access Advisor
+- Never share IAM user and access key
+
 # Hands on to create a user
 
 1. Log in to AWS console UI
