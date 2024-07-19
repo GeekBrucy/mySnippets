@@ -33,3 +33,72 @@ It mainly consists in the capability of:
   - Installing software
   - Downloading common files from the internet
   - Anything you can think of
+
+## EC2 Instance Types - Overview
+
+You can use different types of EC2 instances that are optimised for different use cases (https://aws.amazon.com/ec2/instance-types/)
+
+### EC2 Instance Types - General Purpose
+
+- Great for a diversity of workloads such as web servers or code repositories
+- Balance between
+
+  - Compute
+
+  - Memory
+
+  - Networking
+
+### EC2 Instance Types - Compute optimized
+
+- Great for compute-intensive tasks that require high performance processors
+
+  - Batch processing workloads
+
+  - Media transcoding
+
+  - High performance web servers
+
+  - High performance computing (HPC)
+
+  - Scientific modeling & machine learning
+
+  - Dedicated gaming servers
+
+### EC2 Instance Types - Memory Optimized
+
+- Fast performance for workloads that process large data sets in memory
+
+  - High performance, relational/non-relational databases
+
+  - Distributed web scale cache stores
+
+  - In-memory databases optimized for BI (business intelligence)
+
+  - Applications performing real-time processing of big unstructured data
+
+### EC2 Instance Types - Storage Optimized
+
+- Great for storage-intensive tasks that require high, sequential read and write access to large data sets on local storage
+
+  - High frequency online transaction processing (OLTP) systems
+
+  - Relational & NoSQL databases
+
+  - Cache for in-memory databases (for example, Redis)
+
+  - Data warehousing applications
+
+  - Distributed file systems
+
+### Naming convention
+
+For example: m5.2xlarge
+
+- m: instance class
+- 5: generation (AWS improves them over time)
+- 2xlarge: size within the instance class
+
+## Handy tools:
+
+- [ec2 instances info](https://instances.vantage.sh/)
