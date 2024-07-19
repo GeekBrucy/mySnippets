@@ -125,7 +125,7 @@ For example: m5.2xlarge
 - All inbound traffic is **blocked** by default
 - All outbound traffic is **authorised** by default
 
-## Classic ports to know
+### Classic ports to know
 
 - 22 = SSH (Secure Shell) - log into a linux instance
 - 21 = FTP (File Transfer Protocol) - upload files into a file share
@@ -133,6 +133,19 @@ For example: m5.2xlarge
 - 80 = HTTP - access unsecured websites
 - 443 = HTTPS - access secured websites
 - 3389 = RDP (Remote desktop protocol) - log into a windows instance
+
+## SSH to EC2
+
+Command: `ssh ec2-user@xx.xx.xx.xx -i Yourkey.pem`
+
+## EC2 Instance Roles
+
+If you need to do something as the EC2 instance, make sure you assign roles to the instance. DO NOT use access key in the EC2 instance.
+
+1. Select EC2 instance
+2. In the Actions dropdown, find Security option
+3. Find and access Modify IAM role
+4. Search and assign desired role
 
 ## Handy tools:
 
