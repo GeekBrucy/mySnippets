@@ -348,3 +348,99 @@
 - If you want to use AWS WAF across accounts, accelerate WAF configuration, automate the protection of new resources, use Firewall Manager with AWS WAF
 - Shield Advanced adds additional features on top of AWS WAF, such as dedicated support from the Shield Response Team (SRT) and advanced reporting.
 - If you’re prone to frequent DDoS attacks, consider purchasing Shield Advanced
+
+### AWS Best Practices for DDoS Resiliency
+
+![image](./23_12_DDos_Sample_Architecture.png)
+
+#### Edge Location Mitigation (BP1, BP3)
+
+- BP1 – CloudFront
+  - Web Application delivery at the edge
+  - Protect from DDoS Common Attacks (SYN floods, UDP reflection…)
+- BP1 – Global Accelerator
+  - Access your application from the edge
+  - Integration with Shield for DDoS protection
+  - Helpful if your backend is not compatible with CloudFront
+- BP3 – Route 53
+  - Domain Name Resolution at the edge
+  - DDoS Protection mechanism
+
+#### Best Practices for DDoS mitigation
+
+- Infrastructure layer defense (BP1, BP3, BP6)
+  - Protect Amazon EC2 against high traffic
+  - That includes using Global Accelerator, Route 53, CloudFront, Elastic Load Balancing
+- Amazon EC2 with Auto Scaling (BP7)
+  - Helps scale in case of sudden traffic surges including a flash crowd or a DDoS attack
+- Elastic Load Balancing (BP6)
+  - Elastic Load Balancing scales with the traffic increases and will distribute the traffic to many EC2 instances
+
+#### Application Layer Defense
+
+- Detect and filter malicious web requests (BP1, BP2)
+  - CloudFront cache static content and serve it from edge locations, protecting your backend
+  - AWS WAF is used on top of CloudFront and Application Load Balancer to filter and block requests based on request signatures
+  - WAF rate-based rules can automatically block the IPs of bad actors
+  - Use managed rules on WAF to block attacks based on IP reputation, or block anonymous Ips
+  - CloudFront can block specific geographies
+- Shield Advanced (BP1, BP2, BP6)
+  - Shield Advanced automatic application layer DDoS mitigation automatically creates, evaluates and deploys AWS WAF rules to mitigate layer 7 attacks
+
+#### Attack surface reduction
+
+- Obfuscating AWS resources (BP1, BP4, BP6)
+  - Using CloudFront, API Gateway, Elastic Load Balancing to hide your backend resources (Lambda functions, EC2 instances)
+- Security groups and Network ACLs (BP5)
+  - Use security groups and NACLs to filter traffic based on specific IP at the subnet or ENI-level
+  - Elastic IP are protected by AWS Shield Advanced
+- Protecting API endpoints (BP4)
+  - Hide EC2, Lambda, elsewhere
+  - Edge-optimized mode, or CloudFront + regional mode (more control for DDoS)
+  - WAF + API Gateway: burst limits, headers filtering, use API keys
+
+### Amazon GuardDuty
+
+- Intelligent Threat discovery to protect your AWS Account
+- Uses Machine Learning algorithms, anomaly detection, 3rd party data
+- One click to enable (30 days trial), no need to install software
+- Input data includes:
+  - CloudTrail Events Logs – unusual API calls, unauthorized deployments
+    - CloudTrail Management Events – create VPC subnet, create trail, …
+    - CloudTrail S3 Data Events – get object, list objects, delete object, …
+  - VPC Flow Logs – unusual internal traffic, unusual IP address
+  - DNS Logs – compromised EC2 instances sending encoded data within DNS queries
+  - Optional Features – EKS Audit Logs, RDS & Aurora, EBS, Lambda, S3 Data Events…
+- Can setup EventBridge rules to be notified in case of findings
+- EventBridge rules can target AWS Lambda or SNS
+- Can protect against CryptoCurrency attacks (has a dedicated “finding” for it)
+
+![image](./23_13_GuardDuty_Structure.png)
+
+### Amazon Inspector
+
+- Automated Security Assessments
+- For EC2 instances
+  - Leveraging the AWS System Manager (SSM) agent
+  - Analyze against unintended network accessibility
+  - Analyze the running OS against known vulnerabilities
+- For Container Images push to Amazon ECR
+  - Assessment of Container Images as they are pushed
+- For Lambda Functions
+  - Identifies software vulnerabilities in function code and package dependencies
+  - Assessment of functions as they are deployed
+- Reporting & integration with AWS Security Hub
+- Send findings to Amazon Event Bridge
+
+#### What does Amazon Inspector evaluate?
+
+- Remember: only for EC2 instances, Container Images & Lambda functions
+- Continuous scanning of the infrastructure, only when needed
+- Package vulnerabilities (EC2, ECR & Lambda) – database of CVE
+- Network reachability (EC2)
+- A risk score is associated with all vulnerabilities for prioritization
+
+### AWS Macie
+
+- Amazon Macie is a fully managed data security and data privacy service that uses machine learning and pattern matching to discover and protect your sensitive data in AWS.
+- Macie helps identify and alert you to sensitive data, such as personally identifiable information (PII)
