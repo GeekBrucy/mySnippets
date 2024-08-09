@@ -343,7 +343,7 @@ https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html
 
 - ECMP = Equal-cost multi-path routing
 - Routing strategy to allow to forward a packet over multiple best path
-- Use case: create multiple Siteto- Site VPN connections to increase the bandwidth of your connection to AWS
+- Use case: create multiple Site-to-Site VPN connections to increase the bandwidth of your connection to AWS
 
 #### Transit Gateway: throughput with ECMP
 
