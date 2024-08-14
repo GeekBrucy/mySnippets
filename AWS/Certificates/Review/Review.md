@@ -1,5 +1,9 @@
 # Aurora
 
+## Tips
+
+- transactional + scalable database + high write consistency + linked tables = Amazon Aurora
+
 ## Aurora replicas
 
 - Independent endpoints in an Aurora DB cluster
@@ -44,6 +48,10 @@ Create a read replica and modify the application to use the appropriate endpoint
 ## Integration
 
 - S3
+
+# FSx for windows
+
+With Amazon FSx, you can leverage the rich feature sets and fast performance of widely-used open source and commercially-licensed file systems, while avoiding time-consuming administrative tasks like hardware provisioning, software configuration, patching, and backups
 
 # AWS Global Accelerator
 
@@ -176,15 +184,44 @@ key-value store + changeable schema = Amazon DynamoDB
 
 # S3
 
+## Amazon S3 Transfer Acceleration
+
+Speeds up uploads and downloads by routing traffic through optimized network paths using CloudFront’s edge locations.
+
+## Tips
+
+- S3 is eventually consistent, reading after writing may return old data.
+  - S3 provides read-after-write consistency for PUTS of new objects in your S3 bucket in all Regions with one caveat. The caveat is that if you make a **HEAD or GET** request to a key name **before** the object is **created**, then **create** the object shortly after that, a subsequent **GET** might not return the object due to eventual consistency. Amazon S3 offers eventual consistency for overwrite PUTS and DELETES in all Regions
+
 ## Pre-signed URL
 
 ### Upload with pre-signed url
 
 https://docs.aws.amazon.com/AmazonS3/latest/userguide/PresignedUrlUploadObject.html
 
-## Tier
+## Storage class
+
+- Amazon S3 Standard - General Purpose
+- Amazon S3 Standard-Infrequent Access (IA)
+- Amazon S3 One Zone-Infrequent Access
+- Amazon S3 Glacier Instant Retrieval
+- Amazon S3 Glacier Flexible Retrieval
+- Amazon S3 Glacier Deep Archive
+- Amazon S3 Intelligent Tiering
+  - Designed for 3 use cases:
+    - Unpredictable workloads
+    - Changing access patterns
+    - Lack of experience with storage optimization
+
+## Configuring a static website using a custom domain registered with Route 53
+
+https://docs.aws.amazon.com/AmazonS3/latest/userguide/website-hosting-custom-domain-walkthrough.html
 
 # VPC
+
+## Security
+
+- https://docs.aws.amazon.com/vpc/latest/peering/vpc-peering-security-groups.html
 
 ## NAT Gateway
 
@@ -207,6 +244,10 @@ https://docs.aws.amazon.com/AmazonS3/latest/userguide/PresignedUrlUploadObject.h
 # Messaging
 
 ## SQS - decouple the web application from the database
+
+### Visibility timeout
+
+- 30 seconds by default
 
 ## SNS
 
@@ -245,6 +286,16 @@ a service that enables governance, compliance, operational auditing, and risk au
 
 a fast content delivery network (CDN) service that securely delivers data, videos, applications, and APIs to customers globally with low latency, high transfer speeds, all within a developer-friendly environment
 
+## Scenarios
+
+### To deliver video on demand (VOD) streaming with CloudFront
+
+https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/on-demand-video.html
+
 # Kinesis Firehose
 
 the easiest way to reliably load streaming data into data lakes, data stores and analytics tools
+
+## Tips
+
+- IOT data + streams + Partition by equipment + s3 = Use Amazon Kinesis Data Streams
