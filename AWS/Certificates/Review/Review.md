@@ -35,6 +35,11 @@ Create a read replica and modify the application to use the appropriate endpoint
 
 # AWS Fargate
 
+# EFS
+
+- Scale automatically
+- Accessed concurrently by multiple EC2
+
 # AWS FSx for Lustre
 
 - Easy and cost effective to launch and run popular file systems
@@ -203,10 +208,24 @@ https://docs.aws.amazon.com/AmazonS3/latest/userguide/PresignedUrlUploadObject.h
 
 - Amazon S3 Standard - General Purpose
 - Amazon S3 Standard-Infrequent Access (IA)
+  - Use Cases: Disaster Recovery, backups
 - Amazon S3 One Zone-Infrequent Access
+  - Use Cases: storing secondary backup copies of on-premises data, or data you can recreate
 - Amazon S3 Glacier Instant Retrieval
+  - Low-cost
+  - Pricing: price for storage + object retrieval cost
+  - Millisecond retrieval, great for data accessed once a quarter
+  - Minimum storage duration of 90 days
 - Amazon S3 Glacier Flexible Retrieval
+  - Low-cost
+  - Pricing: price for storage + object retrieval cost
+  - Expedited (1 to 5 minutes), Standard (3 to 5 hours), Bulk (5 to 12 hours) – free
+  - Minimum storage duration of 90 days
 - Amazon S3 Glacier Deep Archive
+  - Low-cost
+  - Pricing: price for storage + object retrieval cost
+  - Standard (12 hours), Bulk (48 hours)
+  - Minimum storage duration of 180 days
 - Amazon S3 Intelligent Tiering
   - Designed for 3 use cases:
     - Unpredictable workloads
@@ -219,12 +238,21 @@ https://docs.aws.amazon.com/AmazonS3/latest/userguide/website-hosting-custom-dom
 
 # VPC
 
+## VPC endpoint
+
+## egress-only internet gateway
+
+- allow outbound **IPv6** traffic from a VPC to the internet while blocking inbound traffic from the internet to the VPC.
+- managed AWS service - cost-effective
+  - Auto scale
+
 ## Security
 
 - https://docs.aws.amazon.com/vpc/latest/peering/vpc-peering-security-groups.html
 
 ## NAT Gateway
 
+- For IPv4
 - Enable instances in a private subnet to connect to the internet or other AWS services
 - Prevent the internet from initiating a connection with those instances
 
@@ -250,6 +278,10 @@ https://docs.aws.amazon.com/AmazonS3/latest/userguide/website-hosting-custom-dom
 - 30 seconds by default
 
 ## SNS
+
+- Good for sending notifications or messages to multiple endpoints
+- does NOT guarantee message order
+- NOT designed for high-throughput, ordered streaming data
 
 ### 2 Types of message queues:
 
@@ -282,6 +314,14 @@ a service that enables governance, compliance, operational auditing, and risk au
 
 # Amazon RDS (Relational Database Service)
 
+## Scenarios
+
+### heavy read and write queries, and having throughput issues
+
+- Run SELECT queries for stale data on read replica
+
+because replicas might not always be up to date
+
 # CloudFront
 
 a fast content delivery network (CDN) service that securely delivers data, videos, applications, and APIs to customers globally with low latency, high transfer speeds, all within a developer-friendly environment
@@ -296,6 +336,32 @@ https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/on-demand-vid
 
 the easiest way to reliably load streaming data into data lakes, data stores and analytics tools
 
+- NOT directly connect with databases or other data services
+- Sources:
+  - Kinesis Data Stream
+  - Lambda
+  - Custom App
+- Destinations:
+  - S3
+  - Redshift
+  - Elasticsearch
+  - Splunk
+  - Custom HTTP endpoints
+
+# Kinesis Data Stream
+
 ## Tips
 
 - IOT data + streams + Partition by equipment + s3 = Use Amazon Kinesis Data Streams
+
+# Amazon Kubernetes - EKS
+
+# AWS secrets manager
+
+# AWS parameter store
+
+# AWS Cloudformation
+
+# AWS Lex
+
+# AWS software version control
