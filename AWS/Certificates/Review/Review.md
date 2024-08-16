@@ -83,6 +83,14 @@ https://repost.aws/knowledge-center/public-load-balancer-private-ec2
 ### Network Load Balancer
 
 - Handle Layer 4 traffic
+- can route traffic to targets based on IP addresses
+- support cross-VPC routing if IP addresses are used
+
+### Application Load Balancer
+
+- Operates at the application layer (layer 7)
+- can route traffic based on IP addresses.
+- support cross-VPC routing if IP addresses are used
 
 ## Types
 
@@ -157,7 +165,9 @@ Provide low-cost magnetic storage that is a good fit for large, sequential workl
 
 # Amazon DynamoDB
 
-key-value store + changeable schema = Amazon DynamoDB
+## Tips
+
+### key-value store + changeable schema = Amazon DynamoDB
 
 - Fully managed
 - multi-region
@@ -169,11 +179,25 @@ key-value store + changeable schema = Amazon DynamoDB
 - can handle more than 10 trillion requests per day
   - support peaks of more than 20 million requests per second
 
+### data in chunks + little latency = NoSQL DB = DynamoDB
+
+### fully managed + scalable + durable + flexible schema =Amazon DynamoDB
+
 # Route 53
 
 - CNAME
 - Alias
 - etc.
+
+## Targets
+
+- Alias records
+  - CloudFront distribution
+  - Elastic Beanstalk env
+  - ELB
+  - API Gateway
+  - S3
+  - VPC interface endpoint
 
 ## Health check
 
@@ -186,6 +210,12 @@ key-value store + changeable schema = Amazon DynamoDB
 # AWS database types
 
 ## Amazon Redshift
+
+an enterprise-level, petabyte scale, fully managed data warehousing service
+
+### To run different queries types (fast and slow) on big data
+
+Use Redshift workload management (WLM)
 
 # S3
 
@@ -238,6 +268,15 @@ https://docs.aws.amazon.com/AmazonS3/latest/userguide/website-hosting-custom-dom
 
 # VPC
 
+## default state of VPC security group
+
+- There are no inbound rules and traffic will be implicitly denied
+- There is an outbound rule that allows all traffic to all IP addresses
+
+## Private Virtual Interface
+
+A private virtual interface for **AWS Direct Connect** provides a dedicated, private connection between your on-premises network and your Amazon VPC. It allows you to route traffic to your VPC using private IP addresses, bypassing the public internet.
+
 ## VPC endpoint
 
 ## egress-only internet gateway
@@ -259,6 +298,8 @@ https://docs.aws.amazon.com/AmazonS3/latest/userguide/website-hosting-custom-dom
 ### Tips
 
 - provide internet to private subnet = use NAT gateway
+
+- An internet gateway must be attached to the VPC for any outbound connections to work.
 
 ## VPC Flow logs
 
@@ -326,6 +367,14 @@ because replicas might not always be up to date
 
 a fast content delivery network (CDN) service that securely delivers data, videos, applications, and APIs to customers globally with low latency, high transfer speeds, all within a developer-friendly environment
 
+## Tips
+
+### Use CloudFront Signed Cookies restrict access to multiple files
+
+CloudFront signed cookies allow you to control who can access your content when you don’t want to change your current URLs or when you want to provide access to multiple restricted files
+
+### Use CloudFront Signed URL restrict access to a Single file
+
 ## Scenarios
 
 ### To deliver video on demand (VOD) streaming with CloudFront
@@ -362,6 +411,67 @@ the easiest way to reliably load streaming data into data lakes, data stores and
 
 # AWS Cloudformation
 
+simplifies provisioning and management on AWS
+
+## Tips
+
+### administrate VPCs = Use AWS CloudFormation
+
 # AWS Lex
 
+a service for building conversational interfaces into any application using voice and text.
+
 # AWS software version control
+
+# AWS PrivateLink
+
+## Components
+
+## Tips
+
+### allow the application to access service endpoints in the same region = Use AWS PrivateLink
+
+# IAM
+
+## Tips
+
+### Every IAM user starts with no permissions
+
+### SSO
+
+- AWS Security Token Service (STS)
+  - a web service that enables you to request temporary, limited-privilege credentials for IAM users or for users that you authenticate (such as federated users from an on-premise directory).
+
+## Amazon Cognito
+
+used for authenticating users to web and mobile apps
+
+# AWS Batch
+
+eliminates the need to operate third-party commercial or open source batch processing solutions
+
+# AWS Pen test
+
+https://aws.amazon.com/security/penetration-testing/
+
+# AWS Step Functions
+
+orchestrates serverless workflows including coordination, state, and function chaining as well as combining long-running executions not supported within Lambda execution limits by breaking into multiple steps or by calling workers running on Amazon Elastic Compute Cloud (Amazon EC2) instances or on-premises
+
+# AWS CodeCommit
+
+fully managed source control service that allows you to host secure and scalable Git repositories
+
+# AWS CodeStar
+
+enables you to quickly develop, build, and deploy applications on AWS
+
+# AWS CloudHSM
+
+a cloud-based hardware security module (HSM) that enables you to easily generate and use your own encryption keys on the AWS Cloud
+
+# AWS EMR
+
+a web service that enables businesses, researchers, data analysts, and developers to easily and cost-effectively process vast amounts of data
+
+EMR utilizes a hosted Hadoop framework running on Amazon EC2 and Amazon S3.
