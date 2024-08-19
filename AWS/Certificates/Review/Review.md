@@ -39,6 +39,8 @@ Create a read replica and modify the application to use the appropriate endpoint
 
 - Scale automatically
 - Accessed concurrently by multiple EC2
+- Supports traditional file system permissions
+  - managed with POSIX permissions, which allows you to set access control on a file-by-file and directory-by-directory basis
 
 # AWS FSx for Lustre
 
@@ -183,9 +185,18 @@ When you configure an ALB with an HTTPS listener, the load balancer handles the 
 
 ### General Purpose SSD (gp2)
 
-### Provisioned IOPS SSD (io1)
+### Provisioned IOPS SSD (io1/io2)
 
-### Provisioned IOPS SSD (io2)
+- Critical business applications with sustained IOPS performance
+- Or applications that need more than 16,000 IOPS
+- Great for databases workloads (sensitive to storage performance and consistency)
+- io1 (4 GB - 16 TB):
+  - Max PIOPS: 64,000 for **Nitro EC2 instances** & 32,000 for other
+  - Can increase PIOPS independently from storage size
+- io2 Block Express (4 GB - 64 TB):
+  - Sub-millisecond latency
+  - Max PIOPS: 256,000 with an IOPS:GB ratio of 1,000:1
+- Supports EBS Multi-attach
 
 ### Cold HDD (sc1)
 
@@ -218,6 +229,22 @@ Provide low-cost magnetic storage that is a good fit for large, sequential workl
 
 # Amazon DynamoDB
 
+## Global table
+
+- fully managed
+- maintains data consistency in database tables located in multiple regions
+- all tables are master tables, data changes to tables in any region are synchronized with tables in other regions
+
+## Read types
+
+### Eventually consistent (default option)
+
+- may return stale data
+
+### Strongly consistent
+
+- ensures that your application always reads the most recend data
+
 ## DynamoDB Stream
 
 captures changes to items in a DynamoDB table and provides a log of these changes. When you enable DynamoDB Streams, you can configure it to capture item-level changes, including inserts, updates, and deletes.
@@ -239,6 +266,14 @@ captures changes to items in a DynamoDB table and provides a log of these change
 ### data in chunks + little latency = NoSQL DB = DynamoDB
 
 ### fully managed + scalable + durable + flexible schema =Amazon DynamoDB
+
+## Amazon DynamoDB Accelerator (DAX)
+
+- Fully-managed, highly available, seamless inmemory cache for DynamoDB
+- Help solve read congestion by caching
+- Microseconds latency for cached data
+- Doesn’t require application logic modification (compatible with existing DynamoDB APIs)
+- 5 minutes TTL for cache (default)
 
 # Route 53
 
@@ -279,6 +314,10 @@ captures changes to items in a DynamoDB table and provides a log of these change
 ## Amazon Redshift
 
 an enterprise-level, petabyte scale, fully managed data warehousing service
+
+### Concurrency scaling
+
+- allows Amazon Redshift to handle an increased number of concurrent queries by temporarily adding more clusters to manage the load. When the number of queries exceeds the capacity of your main cluster, Redshift automatically provisions additional resources to handle the workload.
 
 ### To run different queries types (fast and slow) on big data
 
@@ -451,6 +490,10 @@ because replicas might not always be up to date
 
 a fast content delivery network (CDN) service that securely delivers data, videos, applications, and APIs to customers globally with low latency, high transfer speeds, all within a developer-friendly environment
 
+## Feature
+
+- Geo-restriction (geo-blocking): allows you to distribute or block content to users in specific regions
+
 ## Tips
 
 ### Use CloudFront Signed Cookies restrict access to multiple files
@@ -604,3 +647,18 @@ a service for automating data transfer between on-premises storage and AWS servi
 # AWS Systems Manager
 
 If you had previously set up AWS Systems Manager to collect logs (e.g., by using the Systems Manager Agent (SSM Agent) and CloudWatch Logs), you might be able to retrieve logs from terminated instances. Systems Manager can manage and collect logs from instances, and if it was configured correctly, it could provide access to historical logs even if the instances have been terminated.
+
+# AWS ElastiCache
+
+## AWS ElasticCache for Redis
+
+- high throughput
+- low latency
+- high availability (through replication and persistence options)
+- Supports various data structures
+
+## AWS ElastiCache for Memcached
+
+- high performance
+- low latency
+- DOES NOT have the advanced feature of Redis, such as persistence and complex data structure
