@@ -62,6 +62,8 @@ With Amazon FSx, you can leverage the rich feature sets and fast performance of 
 
 # AWS Global Accelerator
 
+provides improved performance and availability by directing user traffic to the optimal AWS endpoint based on health, geography, and routing policies. It helps reduce latency by directing users to the nearest AWS edge location and then routing traffic to the appropriate region.
+
 # EC2
 
 ## Placement group
@@ -325,6 +327,12 @@ Use Redshift workload management (WLM)
 
 # S3
 
+## Storage gateway
+
+### Tape gateway
+
+provides a virtual tape library (VTL) that can be used to interface with your existing backup applications as if they were writing to physical tapes. It allows you to move from physical tapes to a virtual tape library in the cloud, minimizing disruption.
+
 ## Amazon S3 Transfer Acceleration
 
 Speeds up uploads and downloads by routing traffic through optimized network paths using CloudFront’s edge locations.
@@ -373,6 +381,12 @@ https://docs.aws.amazon.com/AmazonS3/latest/userguide/PresignedUrlUploadObject.h
 https://docs.aws.amazon.com/AmazonS3/latest/userguide/website-hosting-custom-domain-walkthrough.html
 
 # VPC
+
+## Transit Gateway
+
+for secure and highly available communication across VPCs
+
+has no single point of failure or bandwidth bottleneck and can be managed in one place even if the number of connected VPCs increases
 
 ## Route table
 
@@ -599,6 +613,8 @@ enables you to quickly develop, build, and deploy applications on AWS
 
 a cloud-based hardware security module (HSM) that enables you to easily generate and use your own encryption keys on the AWS Cloud
 
+Security level 3
+
 # AWS EMR
 
 a web service that enables businesses, researchers, data analysts, and developers to easily and cost-effectively process vast amounts of data
@@ -627,6 +643,8 @@ It is typically used for backup, disaster recovery, and archiving
 designed to protect web applications by filtering and monitoring HTTP/HTTPS requests based on web security rules
 
 It operates at the application layer (Layer 7 of the OSI model) and is typically used with services like Amazon CloudFront and API Gateway
+
+Only supports **ALB**
 
 # Network ACL (Access Control List)
 
