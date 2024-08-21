@@ -109,6 +109,8 @@ ideal for temporary storage of information that changes frequently, such as buff
 
 ## Auto Scaling
 
+## default ASG configuration
+
 ### Policy types
 
 - Target Tracking Policy
@@ -680,3 +682,34 @@ If you had previously set up AWS Systems Manager to collect logs (e.g., by using
 - high performance
 - low latency
 - DOES NOT have the advanced feature of Redis, such as persistence and complex data structure
+
+# AWS Glue
+
+# AWS Neptune
+
+# AWS SageMaker (for ML)
+
+helps data scientists and developers to prepare, build, train, and deploy high-quality machine learning (ML) models quickly by bringing together a broad set of capabilities purpose-built for ML.
+
+# AWS ECS
+
+## Fargate
+
+- use with ECS to run container without having to manage servers or clusters of EC2 instances
+- No need to provision, configure, or scale clusters of VM to run containers
+  - No need to to choose server types
+  - No need to decide when to scale your clusters or optimize cluster packing
+
+# AWS Cloud Map
+
+- Fully managed solution
+- map logical names to the backend services and resources that your app depend on
+- helps your app discover resources using
+  - AWS SDKs
+  - RESTful API calls
+  - DNS queries
+- serves only healthy resources
+  - DynamoDB tables
+  - SQS
+  - EC2
+  - ECS
