@@ -111,6 +111,23 @@ ideal for temporary storage of information that changes frequently, such as buff
 
 ## default ASG configuration
 
+### Default termination policy
+
+1. identifies which AZ or Zones has the most instances and at least one instance that is not protected from scale in
+2. It proceeds to evaluate unprotected instances within the identified AZ as follows:
+
+Instances that use outdated configurations
+
+- For groups that use a launch template – Determine whether any of the instances use outdated configurations, prioritizing in this order:
+
+  1. First, check for instances launched with a launch configuration.
+
+  2. Then, check for instances launched using a different launch template instead of the current launch template.
+
+  3. Finally, check for instances using the oldest version of the current launch template.
+
+- For groups that use a launch configuration – Determine whether any of the instances use the oldest launch configuration.
+
 ### Policy types
 
 - Target Tracking Policy
@@ -122,6 +139,14 @@ ideal for temporary storage of information that changes frequently, such as buff
 
 - provides access logs that capture detailed information about requests sent to your load balancer
   - Each log contains information such as the time the request was received, the client‘s IP address, latencies, request paths, and server responses. You can use these access logs to analyze traffic patterns and troubleshoot issues
+
+### Securing network traffic
+
+#### Secure listener
+
+- ALB: HTTPS listener
+- NLB: TLS listener
+- CLB: Both HTTPS and TLS listener
 
 ### Network Load Balancer
 
@@ -231,7 +256,31 @@ Provide low-cost magnetic storage that is a good fit for large, sequential workl
 
 # API Gateway
 
+## Caching
+
+- cache endpoint's responses
+  - reduce the number of calls made to your endpoint and also improve the latency of requests to your API
+
 # Amazon DynamoDB
+
+## Capacity mode
+
+### On-Demand
+
+- Pay per request for the data reads and writes your app performs on your tables
+- Suitable for
+  - Create new tables with unkown workloads
+  - have unpredictable application traffic
+  - prefer the ease of paying for only what you use
+
+### Provisioned
+
+- you specify the number of data reads and writes per second that you require for your application
+- you can use auto scaling to automatically adjust your table's capacity based on the specified utilization rate to ensure application performance while reducing costs
+- Suitable for
+  - have predictable application traffic
+  - run applications whose traffic is consistent or ramps gradually
+  - can forecast capacity requirements to control costs
 
 ## Global table
 
@@ -329,6 +378,47 @@ Use Redshift workload management (WLM)
 
 # S3
 
+## Storage class analysis
+
+analyze storage access patterns to help you decide when to transition the right data to the right storage class
+
+## Object Lock
+
+- help prevent Amazon S3 objects from being deleted or overwritten for a fixed amount of time or indefinitely
+- uses a write-once-read-many (WORM) model to store objects
+- help meet regulatory requirements that require WORM storage
+- help add another layer of protection against object changes or deletion.
+
+## Glacier vault lock
+
+- helps you to easily deploy and enforce compliance controls for individual S3 Glacier vaults with a Vault Lock policy
+- can specify controls such as "write once read many" (WORM) in a Vault Lock policy and lock the policy from future edits
+- After a Vault Lock policy is locked, the policy can no longer be changed or deleted.
+
+## Cross-region replication
+
+## Syc command
+
+`aws s3 sync`
+
+- uses the CopyObject APIs to copy objects between S3 buckets
+- lists the source and target buckets to identify objects that are in the source bucket but that aren‘t in the target bucket
+- identifies objects in the source bucket that have different LastModified dates than the objects that are in the target bucket
+- sync command on a versioned bucket copies only the current version of the object—previous versions aren‘t copied
+- preserves object metadata by default
+- can resume
+
+## Batch replication
+
+a feature designed to replicate large amounts of data across S3 buckets in different regions.
+
+- can replicate the following types of objects:
+  - Objects that existed before a replication configuration was in place
+  - Objects that have previously been replicated
+  - Objects that have failed replication
+
+## Transfer Acceleration
+
 ## Storage gateway
 
 ### Tape gateway
@@ -385,6 +475,8 @@ https://docs.aws.amazon.com/AmazonS3/latest/userguide/website-hosting-custom-dom
 # VPC
 
 ## Transit Gateway
+
+It is a network transit hub used to interconnect virtual private clouds (VPCs) and on-premises networks
 
 for secure and highly available communication across VPCs
 
@@ -480,11 +572,47 @@ Using snowball helps eliminate challenges:
 - long transfer times
 - security concerns
 
+## Snowcone
+
+- Smallest member of AWS Snow family of edge computing and data transfer devices
+- portable, rugged, and secure
+- pay only for the use of the device and for data transfer out of AWS
+  - pay a service fee per job, includes
+    - 5 days of device use
+    - a per-day fee for every additional day you use the device before sending it back to AWS
+    - For jobs longer than 30 days, you can select the monthly rental option and keep the device over the long term
+- Data transferred offline into AWS with Snowcone **does not** incur any transfer fees.
+- Only data transfer pricing with DataSync need to refer to DataSync pricing page
+- Options
+  - Snowcone
+  - Snowcone SSD
+
+### Use case
+
+Collect, process and move data to AWS, either offline by shipping the device or online with **AWS DataSync**
+
+## Snowball Edge
+
+- Options
+  - Compute optimized
+    - 52 vCPUs, 42 TB of usable block or object storage, and an optional GPU for use cases such as advanced ML
+    - full motion video analysis in disconnected environments
+  - Storage optimized
+    - 40 vCPUs of compute capacity coupled with 80 TB of usable block or S3-compatible object storage
+    - well suited for local storage and large-scale data transfer
+- pay a service fee per data transfer job
+  - 10 days of on-site Snowball Edge device usage
+  - Shipping days are not counted toward the 10 days. After the 10 days, you pay a low per-day fee for each additional day you keep the device
+
 # AWS Direct Connect
 
 a cloud service solution that makes it easy to establish a dedicated network connection from your premises to AWS
 
 - Establish private connectivity between AWS and your data center, office, or colocation environment
+
+# Site to Site VPN
+
+enables you to securely connect your on-premises network or branch office site to your Amazon Virtual Private Cloud (Amazon VPC)
 
 # CloudTrail
 
@@ -509,6 +637,17 @@ a fast content delivery network (CDN) service that securely delivers data, video
 ## Feature
 
 - Geo-restriction (geo-blocking): allows you to distribute or block content to users in specific regions
+
+### Field-level encryption
+
+- allows you to protect sensitive data by encrypting specific data fields in your requests before they are sent to your origin
+
+### Origin groups
+
+- allow you to configure a primary origin and a secondary (backup) origin
+  - If the primary origin becomes unavailable, CloudFront automatically fails over to the secondary origin
+
+### multiple origins based on the content type
 
 ## Tips
 
@@ -550,7 +689,11 @@ the easiest way to reliably load streaming data into data lakes, data stores and
 
 # AWS secrets manager
 
+- auto rotation
+
 # AWS parameter store
+
+- manual rotation
 
 # AWS Cloudformation
 
@@ -577,6 +720,38 @@ a service for building conversational interfaces into any application using voic
 # IAM
 
 - Can create policies that include conditions based on tags
+
+## Policies
+
+### Type
+
+#### identity-based
+
+Attach managed and inline policies to IAM identities (users, groups to which users belong, or roles). Identity-based policies grant permissions to an identity.
+
+#### resource-based
+
+Attach inline policies to resources. The most common examples of resource-based policies are Amazon S3 bucket policies and IAM role **trust policies**. Resource-based policies grant permissions to the principal that is specified in the policy. Principals can be in the same account as the resource or in other accounts.
+
+##### Trust policies
+
+Trust policies define which principal entities (accounts, users, roles, and federated users) can assume the role
+
+#### Permissions boundaries
+
+Use a managed policy as the permissions boundary for an IAM entity (user or role). That policy defines the maximum permissions that the identity-based policies can grant to an entity, but does not grant permissions. Permissions boundaries do not define the maximum permissions that a resource-based policy can grant to an entity.
+
+#### Organizations SCPs
+
+Use an AWS Organizations service control policy (SCP) to define the maximum permissions for account members of an organization or organizational unit (OU). SCPs limit permissions that **identity-based policies** or **resource-based policies** grant to entities (users or roles) within the account, but **do not** grant permissions.
+
+#### Access control lists (ACLs)
+
+Use ACLs to control which principals in **other accounts** can access the resource to which the ACL is attached. ACLs are similar to resource-based policies, although they are the only policy type that does not use the JSON policy document structure. ACLs are cross-account permissions policies that grant permissions to the specified principal. ACLs **cannot** grant permissions to entities within the **same account**.
+
+#### Session policies
+
+Pass advanced session policies when you use the AWS CLI or AWS API to assume a role or a federated user. Session policies limit the permissions that the role or user's identity-based policies grant to the session. Session policies limit permissions for a created session, but do not grant permissions
 
 ## Tips
 
@@ -635,6 +810,25 @@ offers a managed Active Directory solution (AWS Managed Microsoft AD)
 
 - Auto scale
 
+## When to use
+
+- File processing
+- Stream processing
+- Web Applications
+- IoT backends
+- Mobile backends
+
+## Lambda Layer
+
+Lambda layer is a .zip file archive that contains supplementary code or data. Layers usually contain library dependencies, a custom runtime, or configuration files
+
+### Reasons why you might consider using layers:
+
+- To reduce the size of your deployment packages
+- To separate core function logic from dependencies
+- To share dependencies across multiple functions
+- To use the Lambda console code editor
+
 # AWS Storage gateway
 
 a hybrid cloud storage service that connects on-premises environments with cloud storage
@@ -670,11 +864,12 @@ If you had previously set up AWS Systems Manager to collect logs (e.g., by using
 
 # AWS ElastiCache
 
-## AWS ElasticCache for Redis
+## AWS ElastiCache for Redis
 
 - high throughput
 - low latency
 - high availability (through replication and persistence options)
+  - multi-az deployment option
 - Supports various data structures
 
 ## AWS ElastiCache for Memcached
@@ -713,3 +908,124 @@ helps data scientists and developers to prepare, build, train, and deploy high-q
   - SQS
   - EC2
   - ECS
+
+# Disaster Recovery
+
+## Strategies
+
+https://docs.aws.amazon.com/wellarchitected/latest/reliability-pillar/rel_planning_for_recovery_disaster_recovery.html
+
+### Backup & Restore
+
+- RPO in hours / RTO in 24 Hours
+- Data backed up
+- No services deployed
+- Cost: $
+
+- back up your data and applications into the recovery region
+
+#### Process in the event of a disaster
+
+1. Deploy your infrastructure (using infrastructure as code to reduce RTO)
+2. Deploy your code
+3. Restore the backed up data to recover from a disaster in the recovery region
+
+### Pilot light
+
+- RPO in minutes / RTO in 10s of minutes
+- Data live
+- Services idle
+- Cost: $$
+
+- A small version of the app is always running in the cloud
+- Useful for the critical core (pilot light)
+- Very similar to Backup and Restore
+- Faster than Backup and Restore as critical systems are already up
+
+#### Process
+
+- Provision a copy of your core workload infrastructure in the recovery region
+- Replicate your data into the recovery region and create backups of it there
+- Resources required to support data replication and backup, such as databases and object storage, are always on
+- Other elements such as application servers or serverless compute are not deployed, but can be created when needed with the necessary configuration and application code
+
+### Warm Standby
+
+- RPO in seconds / RTO in minutes
+- Data live
+- Services run reduced capacity
+- Cost: $$$
+
+- Full system is up and running, but at minimum size
+- Upon disaster, we can scale to production load
+
+#### Process
+
+- Maintain a scaled-down but fully functional version of your workload always running in the recovery region
+- Business-critical systems are fully duplicated and are always on, but with scaled down fleet
+- Data is replicated and live in the recovery Region
+
+### Multi-site active / active
+
+- RPO near zero / RTO potentially zero
+- Data live
+- live services
+- Cost: $$$$
+
+#### Process
+
+- Your workload is deployed to, and actively serving traffic from, multiple AWS Regions
+- requires you to synchronize data across Regions
+- Possible conflicts caused by writes to the same record in two different regional replicas must be avoided or handled
+
+### Pilot light VS Warm standby
+
+- Pilot light
+- cannot process requests without additional action taken first
+- require your to turn on servers, possibly deploy additional (non-core) infrastructure and scale up
+- Warm standby
+- can handle traffic (at reduced capacity levels) immediately
+- only requires you to scale up (everything is already deployed and running)
+
+# AWS EventBridge
+
+recommended when you want to build an application that reacts to events from SaaS applications and/or AWS services
+
+the only event-based service that integrates directly with third-party SaaS partners
+
+# AWS Database Migration Service (AWS DMS)
+
+## SOURCES:
+
+- On-Premises and EC2 instances databases: Oracle, MS SQL Server, MySQL, MariaDB, PostgreSQL, MongoDB, SAP, DB2
+- Azure: Azure SQL Database
+- Amazon RDS: all including Aurora
+- Amazon S3
+- DocumentDB
+
+## TARGETS:
+
+- On-Premises and EC2 instances databases: Oracle, MS SQL Server, MySQL, MariaDB, PostgreSQL, SAP
+- Amazon RDS
+- Redshift, DynamoDB, S3
+- OpenSearch Service
+- Kinesis Data Streams
+- Apache Kafka
+- DocumentDB & Amazon Neptune
+- Redis & Babelfish
+
+## Ongoing replication, or change data capture (CDC)
+
+- capture ongoing changes to the source data store while you are migrating your data to a target
+
+# AWS Cost explorer optimization
+
+help you identify underutilized resources by providing detailed cost and usage reports.
+
+# AWS Compute Optimizer
+
+provides recommendations for instance types based on your current utilization
+
+# AWS Trust Advisor
+
+inspects your AWS environment, and then makes recommendations when opportunities exist to **save money**, **improve system availability and performance**, or help **close security gaps**.
