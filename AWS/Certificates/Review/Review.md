@@ -131,6 +131,14 @@ ideal for temporary storage of information that changes frequently, such as buff
 
 ## Auto Scaling
 
+### launch configuration (retired)
+
+One launch configuration can be used in multiple ASG, but you only can specify 1 launch configuration for an ASG.
+
+Once a launch configuration is created, you can't modify it.
+
+To change the launch configuration for an Auto Scaling group, you must create a launch configuration and then update your Auto Scaling group with it.
+
 ## default ASG configuration
 
 ### Default termination policy
@@ -300,6 +308,18 @@ Provide low-cost magnetic storage that is a good fit for large, sequential workl
 
 # Amazon DynamoDB
 
+## Encryption
+
+Specify an encryption key when you create a new table or switch the encryption keys on an existing table.
+
+- AWS owned key – **Default** encryption type. The key is owned by DynamoDB (no additional charge).
+
+  - cannot view, manage, track, or audit the KMS key
+
+- AWS managed key – The key is stored in your account and is managed by AWS KMS (AWS KMS charges apply).
+
+- Customer managed key – The key is stored in your account and is created, owned, and managed by you. You have full control over the KMS key (AWS KMS charges apply).
+
 ## Capacity mode
 
 ### On-Demand
@@ -415,6 +435,19 @@ captures changes to items in a DynamoDB table and provides a log of these change
 Use Redshift workload management (WLM)
 
 # S3
+
+## Metadata
+
+cannot be encrypted
+
+## Event Notification
+
+### Destination
+
+- SQS (Standard Queue only)
+- SNS
+- Lambda
+- EventBridge
 
 ## Static website URL convention
 
@@ -663,6 +696,20 @@ a service that enables governance, compliance, operational auditing, and risk au
 
 # Amazon RDS (Relational Database Service)
 
+https://aws.amazon.com/rds/faqs/
+
+## Multi AZ
+
+https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.MultiAZ.html
+
+- automatically provisions and maintains a synchronous standby replica in a different AZ
+- Failover is automatically handled
+- When failing over, Amazon RDS simply flips the canonical name record (CNAME) for your DB instance to point at the standby
+
+### What will happen when the primary instance of the multi AZ config goes down?
+
+CNAME record will be updated to point to the standby DB
+
 ## Scenarios
 
 ### heavy read and write queries, and having throughput issues
@@ -721,6 +768,16 @@ the easiest way to reliably load streaming data into data lakes, data stores and
   - Custom HTTP endpoints
 
 # Kinesis Data Stream
+
+## FAQ (might be important)
+
+https://aws.amazon.com/kinesis/data-streams/faqs/
+
+### How to handle `ProvisionedThroughputExceededException` and keep costs at a minimum?
+
+Use batch messages
+
+## Enhanced Fanout
 
 ## Tips
 
@@ -793,6 +850,30 @@ Use ACLs to control which principals in **other accounts** can access the resour
 #### Session policies
 
 Pass advanced session policies when you use the AWS CLI or AWS API to assume a role or a federated user. Session policies limit the permissions that the role or user's identity-based policies grant to the session. Session policies limit permissions for a created session, but do not grant permissions
+
+## Tasks only root account user can do
+
+### Account Management Tasks
+
+- Change account name
+- Change root password
+- Change root email address
+- Change AWS support plan
+- Restore IAM user permissiosn
+- Close AWS account
+
+### AWS GovCloud (US) Tasks
+
+- Register for GovCloud
+
+### EC2 Tasks
+
+- Register as a seller
+
+### S3 Tasks
+
+- Enable MFA on S3 bucket delete
+- Edit or delete an S3 bucket policy that denies all principals
 
 ## Tips
 
@@ -883,6 +964,8 @@ It operates at the application layer (Layer 7 of the OSI model) and is typically
 
 Only supports **ALB**
 
+- block common attack patterns
+
 # Network ACL (Access Control List)
 
 control traffic at the subnet level. They are stateless, meaning you need to define rules for both inbound and outbound traffic explicitly
@@ -916,6 +999,8 @@ If you had previously set up AWS Systems Manager to collect logs (e.g., by using
 
 # AWS ElastiCache
 
+can be used as a distributed in-memory cache for session management
+
 ## AWS ElastiCache for Redis
 
 - high throughput
@@ -930,7 +1015,13 @@ If you had previously set up AWS Systems Manager to collect logs (e.g., by using
 - low latency
 - DOES NOT have the advanced feature of Redis, such as persistence and complex data structure
 
+## Redis vs Memcached
+
+https://aws.amazon.com/elasticache/redis-vs-memcached/
+
 # AWS Glue
+
+serverless data integration service that makes it easy for analytics users to discover, prepare, move, and integrate data from multiple sources
 
 # AWS Neptune
 
@@ -1112,3 +1203,23 @@ provides a virtual tape library (VTL) that can be used to interface with your ex
 - Stop, Terminate, Reboot, or Recover an EC2 Instance
 - Trigger Auto Scaling Action
 - Send notification to SNS (from which you can do pretty much anything)
+
+## CloudWatch Logs agents
+
+can be installed on an EC2 instance
+
+NOTE: Replaced by CloudWatch agent
+
+# Quicksight
+
+for the visual representation of data through Dashboards, graphs and various other modes. It has a rich feature set that helps analyze data and the complex relationships that exist between different data features
+
+Non SQL query based analysis
+
+# Security Hub
+
+provides you with a comprehensive view of your security state in AWS and helps you assess your AWS environment against security industry standards and best practices.
+
+# AWS Firewall Manager
+
+security management service that allows you to centrally configure and manage firewall rules across your accounts and applications in AWS Organization
