@@ -1,5 +1,18 @@
 # Aurora
 
+## DB Cloning feature
+
+- copy-on-write protocol, in which data is copied only at the time the data changes, either on the source database or the clone database
+- much faster than a manual snapshot of the DB cluster
+- limited to 15 clones based on a copy, including clones based on other clones
+- clone databases must be created in the same region as the source databases (**NO across AWS regions**)
+
+## Backtracking
+
+- "rewind" the DB cluster to any time you specify
+- much faster than restoring a DB cluster via point-in-time restore or via manual DB cluster snapshot
+- doesn't require a new DB cluster and rewinds the DB cluster in minutes
+
 ## Tips
 
 - transactional + scalable database + high write consistency + linked tables = Amazon Aurora
@@ -72,6 +85,15 @@ provides improved performance and availability by directing user traffic to the 
 
 provides low latency and high throughput for instances deployed in a single AZ
 
+### spread placement group
+
+- a group of instances that are each placed on distinct racks
+- each rack has its own network and power source
+- recommended for applications that have a small number of critical instances that should be kept separate from each other
+- Max of 7 running instances per AZ per group
+
+### partition placement group
+
 ## Instance Types
 
 ### On-demand instances
@@ -140,6 +162,15 @@ Instances that use outdated configurations
 - provides access logs that capture detailed information about requests sent to your load balancer
   - Each log contains information such as the time the request was received, the client‘s IP address, latencies, request paths, and server responses. You can use these access logs to analyze traffic patterns and troubleshoot issues
 
+### Cross-zone
+
+Example, an ELB is setup for 2 AZs. AZ-1 has 2 instances, AZ-2 has 8 instances.
+
+- If cross zone is enabled, each instance will get 10% of the traffics.
+- If cross zone is disabled, each AZ will have 50% of traffics
+  - Each instance in AZ-1 will have 25% of the traffics
+  - Each instance in AZ-2 will have 6.25% of the traffics
+
 ### Securing network traffic
 
 #### Secure listener
@@ -153,6 +184,7 @@ Instances that use outdated configurations
 - Handle Layer 4 traffic
 - can route traffic to targets based on IP addresses
 - support cross-VPC routing if IP addresses are used
+- by default, cross-zone load balancing is disabled
 
 #### NLB with TCP listener
 
@@ -163,6 +195,11 @@ A Network Load Balancer can handle TCP traffic, but it does not terminate SSL/TL
 - Operates at the application layer (layer 7)
 - can route traffic based on IP addresses.
 - support cross-VPC routing if IP addresses are used
+- by default, cross-zone load balancing is enabled
+
+### Gateway Load Balancer
+
+- by default, cross-zone load balancing is disabled
 
 #### ALB with HTTPs listener
 
@@ -366,7 +403,8 @@ captures changes to items in a DynamoDB table and provides a log of these change
 
 ## Amazon Redshift
 
-an enterprise-level, petabyte scale, fully managed data warehousing service
+- an enterprise-level, petabyte scale, fully managed data warehousing service
+- designed for large scale data set storage and analysis
 
 ### Concurrency scaling
 
@@ -377,6 +415,15 @@ an enterprise-level, petabyte scale, fully managed data warehousing service
 Use Redshift workload management (WLM)
 
 # S3
+
+## Static website URL convention
+
+https://docs.aws.amazon.com/AmazonS3/latest/userguide/WebsiteEndpoints.html
+
+Depending on your Region, your Amazon S3 website endpoint follows one of these two formats.
+
+- s3-website dash (-) Region ‐ http://bucket-name.s3-website-Region.amazonaws.com
+- s3-website dot (.) Region ‐ http://bucket-name.s3-website.Region.amazonaws.com
 
 ## Storage class analysis
 
@@ -418,12 +465,6 @@ a feature designed to replicate large amounts of data across S3 buckets in diffe
   - Objects that have failed replication
 
 ## Transfer Acceleration
-
-## Storage gateway
-
-### Tape gateway
-
-provides a virtual tape library (VTL) that can be used to interface with your existing backup applications as if they were writing to physical tapes. It allows you to move from physical tapes to a virtual tape library in the cloud, minimizing disruption.
 
 ## Amazon S3 Transfer Acceleration
 
@@ -856,7 +897,18 @@ manage permissions across multiple AWS accounts. They allow you to specify what 
 
 # AWS DataSync
 
-a service for automating data transfer between on-premises storage and AWS services like S3
+a service for automating data transfer between on-premises storage and AWS services like S3 over the internet or AWS Direct Connect
+
+- Fully automates and accelerates moving large active datasets to AWS
+- Retry and network resiliency mechanisms
+- Network optimizations
+- Built-in task scheduling
+- Monitoring via DataSync API and Console, CloudWatch metrics, events and logs
+- Performs data integrity verification both during the transfer and at the end of the transfer
+- Natively integrated with S3, EFS, FSx for Windows File Server, CLoudWatch, CloudTrail
+  - seamless and secure access
+  - detailed monitoring of the transfer
+- capable of saturating a 10 Gbps network link
 
 # AWS Systems Manager
 
@@ -1029,3 +1081,34 @@ provides recommendations for instance types based on your current utilization
 # AWS Trust Advisor
 
 inspects your AWS environment, and then makes recommendations when opportunities exist to **save money**, **improve system availability and performance**, or help **close security gaps**.
+
+# Athena
+
+- an interactive query service
+- serverless
+- makes it easy to analyze data directly in S3 using standard SQL
+- pay only for the queries they run
+
+## Use Cases
+
+- process logs
+- perform ad-hoc analysis
+- run interactive queries
+
+# Storage gateway
+
+### Tape gateway
+
+provides a virtual tape library (VTL) that can be used to interface with your existing backup applications as if they were writing to physical tapes. It allows you to move from physical tapes to a virtual tape library in the cloud, minimizing disruption.
+
+### S3 File Gateway
+
+### Volume Gateway
+
+# CloudWatch
+
+## CloudWatch Alarm Actions
+
+- Stop, Terminate, Reboot, or Recover an EC2 Instance
+- Trigger Auto Scaling Action
+- Send notification to SNS (from which you can do pretty much anything)
