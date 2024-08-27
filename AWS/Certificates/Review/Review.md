@@ -55,6 +55,12 @@ Create a read replica and modify the application to use the appropriate endpoint
 - Supports traditional file system permissions
   - managed with POSIX permissions, which allows you to set access control on a file-by-file and directory-by-directory basis
 
+## EFS Infrequent Access
+
+a storage class that provides price/performance that is cost-optimized for files not accessed every day, with storage prices up to 92% lower compared to Amazon EFS Standard. The EFS IA storage class costs only $0.025/GB-month
+
+To get started with EFS IA, simply enable EFS Lifecycle Management for your file system by selecting a lifecycle policy that matches your needs
+
 # AWS FSx for Lustre
 
 - Easy and cost effective to launch and run popular file systems
@@ -79,6 +85,24 @@ provides improved performance and availability by directing user traffic to the 
 
 # EC2
 
+## Bastion host
+
+Bastion Hosts are using the SSH protocol, which is a TCP based protocol on port 22
+
+NOTE: An ALB operates at layer 7, only supports HTTP traffic, so ALB cannot be used for Bastion host
+
+## Elastic Fabric Adapter
+
+https://aws.amazon.com/hpc/efa/
+
+a network interface for Amazon EC2 instances that enables customers to run applications requiring high levels of inter-node communications at scale on AWS. Its custom-built operating system (OS) bypass hardware interface enhances the performance of inter-instance communications, which is critical to scaling these applications
+
+## Attributes
+
+### DeleteOnTermination to root EBS volume
+
+If the instance is running, you can set `DeleteOnTermination` to False/True using the command line
+
 ## Placement group
 
 ### cluster placement group
@@ -91,8 +115,18 @@ provides low latency and high throughput for instances deployed in a single AZ
 - each rack has its own network and power source
 - recommended for applications that have a small number of critical instances that should be kept separate from each other
 - Max of 7 running instances per AZ per group
+- designed for small group of instances
 
 ### partition placement group
+
+help reduce the likelihood of correlated hardware failures for your application
+
+- divides each group into logical segments called partitions
+- ensures that each partition within a placement group has its own set of racks
+- Each rack has its own network and power source
+- A partition placement group can have partitions in multiple Availability Zones in the same Region
+- maximum of 7 partitions per Availability Zone
+- designed for small group of instances
 
 ## Instance Types
 
@@ -247,6 +281,13 @@ When you configure an ALB with an HTTPS listener, the load balancer handles the 
 
 - Block storage
 - Fault tolerant up to the loss of an instance
+
+## RAID Config Options
+
+https://docs.aws.amazon.com/ebs/latest/userguide/raid-config.html
+
+- RAID 0: when I/O performance is more important than fault tolerance
+- RAID 1: when fault tolerance is more important than I/O performance
 
 ## EBS Data Lifecycle Manager (DLM)
 
@@ -419,6 +460,17 @@ captures changes to items in a DynamoDB table and provides a log of these change
 - Multivalue answer routing policy – Use when you want Route 53 to respond to DNS queries with up to eight healthy records selected at random.
 - Weighted routing policy – Use to route traffic to multiple resources in proportions that you specify.
 
+## Private Host Zone
+
+https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/hosted-zone-private-creating.html
+
+a container for records for a domain that you host in one or more Amazon virtual private clouds (VPCs)
+
+For each VPC that you want to associate with the Route 53 hosted zone, change the following VPC settings to true:
+
+- enableDnsHostnames
+- enableDnsSupport
+
 # AWS database types
 
 ## Amazon Redshift
@@ -435,6 +487,18 @@ captures changes to items in a DynamoDB table and provides a log of these change
 Use Redshift workload management (WLM)
 
 # S3
+
+## Byte-Range Fetches
+
+https://docs.aws.amazon.com/whitepapers/latest/s3-optimizing-performance-best-practices/use-byte-range-fetches.html
+
+Using the Range HTTP header in a GET Object request, you can fetch a byte-range from an object, transferring only the specified portion
+
+## Request header
+
+- s3:x-amz-acl: to specify an ACL in the request
+- aws:SecureTransport: to check if the request is sent through HTTP or HTTPS. When this key is true, it means that the request is sent through HTTPS.
+- x-amz-server-side-encryption: to encrypt an object at the time of upload. This header tells S3 to encrypt the object using SSE-C, SSE-S3, or SSE-KMS.
 
 ## Metadata
 
@@ -621,6 +685,24 @@ A private virtual interface for **AWS Direct Connect** provides a dedicated, pri
 
 - 30 seconds by default
 
+### Queue types
+
+#### Standard
+
+#### Temporary queue
+
+help you save development time and deployment costs when using common message patterns such as request-response
+
+#### FIFO Queue
+
+#### Delay Queue
+
+postpone the delivery of new messages to a queue for a number of seconds
+
+#### Dead-letter queue
+
+messages that can‘t be processed (consumed) successfully
+
 ## SNS
 
 - Good for sending notifications or messages to multiple endpoints
@@ -710,6 +792,14 @@ https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.MultiAZ.html
 
 CNAME record will be updated to point to the standby DB
 
+### Apply operation system updates Steps
+
+https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_UpgradeDBInstance.Maintenance.html#USER_UpgradeDBInstance.Maintenance.Multi-AZ
+
+1. Perform maintenance on the standby.
+2. Promote the standby to primary.
+3. Perform maintenance on the old primary, which becomes the new standby.
+
 ## Scenarios
 
 ### heavy read and write queries, and having throughput issues
@@ -717,6 +807,14 @@ CNAME record will be updated to point to the standby DB
 - Run SELECT queries for stale data on read replica
 
 because replicas might not always be up to date
+
+## RDS maintenance
+
+https://repost.aws/knowledge-center/rds-required-maintenance
+
+### DB engine maintenance
+
+Upgrades to the database engine level **require downtime**. Even if your RDS DB instance uses a Multi-AZ deployment, both the **primary and standby DB instances** upgrade at the same time. This causes downtime until the upgrade completes, and the duration of the downtime varies based on the size of your DB instance
 
 # CloudFront
 
@@ -750,6 +848,15 @@ CloudFront signed cookies allow you to control who can access your content when 
 ### To deliver video on demand (VOD) streaming with CloudFront
 
 https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/on-demand-video.html
+
+### Only allow user to access S3 via CloudFront
+
+https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/private-content-restricting-access-to-s3.html
+
+#### 2 ways to send authenticated request to S3 origin
+
+- Origin access control (OAC).
+- Origin access identity
 
 # Kinesis Firehose
 
@@ -1022,6 +1129,15 @@ https://aws.amazon.com/elasticache/redis-vs-memcached/
 # AWS Glue
 
 serverless data integration service that makes it easy for analytics users to discover, prepare, move, and integrate data from multiple sources
+
+- Provides Managed ETL service (runs on serverless Apache Spark Env)
+- crawls your data sources
+- identifies data formats
+- suggests schemas to store your data
+- automatically generates the code to run your data transformations and loading processes
+- no infrastructure to manage
+- provisions, configures, and scales the resources required to run your data integration jobs
+- pay only for the resources your jobs use while running.
 
 # AWS Neptune
 
