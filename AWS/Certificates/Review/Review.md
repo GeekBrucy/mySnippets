@@ -75,13 +75,24 @@ To get started with EFS IA, simply enable EFS Lifecycle Management for your file
 
 - S3
 
-# FSx for windows
+# FSx for windows file server
 
 With Amazon FSx, you can leverage the rich feature sets and fast performance of widely-used open source and commercially-licensed file systems, while avoiding time-consuming administrative tasks like hardware provisioning, software configuration, patching, and backups
 
+- Supports
+  - DFS (Distributed File System) namespaces
+  - DFS (Distributed File System) Replication (DFSR)
+- Protocols
+  - SMB
+  - Windows NTFS
+
 # AWS Global Accelerator
 
-provides improved performance and availability by directing user traffic to the optimal AWS endpoint based on health, geography, and routing policies. It helps reduce latency by directing users to the nearest AWS edge location and then routing traffic to the appropriate region.
+provides improved performance and availability by directing user traffic to the optimal AWS endpoint based on health, geography, and routing policies. It helps **reduce latency** by directing users to the nearest AWS edge location and then routing traffic to the appropriate region.
+
+- Static IP Addresses: Provides two static IP addresses for whitelisting.
+- Global Traffic Management: Routes traffic to the nearest or healthiest endpoint based on latency and health checks.
+- Regional Failover: Automatically reroutes traffic to healthy endpoints if one region becomes unavailable.
 
 # EC2
 
@@ -96,6 +107,10 @@ NOTE: An ALB operates at layer 7, only supports HTTP traffic, so ALB cannot be u
 https://aws.amazon.com/hpc/efa/
 
 a network interface for Amazon EC2 instances that enables customers to run applications requiring high levels of inter-node communications at scale on AWS. Its custom-built operating system (OS) bypass hardware interface enhances the performance of inter-instance communications, which is critical to scaling these applications
+
+- Low-Latency Networking
+- Scalable
+- HPC-Specific Features
 
 ## Attributes
 
@@ -135,6 +150,8 @@ help reduce the likelihood of correlated hardware failures for your application
 - billed by hour or second
 - offer the flexibility to start and stop instances as needed without long-term commitments
 
+#### On-demand capacity reservations
+
 ### Spot instances
 
 - can be interrupted with very short notice if AWS needs the capacity for other purposes
@@ -154,6 +171,10 @@ https://aws.amazon.com/premiumsupport/knowledge-center/copy-ami-region/
 3. After the copy operation completes, launch a new EC2 instance from your AMI in the new AWS Region
 
 ### How do I attach backend instances with private IP addresses to my internet-facing load balancer in ELB?
+
+https://repost.aws/knowledge-center/public-load-balancer-private-ec2
+
+### Public load balancer with private EC2
 
 https://repost.aws/knowledge-center/public-load-balancer-private-ec2
 
@@ -477,6 +498,7 @@ For each VPC that you want to associate with the Route 53 hosted zone, change th
 
 - an enterprise-level, petabyte scale, fully managed data warehousing service
 - designed for large scale data set storage and analysis
+- cache the result and return the cached result when queries are re-run
 
 ### Concurrency scaling
 
@@ -582,6 +604,7 @@ https://docs.aws.amazon.com/AmazonS3/latest/userguide/PresignedUrlUploadObject.h
 
 - Amazon S3 Standard - General Purpose
 - Amazon S3 Standard-Infrequent Access (IA)
+  - min 30 days
   - Use Cases: Disaster Recovery, backups
 - Amazon S3 One Zone-Infrequent Access
   - Use Cases: storing secondary backup copies of on-premises data, or data you can recreate
@@ -611,6 +634,27 @@ https://docs.aws.amazon.com/AmazonS3/latest/userguide/PresignedUrlUploadObject.h
 https://docs.aws.amazon.com/AmazonS3/latest/userguide/website-hosting-custom-domain-walkthrough.html
 
 # VPC
+
+## Network Firewall
+
+- stateful
+- managed
+- intrusion detection and prevention service
+- supported by AWS Firewall Manager
+- create within the VPC
+
+- filter traffic at the perimeter of your VPC
+  - filtering traffic going to and coming from
+    - internet gateway
+    - NAT gateway
+    - VPN
+    - AWS Direct Connect
+
+## Internet Gateway
+
+https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Internet_Gateway.html
+
+An internet gateway enables resources in your public subnets (such as EC2 instances) to connect to the internet if the resource has a public IPv4 address or an IPv6 address
 
 ## Transit Gateway
 
@@ -680,6 +724,11 @@ A private virtual interface for **AWS Direct Connect** provides a dedicated, pri
 # Messaging
 
 ## SQS - decouple the web application from the database
+
+### Polling options:
+
+- Short polling: Check new message frequently
+- Long polling: Wait for the message
 
 ### Visibility timeout
 
@@ -816,6 +865,40 @@ https://repost.aws/knowledge-center/rds-required-maintenance
 
 Upgrades to the database engine level **require downtime**. Even if your RDS DB instance uses a Multi-AZ deployment, both the **primary and standby DB instances** upgrade at the same time. This causes downtime until the upgrade completes, and the duration of the downtime varies based on the size of your DB instance
 
+## RDS Proxy
+
+https://aws.amazon.com/rds/proxy/
+
+- fully managed
+- highly available
+- makes app more scalable
+- more resilient to db failures
+- more secure
+- allow applications to pool and share connections
+- improve database efficiency and application scalability
+
+## Security
+
+### SSL/TLS
+
+RDS creates an SSL certificate and installs the certificate on the DB instance when Amazon RDS provisions the instance.
+
+These certificates are signed by a certificate authority
+
+The SSL certificate includes the DB instance endpoint as the Common Name (CN) for the SSL certificate to guard against spoofing attacks.
+
+### Encrypt read replica
+
+- cannot create an encrypted read replica from an unencrypted master DB
+- cannot enable encryption after launch time for the master DB instance
+
+#### Steps
+
+1. Take snapshot for the existing master DB instance
+2. Encrypt the snapshot
+3. Create new encrypted master DB from the snapshot
+4. Create encrypted read replica
+
 # CloudFront
 
 a fast content delivery network (CDN) service that securely delivers data, videos, applications, and APIs to customers globally with low latency, high transfer speeds, all within a developer-friendly environment
@@ -891,6 +974,10 @@ Use batch messages
 - IOT data + streams + Partition by equipment + s3 = Use Amazon Kinesis Data Streams
 
 # Amazon Kubernetes - EKS
+
+- managed service
+- run Kubernetes on AWS
+- Applications running on Amazon EKS are fully compatible with applications running on any standard Kubernetes environment
 
 # AWS secrets manager
 
@@ -1058,11 +1145,6 @@ Lambda layer is a .zip file archive that contains supplementary code or data. La
 - To share dependencies across multiple functions
 - To use the Lambda console code editor
 
-# AWS Storage gateway
-
-a hybrid cloud storage service that connects on-premises environments with cloud storage
-It is typically used for backup, disaster recovery, and archiving
-
 # AWS WAF (Web Application Firewall)
 
 designed to protect web applications by filtering and monitoring HTTP/HTTPS requests based on web security rules
@@ -1087,9 +1169,9 @@ manage permissions across multiple AWS accounts. They allow you to specify what 
 
 # AWS DataSync
 
-a service for automating data transfer between on-premises storage and AWS services like S3 over the internet or AWS Direct Connect
+a service for automating data transfer between on-premises storage and AWS services like S3 **over the internet** or **AWS Direct Connect**
 
-- Fully automates and accelerates moving large active datasets to AWS
+- **Fully automates** and accelerates moving large active datasets to AWS
 - Retry and network resiliency mechanisms
 - Network optimizations
 - Built-in task scheduling
@@ -1099,6 +1181,11 @@ a service for automating data transfer between on-premises storage and AWS servi
   - seamless and secure access
   - detailed monitoring of the transfer
 - capable of saturating a 10 Gbps network link
+- DataSync works with the following on-premises storage systems:
+  - Network File System (NFS)
+  - Server Message Block (SMB)
+  - Hadoop Distributed File Systems (HDFS)
+  - Object storage
 
 # AWS Systems Manager
 
@@ -1302,7 +1389,10 @@ inspects your AWS environment, and then makes recommendations when opportunities
 - perform ad-hoc analysis
 - run interactive queries
 
-# Storage gateway
+# AWS Storage gateway
+
+a hybrid cloud storage service that connects on-premises environments with cloud storage
+It is typically used for backup, disaster recovery, and archiving
 
 ### Tape gateway
 
@@ -1310,7 +1400,19 @@ provides a virtual tape library (VTL) that can be used to interface with your ex
 
 ### S3 File Gateway
 
+- Configured S3 buckets are accessible using the **NFS** and **SMB** protocol
+- Most recently used data is cached in the file gateway
+- Supports S3 Standard, S3 Standard IA, S3 One Zone A, S3 Intelligent Tiering
+- Transition to S3 Glacier using a Lifecycle Policy
+- Bucket access using IAM roles for each File Gateway
+- SMB Protocol has integration with **Active Directory (AD)** for user authentication
+
 ### Volume Gateway
+
+- **Block storage** using **iSCSI** protocol backed by S3
+- Backed by EBS snapshots which can help **restore on-premises volumes**!
+- Cached volumes: low latency access to most recent data
+- Stored volumes: entire dataset is on premise, scheduled backups to S3
 
 # CloudWatch
 
@@ -1331,6 +1433,8 @@ NOTE: Replaced by CloudWatch agent
 for the visual representation of data through Dashboards, graphs and various other modes. It has a rich feature set that helps analyze data and the complex relationships that exist between different data features
 
 Non SQL query based analysis
+
+- integrated with AWS CloudTrail
 
 # Security Hub
 
