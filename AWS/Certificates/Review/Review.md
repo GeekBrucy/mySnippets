@@ -33,6 +33,13 @@
 
 Create a read replica and modify the application to use the appropriate endpoint.
 
+## Aurora Serverless
+
+- on-demand
+- auto-scaling
+- auto start up, shut down
+- cost-effective
+
 # Elastic Beanstalk
 
 ## Supported load balancer type:
@@ -53,7 +60,19 @@ Create a read replica and modify the application to use the appropriate endpoint
 - Scale automatically
 - Accessed concurrently by multiple EC2
 - Supports traditional file system permissions
-  - managed with POSIX permissions, which allows you to set access control on a file-by-file and directory-by-directory basis
+  - managed with **POSIX** permissions, which allows you to set access control on a file-by-file and directory-by-directory basis
+
+## Lifecycle policies
+
+By default:
+
+- Transition into IA is set to 30 days since last access
+  - Min: 1 day
+  - Max: 365 days
+- Transition into Archive is set to 90 days since last access
+  - Min: 1 day (depending on Transition into IA's max day)
+  - Max: 365 days
+- Transition into Standard is set to None
 
 ## EFS Infrequent Access
 
@@ -635,6 +654,14 @@ https://docs.aws.amazon.com/AmazonS3/latest/userguide/website-hosting-custom-dom
 
 # VPC
 
+## VPN
+
+### Virtual Private Gateway (VPG)
+
+A VPG is used to setup an AWS VPN which you can use in combination with Direct Connect to encrypt all data that traverses the Direct Connect link
+
+This combination provides an IPsec-encrypted private connection that also reduces network costs, increases bandwidth throughput, and provides a more consistent network experience than internet-based VPN connections.
+
 ## Network Firewall
 
 - stateful
@@ -824,6 +851,25 @@ enables you to securely connect your on-premises network or branch office site t
 a service that enables governance, compliance, operational auditing, and risk auditing of your AWS account
 
 - Event log files are encrypted using S3 server-side encryption (SSE)
+
+## Data Event
+
+- By default, data events are not logged (because high volume operations)
+- Amazon S3 object-level activity (ex: `GetObject`, `DeleteObject`, `PutObject`): can separate Read and Write Events
+- AWS Lambda function execution activity (the Invoke API)
+- CloudTrail `PutAuditEvents` activity on a CloudTrail Lake channel that is used to log events from outside AWS
+- Amazon SNS `Publish` and `PublishBatch` API operations on topics
+
+## Management Events
+
+- Operations that are performed on resources in your AWS account
+- Examples:
+  - Configuring security (IAM `AttachRolePolicy`)
+  - Registering devices (for example, EC2 `CreateDefaultVPC`)
+  - Configuring rules for routing data (Amazon EC2 `CreateSubnet`)
+  - Setting up logging (AWS CloudTrail `CreateTrail`)
+- By default, trails are configured to log management events.
+- Can separate Read Events (that don’t modify resources) from Write Events (that may modify resources)
 
 # Amazon RDS (Relational Database Service)
 
@@ -1391,6 +1437,8 @@ inspects your AWS environment, and then makes recommendations when opportunities
 
 # AWS Storage gateway
 
+https://docs.aws.amazon.com/storagegateway/latest/vgw/WhatIsStorageGateway.html
+
 a hybrid cloud storage service that connects on-premises environments with cloud storage
 It is typically used for backup, disaster recovery, and archiving
 
@@ -1409,10 +1457,22 @@ provides a virtual tape library (VTL) that can be used to interface with your ex
 
 ### Volume Gateway
 
+https://docs.aws.amazon.com/storagegateway/latest/vgw/WhatIsStorageGateway.html#volume-gateway
+
 - **Block storage** using **iSCSI** protocol backed by S3
 - Backed by EBS snapshots which can help **restore on-premises volumes**!
 - Cached volumes: low latency access to most recent data
 - Stored volumes: entire dataset is on premise, scheduled backups to S3
+
+#### Cached volume
+
+https://docs.aws.amazon.com/storagegateway/latest/vgw/StorageGatewayConcepts.html#storage-gateway-cached-concepts
+
+- S3 as primary data storage
+- retain frequently accessed data locally in the storage gateway
+- minimize the need to scale your on prem storage infrastructure
+- providing you app with low-latency access to the frequently accessed data
+-
 
 # CloudWatch
 
@@ -1443,3 +1503,17 @@ provides you with a comprehensive view of your security state in AWS and helps y
 # AWS Firewall Manager
 
 security management service that allows you to centrally configure and manage firewall rules across your accounts and applications in AWS Organization
+
+# AWS Macie
+
+# Amazon Quantum Ledger Database
+
+- has a built-in immutable journal that stores an accurate and sequenced entry of every data change
+  - the journal is append-only
+  - the journal cannot be overwritten or deleted
+
+# AWS Lake Formation
+
+a service that makes it easy to set up a secure data lake in days. A data lake is a centralized, curated, and secured repository that stores all your data, both in its original form and prepared for analysis. With AWS Lake Formation, you can import data from MySQL, PostgreSQL, SQL Server, MariaDB, and Oracle databases running in Amazon Relational Database Service (RDS) or hosted in EC2. Both bulk and incremental data loading are supported.
+
+Use Case: Lake Formation is ideal for creating a centralized data repository where you can aggregate data from multiple sources, including Amazon RDS, and prepare it for Machine Learning analysis. It provides tools to manage data access, ensure data quality, and integrate with other AWS analytics services.
