@@ -529,6 +529,15 @@ Use Redshift workload management (WLM)
 
 # S3
 
+## Object Lambda
+
+- Use AWS Lambda Functions to change the object before it is retrieved by the caller application
+- Only one S3 bucket is needed, on top of which we create S3 Access Point and S3 Object Lambda Access Points.
+- Use Cases:
+  - Redacting personally identifiable information for analytics or nonproduction environments.
+  - Converting across data formats, such as converting XML to JSON.
+  - Resizing and watermarking images on the fly using caller-specific details, such as the user who requested the object.
+
 ## Byte-Range Fetches
 
 https://docs.aws.amazon.com/whitepapers/latest/s3-optimizing-performance-best-practices/use-byte-range-fetches.html
@@ -987,6 +996,16 @@ https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/private-conte
 - Origin access control (OAC).
 - Origin access identity
 
+## CloudFront Functions
+
+- Lightweight functions written in JavaScript
+- For high-scale, latency-sensitive CDN customizations
+- Sub-ms startup times, millions of requests/second
+- Used to change Viewer requests and responses:
+  - Viewer Request: after CloudFront receives a request from a viewer
+  - Viewer Response: before CloudFront forwards the response to the viewer
+- Native feature of CloudFront (manage code entirely within CloudFront)
+
 # Kinesis Firehose
 
 the easiest way to reliably load streaming data into data lakes, data stores and analytics tools
@@ -1425,6 +1444,7 @@ inspects your AWS environment, and then makes recommendations when opportunities
 # Athena
 
 - an interactive query service
+  - can handle complex queries / analysis
 - serverless
 - makes it easy to analyze data directly in S3 using standard SQL
 - pay only for the queries they run
@@ -1517,3 +1537,35 @@ security management service that allows you to centrally configure and manage fi
 a service that makes it easy to set up a secure data lake in days. A data lake is a centralized, curated, and secured repository that stores all your data, both in its original form and prepared for analysis. With AWS Lake Formation, you can import data from MySQL, PostgreSQL, SQL Server, MariaDB, and Oracle databases running in Amazon Relational Database Service (RDS) or hosted in EC2. Both bulk and incremental data loading are supported.
 
 Use Case: Lake Formation is ideal for creating a centralized data repository where you can aggregate data from multiple sources, including Amazon RDS, and prepare it for Machine Learning analysis. It provides tools to manage data access, ensure data quality, and integrate with other AWS analytics services.
+
+# AWS Compute Optimizer
+
+helps you identify the optimal AWS resource configurations, such as
+
+- Amazon Elastic Compute Cloud (EC2) instance types
+- Amazon Elastic Block Store (EBS) volume configurations
+- AWS Lambda function memory sizes
+
+using machine learning to analyze historical utilization metrics. AWS Compute Optimizer provides a set of APIs and a console experience to help you reduce costs and increase workload performance by recommending the optimal AWS resources for your AWS workloads.
+
+# AWS Control Tower
+
+https://docs.aws.amazon.com/controltower/latest/userguide/what-is-control-tower.html
+
+automates the setup of a new landing zone using best practices blueprints for identity, federated access, and account structure.
+
+## Landing Zone
+
+A landing zone is a well-architected, multi-account environment that's based on security and compliance best practices. It is the enterprise-wide container that holds all of your organizational units (OUs), accounts, users, and other resources that you want to be subject to compliance regulation. A landing zone can scale to fit the needs of an enterprise of any size.
+
+# AWS AppSync
+
+https://docs.aws.amazon.com/appsync/latest/devguide/what-is-appsync.html
+
+AWS AppSync enables developers to connect their applications and services to data and events with secure, serverless and high-performing GraphQL and Pub/Sub APIs. You can do the following with AWS AppSync:
+
+- Access data from one or more data sources from a single GraphQL API endpoint.
+- Combine multiple source GraphQL APIs into a single, merged GraphQL API.
+- Publish real-time data updates to your applications.
+- Leverage built-in security, monitoring, logging, and tracing, with optional caching for low latency.
+- Only pay for API requests and any real-time messages that are delivered.
