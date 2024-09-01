@@ -279,6 +279,14 @@ A Network Load Balancer can handle TCP traffic, but it does not terminate SSL/TL
 - support cross-VPC routing if IP addresses are used
 - by default, cross-zone load balancing is enabled
 
+#### Access log
+
+https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-access-logs.html
+
+#### Connection log
+
+https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-connection-logs.html
+
 ### Gateway Load Balancer
 
 - by default, cross-zone load balancing is disabled
@@ -322,6 +330,11 @@ When you configure an ALB with an HTTPS listener, the load balancer handles the 
 - Block storage
 - Fault tolerant up to the loss of an instance
 
+## EBS optimized instances
+
+- provide dedicated capacity for Amazon EBS I/O
+- optimized instances are designed for use with all EBS volume types.
+
 ## RAID Config Options
 
 https://docs.aws.amazon.com/ebs/latest/userguide/raid-config.html
@@ -335,6 +348,8 @@ https://docs.aws.amazon.com/ebs/latest/userguide/raid-config.html
 - allows you to define lifecycle policies for your EBS volumes, such as creating snapshots at regular intervals (daily, weekly, etc.) and retaining them for a specified duration
 
 ## Types
+
+https://docs.aws.amazon.com/ebs/latest/userguide/ebs-volume-types.html
 
 ### General Purpose SSD (gp3)
 
@@ -363,6 +378,8 @@ Provide low-cost magnetic storage that is a good fit for large, sequential workl
 - ETL
 - Data warehouse
 - Log processing
+
+cost-effective option for frequently accessed, throughput intensive workloads with large datasets and large I/O sizes, such as MapReduce, Kafka, log processing, data warehouse, and ETL workloads.
 
 #### Tips
 
@@ -465,6 +482,10 @@ captures changes to items in a DynamoDB table and provides a log of these change
 - Microseconds latency for cached data
 - Doesn’t require application logic modification (compatible with existing DynamoDB APIs)
 - 5 minutes TTL for cache (default)
+
+## Auto scaling
+
+Amazon DynamoDB auto scaling uses the AWS Application Auto Scaling service to dynamically adjust provisioned throughput capacity on your behalf, in response to actual traffic patterns
 
 # Route 53
 
@@ -591,6 +612,10 @@ analyze storage access patterns to help you decide when to transition the right 
 
 ## Cross-region replication
 
+## Same Region replication (SRR)
+
+automatically copy files from one bucket to another one as they are added to the source bucket
+
 ## Syc command
 
 `aws s3 sync`
@@ -699,6 +724,8 @@ It is a network transit hub used to interconnect virtual private clouds (VPCs) a
 for secure and highly available communication across VPCs
 
 has no single point of failure or bandwidth bottleneck and can be managed in one place even if the number of connected VPCs increases
+
+**Note**: AWS Transit Gateway can be used for both connecting **on-premises networks to your AWS environment** and for **connecting multiple VPCs within AWS**
 
 ## Route table
 
@@ -883,6 +910,14 @@ a service that enables governance, compliance, operational auditing, and risk au
 # Amazon RDS (Relational Database Service)
 
 https://aws.amazon.com/rds/faqs/
+
+## AWSAuthenticationPlugin
+
+An AWS-provided plugin that works seamlessly with IAM to authenticate your IAM users.
+
+Connect to the DB instance and issue the CREATE USER statement, as shown in the following example:
+
+`CREATE USER jane_doe IDENTIFIED WITH AWSAuthenticationPlugin AS 'RDS';`
 
 ## Multi AZ
 
@@ -1134,6 +1169,17 @@ Pass advanced session policies when you use the AWS CLI or AWS API to assume a r
 - Enable MFA on S3 bucket delete
 - Edit or delete an S3 bucket policy that denies all principals
 
+## IAM Identity Center (successor to AWS Single Sign-On)
+
+- One login (single sign-on) for all your
+  - AWS accounts in AWS Organizations
+  - Business cloud applications (e.g., Salesforce, Box, Microsoft 365, …)
+  - SAML2.0-enabled applications
+  - EC2 Windows Instances
+- Identity providers
+  - Built-in identity store in IAM Identity Center
+  - 3rd party: Active Directory (AD), OneLogin, Okta…
+
 ## Tips
 
 ### Every IAM user starts with no permissions
@@ -1146,6 +1192,14 @@ Pass advanced session policies when you use the AWS CLI or AWS API to assume a r
 ## Amazon Cognito
 
 used for authenticating users to web and mobile apps
+
+### Identity Pools
+
+Cognito Identity Pools are used for granting access to AWS resources rather than handling user authentication
+
+### User Pools
+
+AWS Cognito User Pools provide user directory features including sign-up and sign-in services
 
 # AWS Batch
 
@@ -1187,6 +1241,8 @@ a configuration management service that supports Chef and Puppet, which allows y
 
 offers a managed Active Directory solution (AWS Managed Microsoft AD)
 
+- allows you to connect your AWS resources with an existing on-prem Microsoft Active Directory or to set up new, stand-alone directory in the AWS Cloud
+
 # Lambda
 
 - Auto scale
@@ -1227,6 +1283,13 @@ control traffic at the subnet level. They are stateless, meaning you need to def
 # AWS Management consoles
 
 # AWS Organization
+
+- provides policy-based management for multiple AWS accounts
+- can create member accounts that are part of the org and centrally manage the accounts
+
+## PrincipalOrgID
+
+PrincipalOrgId is used by specifying the Principal element in a resource-based policy. You can specify the organization ID in the condition element
 
 ## SCP (Service Control Policies)
 
@@ -1325,6 +1388,8 @@ helps data scientists and developers to prepare, build, train, and deploy high-q
 ## Strategies
 
 https://docs.aws.amazon.com/wellarchitected/latest/reliability-pillar/rel_planning_for_recovery_disaster_recovery.html
+
+![DR Strategies](./DR%20Strategies.png)
 
 ### Backup & Restore
 
@@ -1455,6 +1520,10 @@ inspects your AWS environment, and then makes recommendations when opportunities
 - perform ad-hoc analysis
 - run interactive queries
 
+## Athena Federated Query
+
+you can run SQL queries across data stored in relational, non-relational, object, and custom data sources.
+
 # AWS Storage gateway
 
 https://docs.aws.amazon.com/storagegateway/latest/vgw/WhatIsStorageGateway.html
@@ -1495,6 +1564,12 @@ https://docs.aws.amazon.com/storagegateway/latest/vgw/StorageGatewayConcepts.htm
 -
 
 # CloudWatch
+
+## Dashboard
+
+You can share your CloudWatch dashboards with people who do not have direct access to your AWS account.
+
+This enables you to share dashboards across teams, with stakeholders, and with people external to your organization. You can even display dashboards on big screens in team areas or embed them in Wikis and other webpages.
 
 ## CloudWatch Alarm Actions
 
@@ -1538,6 +1613,10 @@ a service that makes it easy to set up a secure data lake in days. A data lake i
 
 Use Case: Lake Formation is ideal for creating a centralized data repository where you can aggregate data from multiple sources, including Amazon RDS, and prepare it for Machine Learning analysis. It provides tools to manage data access, ensure data quality, and integrate with other AWS analytics services.
 
+## tag-based access control
+
+With Lake Formation tag-based access control, you can manage permissions using tags and grant cross-account permissions
+
 # AWS Compute Optimizer
 
 helps you identify the optimal AWS resource configurations, such as
@@ -1569,3 +1648,21 @@ AWS AppSync enables developers to connect their applications and services to dat
 - Publish real-time data updates to your applications.
 - Leverage built-in security, monitoring, logging, and tracing, with optional caching for low latency.
 - Only pay for API requests and any real-time messages that are delivered.
+
+# AWS Config
+
+Tracks changes in the configuration of your AWS resources, and it regularly sends updated configuration details to an S3 that you specify. For each resource type that AWS Config records, it sends a configuration history file every 6 hours
+
+# AWS Amplify - web and mobile applications
+
+- A set of tools and services that helps you develop and deploy scalable full stack web and mobile applications
+- Authentication, Storage, API (REST, GraphQL), CI/CD, PubSub, Analytics, AI/ML Predictions, Monitoring, …
+- Connect your source code from GitHub, AWS CodeCommit, Bitbucket, GitLab, or upload directly
+
+# AWS CodeDeploy
+
+CodeDeploy is a deployment service that automates application deployments to Amazon EC2 instances, on-premises instances, serverless Lambda functions, or Amazon ECS services.
+
+# AWS Service Catalog
+
+AWS Service Catalog enables organizations to create and manage catalogs of IT services that are approved for use on AWS. It allows centrally managed service portfolios, which clients can use on a self-service basis.
