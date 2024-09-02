@@ -62,3 +62,7 @@ To check return value: https://learn.microsoft.com/en-us/rest/api/searchmanageme
 ```
 "[reference(resourceId('Microsoft.Network/privateEndpoints', parameters('private_endpoint_name')), '2023-04-01').networkInterfaces[0].id]"
 ```
+
+# Useful repo
+
+https://github.com/Azure/azure-quickstart-templates
