@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WebSocket Client</title>
+  <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+</head>
+<body>
+  <h1>WebSocket Client</h1>
+  <button id="sendBtn">Send Message</button>
+  <button id="joinBtn">Join</button>
+  <div id="response"></div>
+
+  <script>
+    const socket = io('http://localhost:3000');
+
+    socket.on('connect', () => {
+      console.log('Connected to server');
+    });
+
+    socket.on('message', (data) => {
+      document.getElementById('response').innerText = data;
+    });
+
+    socket.on('joinedRoom', (data) => {
+      document.getElementById('response').innerText = data;
+    });
+
+    socket.on('showRoom', (data) => {
+      document.getElementById('response').innerText += data;
+    });
+
+    document.getElementById('sendBtn').addEventListener('click', () => {
+      socket.emit('message', 'Hello from client');
+    });
+    document.getElementById('joinBtn').addEventListener('click', () => {
+      socket.emit('joinRoom', 1);
+    });
+  </script>
+</body>
+</html>
