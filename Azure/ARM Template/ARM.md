@@ -66,3 +66,7 @@ To check return value: https://learn.microsoft.com/en-us/rest/api/searchmanageme
 # Useful repo
 
 https://github.com/Azure/azure-quickstart-templates
+
+# Azure DevOps Pipeline - Blocked by Network Rules of Storage Account
+
+https://tanutaran.medium.com/azure-devops-pipeline-blocked-by-network-rules-of-storage-account-3829eed055d7#:~:text=The%20request%20may%20be%20blocked,'az%20storage%20account%20update'.
