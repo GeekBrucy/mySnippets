@@ -18,11 +18,18 @@ public class LibraryMappingProfile : Profile
         .ForMember(dest => dest.LibraryLocation, opt => opt.MapFrom(src => src.Location))
         .ForMember(dest => dest.IsArchived, opt => opt.MapFrom(src => src.IsDeleted))
         .ForMember(dest => dest.BookList, opt => opt.MapFrom(src => src.Books))
-        .ReverseMap()
-        .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.LibraryId))
-        .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.LibraryName))
-        .ForMember(dest => dest.Location, opt => opt.MapFrom(src => src.LibraryLocation))
-        .ForMember(dest => dest.IsDeleted, opt => opt.MapFrom(src => src.IsArchived))
-        .ForMember(dest => dest.Books, opt => opt.MapFrom(src => src.BookList));
+        .ReverseMap();
+    // .ReverseMap()
+    // .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.LibraryId))
+    // .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.LibraryName))
+    // .ForMember(dest => dest.Location, opt => opt.MapFrom(src => src.LibraryLocation))
+    // .ForMember(dest => dest.IsDeleted, opt => opt.MapFrom(src => src.IsArchived))
+    // .ForMember(dest => dest.Books, opt => opt.MapFrom(src => src.BookList));
+    // CreateMap<LibraryFE, Library>()
+    //   .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.LibraryId))
+    //   .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.LibraryName))
+    //   .ForMember(dest => dest.Location, opt => opt.MapFrom(src => src.LibraryLocation))
+    //   .ForMember(dest => dest.IsDeleted, opt => opt.MapFrom(src => src.IsArchived))
+    //   .ForMember(dest => dest.Books, opt => opt.MapFrom(src => src.BookList));
   }
 }

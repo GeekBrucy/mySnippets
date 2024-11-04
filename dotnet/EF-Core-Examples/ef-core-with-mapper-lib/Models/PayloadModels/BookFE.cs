@@ -11,4 +11,5 @@ public class BookFE
   public string BookTitle { get; set; }       // Maps to Book.Title
   public string BookAuthor { get; set; }      // Maps to Book.Author
   public bool IsArchived { get; set; }        // Maps to Book.IsDeleted
+  public ICollection<ChapterFE> BookChapters { get; set; }
 }

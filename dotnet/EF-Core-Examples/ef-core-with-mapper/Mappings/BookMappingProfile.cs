@@ -17,10 +17,17 @@ public class BookMappingProfile : Profile
         .ForMember(dest => dest.BookTitle, opt => opt.MapFrom(src => src.Title))
         .ForMember(dest => dest.BookAuthor, opt => opt.MapFrom(src => src.Author))
         .ForMember(dest => dest.IsArchived, opt => opt.MapFrom(src => src.IsDeleted))
-        .ReverseMap() // Enables BookViewModel to Book mapping
-        .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.BookId))
-        .ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.BookTitle))
-        .ForMember(dest => dest.Author, opt => opt.MapFrom(src => src.BookAuthor))
-        .ForMember(dest => dest.IsDeleted, opt => opt.MapFrom(src => src.IsArchived));
+        .ForMember(dest => dest.BookChapters, opt => opt.MapFrom(src => src.Chapters))
+        .ReverseMap();
+    // .ReverseMap() // Enables BookViewModel to Book mapping
+    // .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.BookId))
+    // .ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.BookTitle))
+    // .ForMember(dest => dest.Author, opt => opt.MapFrom(src => src.BookAuthor))
+    // .ForMember(dest => dest.IsDeleted, opt => opt.MapFrom(src => src.IsArchived));
+    // CreateMap<BookFE, Book>()
+    //   .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.BookId))
+    //   .ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.BookTitle))
+    //   .ForMember(dest => dest.Author, opt => opt.MapFrom(src => src.BookAuthor))
+    //   .ForMember(dest => dest.IsDeleted, opt => opt.MapFrom(src => src.IsArchived));
   }
 }
