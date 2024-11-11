@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ef_core_with_mapper_lib.Models.DBModels;
 
-public class Chapter
+public class Chapter : BaseModel
 {
   public int Id { get; set; }
   public string Title { get; set; }

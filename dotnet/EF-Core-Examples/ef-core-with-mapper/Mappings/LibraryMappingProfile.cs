@@ -17,19 +17,34 @@ public class LibraryMappingProfile : Profile
         .ForMember(dest => dest.LibraryName, opt => opt.MapFrom(src => src.Name))
         .ForMember(dest => dest.LibraryLocation, opt => opt.MapFrom(src => src.Location))
         .ForMember(dest => dest.IsArchived, opt => opt.MapFrom(src => src.IsDeleted))
-        .ForMember(dest => dest.BookList, opt => opt.MapFrom(src => src.Books))
-        .ReverseMap();
-    // .ReverseMap()
-    // .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.LibraryId))
-    // .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.LibraryName))
-    // .ForMember(dest => dest.Location, opt => opt.MapFrom(src => src.LibraryLocation))
-    // .ForMember(dest => dest.IsDeleted, opt => opt.MapFrom(src => src.IsArchived))
-    // .ForMember(dest => dest.Books, opt => opt.MapFrom(src => src.BookList));
-    // CreateMap<LibraryFE, Library>()
-    //   .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.LibraryId))
-    //   .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.LibraryName))
-    //   .ForMember(dest => dest.Location, opt => opt.MapFrom(src => src.LibraryLocation))
-    //   .ForMember(dest => dest.IsDeleted, opt => opt.MapFrom(src => src.IsArchived))
-    //   .ForMember(dest => dest.Books, opt => opt.MapFrom(src => src.BookList));
+        .ForMember(dest => dest.BookList, opt => opt.MapFrom(src => src.Books));
+
+    CreateMap<LibraryFE, Library>()
+        .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.LibraryId))
+        .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.LibraryName))
+        .ForMember(dest => dest.Location, opt => opt.MapFrom(src => src.LibraryLocation))
+        .ForMember(dest => dest.IsDeleted, opt => opt.MapFrom(src => src.IsArchived))
+        // The following is needed because automapper will refresh ef entity state
+        .AfterMap((src, dest, context) =>
+        {
+          // Handle the Books collection update logic
+          foreach (var bookFE in src.BookList)
+          {
+            var existingBook = dest.Books.FirstOrDefault(b => b.Id == bookFE.BookId);
+            if (existingBook != null)
+            {
+              // Map properties onto existing book
+              context.Mapper.Map(bookFE, existingBook);
+            }
+            else
+            {
+              // Add new book to the collection
+              dest.Books.Add(context.Mapper.Map<Book>(bookFE));
+            }
+          }
+
+          // Remove books not in the FE model
+          dest.Books.RemoveAll(b => !src.BookList.Any(feB => feB.BookId == b.Id));
+        });
   }
 }

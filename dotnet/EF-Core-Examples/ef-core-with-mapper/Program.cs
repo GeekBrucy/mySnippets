@@ -15,6 +15,7 @@ Action<DbContextOptionsBuilder> dbContextBuilder = opt =>
     var connStr = builder.Configuration.GetConnectionString("postgres");
 
     opt.UseNpgsql(connStr, x => x.MigrationsAssembly(Assembly.GetExecutingAssembly().GetName().Name));
+    opt.EnableSensitiveDataLogging();
 };
 
 builder.Services.AddDbContext<AppDBContext>(dbContextBuilder);

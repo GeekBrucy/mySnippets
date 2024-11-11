@@ -16,6 +16,7 @@ public class ChapterMappingProfile : Profile
         .ForMember(dest => dest.ChapterId, opt => opt.MapFrom(src => src.Id))
         .ForMember(dest => dest.ChapterTitle, opt => opt.MapFrom(src => src.Title))
         .ForMember(dest => dest.ChapterNumber, opt => opt.MapFrom(src => src.Number))
+        .ForMember(dest => dest.IsArchived, opt => opt.MapFrom(src => src.IsDeleted))
         .ReverseMap();
   }
 }

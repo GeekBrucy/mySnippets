@@ -5,11 +5,10 @@ using System.Threading.Tasks;
 
 namespace ef_core_with_mapper_lib.Models.DBModels;
 
-public class Library
+public class Library : BaseModel
 {
   public int Id { get; set; }
   public string Name { get; set; }
   public string Location { get; set; }
-  public bool IsDeleted { get; set; }
-  public ICollection<Book> Books { get; set; } = new List<Book>();
+  public List<Book> Books { get; set; } = new List<Book>();
 }

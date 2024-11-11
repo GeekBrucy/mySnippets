@@ -10,4 +10,5 @@ public class ChapterFE
   public int? ChapterId { get; set; }
   public string ChapterTitle { get; set; }
   public int ChapterNumber { get; set; }
+  public bool IsArchived { get; set; } = false;
 }
