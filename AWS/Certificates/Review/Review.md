@@ -372,7 +372,7 @@ https://docs.aws.amazon.com/ebs/latest/userguide/ebs-volume-types.html
 
 ### Throughput Optimized HDD (st1)
 
-Provide low-cost magnetic storage that is a good fit for large, sequential workloads, such as
+Provide low-cost magnetic storage that is a good fit for large, **sequential workloads**, such as
 
 - Amazon EMR
 - ETL
