@@ -9,7 +9,6 @@
   - Consist of a single ZIP file or WAR file (you can include multiple WAR files inside your ZIP file)
   - Not exceed 512 MB
   - Not include a parent folder or top-level directory (subdirectories are fine)
-
-- If you want to deploy a worker application that processes periodic background tasks, your application source bundle must also include a cron.yaml file. For more information, see Periodic Tasks.
+  - If you want to deploy a worker application that processes periodic background tasks, your application source bundle must also include a cron.yaml file. For more information, see Periodic Tasks.
 
 - Elastic Beanstalk supports two methods of saving configuration option settings. Configuration files in YAML or JSON format can be included in your application’s source code in a directory named .ebextensions and deployed as part of your application source bundle. You create and manage configuration files locally.

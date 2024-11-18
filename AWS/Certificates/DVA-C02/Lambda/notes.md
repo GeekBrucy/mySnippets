@@ -15,3 +15,22 @@
 - To resolve “LambdaThrottledException” error while using Amazon Cognito Events, you need to perform retry on sync operations while writing Lambda function.
 
 - If the lambda function was created with the default settings , it would have the default timeout of 3 seconds
+
+- For errors such as “ServiceException”, best practice is to Retry invoking Lambda function. Within a Retry Code “ErrorEquals” field is required string which matches error names & all other fields are optional.
+
+- Lambda Catch code is only used after a number of retries are performed by State function.
+
+- BackoffRate field is optional in Lambda Retry code & if not specified Default value of 2.0 is considered.
+
+- Lambda Catch code is only used after a number of retries are performed by State function. ResultPath is an optional field in a Catch Code, ErrorEquals & Next are required strings.
+
+- If you are writing code that uses other resources, such as a graphics library for image processing, or you want to use the AWS CLI instead of the console, you need to first create the Lambda function deployment package, and then use the console or the CLI to upload the package.
+
+- Take advantage of Execution Context reuse to improve the performance of your function. Make sure any externalized configuration or dependencies that your code retrieves are stored and referenced locally after initial execution. Limit the re-initialization of variables/objects on every invocation. Instead use static initialization/constructor, global/static variables and singletons. Keep alive and reuse connections (HTTP, database, etc.) that were established during a previous invocation.
+
+- Integration Type “Aws_Proxy” can be used for an API method to be integrated with the Lambda Function where incoming requests from the clients is passed as input to Lambda Function.
+
+- AWS Lambda uses environment variables to facilitate communication with the X-Ray daemon and configure the X-Ray SDK.
+  - \_X_AMZN_TRACE_ID: Contains the tracing header, which includes the sampling decision, trace ID, and parent segment ID. If Lambda receives a tracing header when your function is invoked, that header will be used to populate the \_X_AMZN_TRACE_ID environment variable. If a tracing header was not received, Lambda will generate one for you.
+  - AWS_XRAY_CONTEXT_MISSING: The X-Ray SDK uses this variable to determine its behavior in the event that your function tries to record X-Ray data, but a tracing header is not available. Lambda sets this value to LOG_ERROR by default.
+  - AWS_XRAY_DAEMON_ADDRESS: This environment variable exposes the X-Ray daemon’s address in the following format: IP_ADDRESS:PORT. You can use the X-Ray daemon’s address to send trace data to the X-Ray daemon directly, without using the X-Ray SDK.
