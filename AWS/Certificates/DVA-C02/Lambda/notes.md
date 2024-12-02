@@ -31,6 +31,13 @@
 - Integration Type “Aws_Proxy” can be used for an API method to be integrated with the Lambda Function where incoming requests from the clients is passed as input to Lambda Function.
 
 - AWS Lambda uses environment variables to facilitate communication with the X-Ray daemon and configure the X-Ray SDK.
+
   - \_X_AMZN_TRACE_ID: Contains the tracing header, which includes the sampling decision, trace ID, and parent segment ID. If Lambda receives a tracing header when your function is invoked, that header will be used to populate the \_X_AMZN_TRACE_ID environment variable. If a tracing header was not received, Lambda will generate one for you.
   - AWS_XRAY_CONTEXT_MISSING: The X-Ray SDK uses this variable to determine its behavior in the event that your function tries to record X-Ray data, but a tracing header is not available. Lambda sets this value to LOG_ERROR by default.
   - AWS_XRAY_DAEMON_ADDRESS: This environment variable exposes the X-Ray daemon’s address in the following format: IP_ADDRESS:PORT. You can use the X-Ray daemon’s address to send trace data to the X-Ray daemon directly, without using the X-Ray SDK.
+
+- With the Lambda proxy integration, Lambda is required to return an output of the following format … In this output, statusCode is typically 4XX for a client error and 5XX for a server error. API Gateway handles these errors by mapping the Lambda error to an HTTP error response, according to the specified statusCode. For API Gateway to pass the error type (for example, InvalidParameterException), as part of the response to the client, the Lambda function must include a header (for example, “X-Amzn-ErrorType“:“InvalidParameterException“) in the headers property.
+
+- You can assign an alias to a specific version and link the S3 trigger to that alias. If you want to change the version of the Lambda triggered by S3, you just need to edit the alias
+
+- Lambda@Edge functions can only be created and deployed in the us-east-1 (N. Virginia) Region
