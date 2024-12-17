@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using webapi_automapper_playground.Models.Model1;
+using webapi_automapper_playground.Models.Model1.Nested;
 
 namespace webapi_automapper_playground.Controllers;
 
@@ -44,5 +45,27 @@ public class PlaygroundController : ControllerBase
     };
 
     return _mapper.Map<SimpleSourceModel1>(src);
+  }
+
+  [HttpGet]
+  public NestedTargetParent NestedMap()
+  {
+    var src = new NestedSourceParent
+    {
+      SourceParentProp = "SourceParentProp",
+      SourceChild1 = new NestedSourceChild1
+      {
+        SourceChild1Prop1 = "SourceChild1Prop1"
+      },
+      SourceChildren1 = [
+        new NestedSourceChild
+        {
+          SourceChildProp1 = "SourceChildProp1",
+          SourceChildProp2 = "SourceChildProp2"
+        }
+      ]
+    };
+
+    return _mapper.Map<NestedTargetParent>(src);
   }
 }
