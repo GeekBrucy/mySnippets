@@ -1,0 +1,6 @@
+@webapi_automapper_playground_HostAddress = http://localhost:5290
+
+GET {{webapi_automapper_playground_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
