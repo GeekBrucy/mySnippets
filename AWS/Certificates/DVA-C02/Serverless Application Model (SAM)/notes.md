@@ -31,3 +31,39 @@ A framework specifically designed for building and deploying serverless applicat
 # SAM policy list
 
 https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-policy-template-list.html
+
+# Locally start AWS Lambda
+
+- `sam local start-lambda`
+
+# Locally Invoke Lambda Function
+
+- `sam local invoke`
+
+# Locally Start an API Gateway Endpoint
+
+- `sam local start-api`
+
+# Generate AWS Events for Lambda Functions
+
+- `sam local generate-event`
+
+# Multiple Env
+
+- `samconfig.toml`
+
+```toml
+[dev.deploy.parameters]
+stack_name = "my-dev-stack"
+s3_bucket = "xxxxx-dev"
+s3_prefix = "xxxxx/dev"
+region = "us-east-1"
+capabilities = "CAPABILITY_IAM"
+parameter_overrides = "Environment=Development"
+
+[dev.sync.parameters]
+watch = true
+
+[prod.sync.parameters]
+watch = false
+```

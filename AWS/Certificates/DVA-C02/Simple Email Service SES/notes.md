@@ -1,0 +1,8 @@
+- Send emails to people using
+  - SMTP interface
+  - or AWS SDK
+- Ability to receive email. Integrates with:
+  - S3
+  - SNS
+  - Lambda
+- Integrated with IAM for allowing to send emails
