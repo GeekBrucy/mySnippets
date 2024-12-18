@@ -7,9 +7,9 @@ using webapi_automapper_playground.Models.Model1.Nested;
 
 namespace webapi_automapper_playground.Mappings;
 
-public class NestedSourceParentMappingProfile : Profile
+public class NestedSourceParentModel1MappingProfile : Profile
 {
-  public NestedSourceParentMappingProfile()
+  public NestedSourceParentModel1MappingProfile()
   {
     CreateMap<NestedSourceParent, NestedTargetParent>()
       .ForMember(d => d.TargetParentProp, opt => opt.MapFrom(s => s.SourceParentProp))

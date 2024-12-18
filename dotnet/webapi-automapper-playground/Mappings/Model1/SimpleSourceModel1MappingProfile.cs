@@ -7,9 +7,9 @@ using webapi_automapper_playground.Models.Model1;
 
 namespace webapi_automapper_playground.Mappings;
 
-public class SimpleSourceModelMappingProfile : Profile
+public class SimpleSourceModel1MappingProfile : Profile
 {
-  public SimpleSourceModelMappingProfile()
+  public SimpleSourceModel1MappingProfile()
   {
     CreateMap<SimpleSourceModel1, SimpleTargetModel1>()
       .ForMember(d => d.TargetProp1, opt => opt.MapFrom(s => s.SourceProp1))
