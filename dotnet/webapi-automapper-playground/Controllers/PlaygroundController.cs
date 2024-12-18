@@ -6,6 +6,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using webapi_automapper_playground.Models.Model1;
 using webapi_automapper_playground.Models.Model1.Nested;
+using webapi_automapper_playground.Models.Model2;
 
 namespace webapi_automapper_playground.Controllers;
 
@@ -67,5 +68,118 @@ public class PlaygroundController : ControllerBase
     };
 
     return _mapper.Map<NestedTargetParent>(src);
+  }
+
+  [HttpGet]
+  public TargetModel2Parent1 MapGrandChild()
+  {
+    var source = new SourceModel2Parent
+    {
+      SourceChildren = new List<SourceModel2Child>
+      {
+        new SourceModel2Child
+        {
+          SourceChildProp1 = 1,
+          SourceChildProp2 = 2,
+          SourceChildProp3 = 3,
+          SourceChildProp4 = 4,
+          SourceChildProp5 = 5,
+          SourceChildProp6 = 6,
+          SourceChildProp7 = 7,
+          Type = "Type1",
+        },
+        new SourceModel2Child
+        {
+          SourceChildProp1 = 1,
+          SourceChildProp2 = 22,
+          SourceChildProp3 = 33,
+          SourceChildProp4 = 44,
+          SourceChildProp5 = 55,
+          SourceChildProp6 = 66,
+          SourceChildProp7 = 77,
+          Type = "Type1",
+        },
+        new SourceModel2Child
+        {
+          SourceChildProp1 = 1,
+          SourceChildProp2 = 222,
+          SourceChildProp3 = 333,
+          SourceChildProp4 = 444,
+          SourceChildProp5 = 555,
+          SourceChildProp6 = 666,
+          SourceChildProp7 = 777,
+          Type = "Type1",
+        },
+        new SourceModel2Child
+        {
+          SourceChildProp1 = 1,
+          SourceChildProp2 = 2222,
+          SourceChildProp3 = 3333,
+          SourceChildProp4 = 4444,
+          SourceChildProp5 = 5555,
+          SourceChildProp6 = 6666,
+          SourceChildProp7 = 7777,
+          Type = "Type2",
+        },
+      }
+    };
+
+    return _mapper.Map<TargetModel2Parent1>(source);
+  }
+
+  [HttpGet]
+  public TargetModel2Parent2 MapGrandChild2()
+  {
+    var source = new SourceModel2Parent
+    {
+      SourceChildren = new List<SourceModel2Child>
+      {
+        new SourceModel2Child
+        {
+          SourceChildProp1 = 1,
+          SourceChildProp2 = 2,
+          SourceChildProp3 = 3,
+          SourceChildProp4 = 4,
+          SourceChildProp5 = 5,
+          SourceChildProp6 = 6,
+          SourceChildProp7 = 7,
+          Type = "Type1",
+        },
+        new SourceModel2Child
+        {
+          SourceChildProp1 = 2,
+          SourceChildProp2 = 22,
+          SourceChildProp3 = 33,
+          SourceChildProp4 = 44,
+          SourceChildProp5 = 55,
+          SourceChildProp6 = 66,
+          SourceChildProp7 = 77,
+          Type = "Type1",
+        },
+        new SourceModel2Child
+        {
+          SourceChildProp1 = 1,
+          SourceChildProp2 = 222,
+          SourceChildProp3 = 333,
+          SourceChildProp4 = 444,
+          SourceChildProp5 = 555,
+          SourceChildProp6 = 666,
+          SourceChildProp7 = 777,
+          Type = "Type1",
+        },
+        new SourceModel2Child
+        {
+          SourceChildProp1 = 1,
+          SourceChildProp2 = 2222,
+          SourceChildProp3 = 3333,
+          SourceChildProp4 = 4444,
+          SourceChildProp5 = 5555,
+          SourceChildProp6 = 6666,
+          SourceChildProp7 = 7777,
+          Type = "Type2",
+        },
+      }
+    };
+    return _mapper.Map<TargetModel2Parent2>(source);
   }
 }
