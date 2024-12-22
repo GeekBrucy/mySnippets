@@ -11,9 +11,9 @@ namespace webapi_automapper_playground.Controllers;
 [Route("[controller]/[action]")]
 public class DesignPlaygroundController : ControllerBase
 {
-  private readonly IFeature1Service _feature1Service;
+  private readonly ISearchService _feature1Service;
   public DesignPlaygroundController(
-    IFeature1Service feature1Service
+    ISearchService feature1Service
   )
   {
     _feature1Service = feature1Service;

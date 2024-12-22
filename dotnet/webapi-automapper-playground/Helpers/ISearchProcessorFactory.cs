@@ -7,7 +7,7 @@ using webapi_automapper_playground.Services.Feature1.Feature1Functions;
 
 namespace webapi_automapper_playground.Helpers;
 
-public interface IFeature1FunctionFactory
+public interface ISearchProcessorFactory
 {
-  IBaseFeature1Function<T> GetFeatureFunction<T>() where T : class;
+  IBaseSearchProcessor<T> GetFeatureFunction<T>() where T : class;
 }

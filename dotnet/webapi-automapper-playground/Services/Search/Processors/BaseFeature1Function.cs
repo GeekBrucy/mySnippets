@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace webapi_automapper_playground.Services.Feature1.Feature1Functions;
 
-public abstract class BaseFeature1Function<T> : IBaseFeature1Function<T>
+public abstract class BaseSearchProcessor<T> : IBaseSearchProcessor<T>
 {
   protected abstract string WhoAmI { get; set; }
   public void Do()

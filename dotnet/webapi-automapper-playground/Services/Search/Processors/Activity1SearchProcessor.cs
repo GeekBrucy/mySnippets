@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace webapi_automapper_playground.Services.Feature1.Feature1Functions;
 
 // Curiously Recurring Template Pattern (CRTP) or self-referencing generic pattern.
-public class Feature1Function1 : BaseFeature1Function<Feature1Function1>
+public class Activity1SearchProcessor : BaseSearchProcessor<Activity1SearchProcessor>
 {
-  protected override string WhoAmI { get; set; } = nameof(Feature1Function1);
+  protected override string WhoAmI { get; set; } = nameof(Activity1SearchProcessor);
 }

@@ -6,18 +6,18 @@ using webapi_automapper_playground.Services.Feature1.Feature1Functions;
 
 namespace webapi_automapper_playground.Helpers;
 
-public class Feature1FunctionFactory : IFeature1FunctionFactory
+public class SearchProcessorFactory : ISearchProcessorFactory
 {
   private readonly IServiceProvider _serviceProvider;
-  public Feature1FunctionFactory(
+  public SearchProcessorFactory(
     IServiceProvider serviceProvider
   )
   {
     _serviceProvider = serviceProvider;
   }
 
-  public IBaseFeature1Function<T> GetFeatureFunction<T>() where T : class
+  public IBaseSearchProcessor<T> GetFeatureFunction<T>() where T : class
   {
-    return _serviceProvider.GetRequiredService<IBaseFeature1Function<T>>();
+    return _serviceProvider.GetRequiredService<IBaseSearchProcessor<T>>();
   }
 }

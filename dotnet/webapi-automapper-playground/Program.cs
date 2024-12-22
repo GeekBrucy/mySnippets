@@ -19,9 +19,9 @@ builder.Services.AddAutoMapper
 );
 
 
-builder.Services.AddScoped<IFeature1FunctionFactory, Feature1FunctionFactory>();
-builder.Services.AddScoped<IFeature1Service, Feature1Service>();
-builder.Services.AddScoped<IBaseFeature1Function<Feature1Function1>, Feature1Function1>();
+builder.Services.AddScoped<ISearchProcessorFactory, SearchProcessorFactory>();
+builder.Services.AddScoped<ISearchService, SearchService>();
+builder.Services.AddScoped<IBaseSearchProcessor<Activity1SearchProcessor>, Activity1SearchProcessor>();
 
 var app = builder.Build();
 
