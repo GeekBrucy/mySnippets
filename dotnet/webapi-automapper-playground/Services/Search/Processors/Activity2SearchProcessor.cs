@@ -6,13 +6,12 @@ using webapi_automapper_playground.Models;
 
 namespace webapi_automapper_playground.Services.Search.Processors;
 
-// Curiously Recurring Template Pattern (CRTP) or self-referencing generic pattern.
-public class Activity1SearchProcessor : BaseSearchProcessor
+public class Activity2SearchProcessor : BaseSearchProcessor
 {
-  protected override string WhoAmI { get; set; } = nameof(Activity1SearchProcessor);
+  protected override string WhoAmI { get; set; } = nameof(Activity2SearchProcessor);
 
   public override bool CanProcess(ExampleActivity exampleActivity)
   {
-    return exampleActivity.Child1 != null;
+    return exampleActivity.Child2 != null;
   }
 }

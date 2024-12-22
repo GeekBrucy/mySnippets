@@ -5,14 +5,13 @@ using System.Threading.Tasks;
 using webapi_automapper_playground.Helpers;
 using webapi_automapper_playground.Models;
 using webapi_automapper_playground.Services.Feature1;
-using webapi_automapper_playground.Services.Feature1.Feature1Functions;
+using webapi_automapper_playground.Services.Search.Processors;
 
 namespace webapi_automapper_playground.Services;
 
 public class SearchService : ISearchService
 {
-
-  private readonly ISearchProcessorFactory _functionFactory;
+  private readonly IEnumerable<IBaseSearchProcessor> _searchProcessors;
 
   // for testing purpose
   private List<ExampleMaster> exampleMasters = new List<ExampleMaster>
@@ -40,16 +39,25 @@ public class SearchService : ISearchService
   };
 
   public SearchService(
-    ISearchProcessorFactory functionFactory
+    IEnumerable<IBaseSearchProcessor> searchProcessors
   )
   {
-    _functionFactory = functionFactory;
+    _searchProcessors = searchProcessors;
   }
-
-
 
   public void Run()
   {
-    _functionFactory.GetFeatureFunction<Activity1SearchProcessor>().Do();
+    foreach (var master in exampleMasters)
+    {
+      foreach (var activity in master.Activities)
+      {
+        foreach (var processor in from processor in _searchProcessors
+                                  where processor.CanProcess(activity)
+                                  select processor)
+        {
+          processor.Do();
+        }
+      }
+    }
   }
 }

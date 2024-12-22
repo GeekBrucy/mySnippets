@@ -2,7 +2,7 @@ using System.Reflection;
 using webapi_automapper_playground.Helpers;
 using webapi_automapper_playground.Services;
 using webapi_automapper_playground.Services.Feature1;
-using webapi_automapper_playground.Services.Feature1.Feature1Functions;
+using webapi_automapper_playground.Services.Search.Processors;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,7 +21,8 @@ builder.Services.AddAutoMapper
 
 builder.Services.AddScoped<ISearchProcessorFactory, SearchProcessorFactory>();
 builder.Services.AddScoped<ISearchService, SearchService>();
-builder.Services.AddScoped<IBaseSearchProcessor<Activity1SearchProcessor>, Activity1SearchProcessor>();
+builder.Services.AddScoped<IBaseSearchProcessor, Activity1SearchProcessor>();
+builder.Services.AddScoped<IBaseSearchProcessor, Activity2SearchProcessor>();
 
 var app = builder.Build();
 

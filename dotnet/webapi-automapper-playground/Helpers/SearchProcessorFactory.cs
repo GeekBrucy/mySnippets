@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using webapi_automapper_playground.Services.Feature1.Feature1Functions;
+using webapi_automapper_playground.Services.Search.Processors;
 
 namespace webapi_automapper_playground.Helpers;
 
@@ -16,8 +16,8 @@ public class SearchProcessorFactory : ISearchProcessorFactory
     _serviceProvider = serviceProvider;
   }
 
-  public IBaseSearchProcessor<T> GetFeatureFunction<T>() where T : class
+  public IBaseSearchProcessor GetFeatureFunction()
   {
-    return _serviceProvider.GetRequiredService<IBaseSearchProcessor<T>>();
+    return _serviceProvider.GetRequiredService<IBaseSearchProcessor>();
   }
 }
