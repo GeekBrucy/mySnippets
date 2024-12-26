@@ -12,3 +12,122 @@
   - If you want to deploy a worker application that processes periodic background tasks, your application source bundle must also include a cron.yaml file. For more information, see Periodic Tasks.
 
 - Elastic Beanstalk supports two methods of saving configuration option settings. Configuration files in YAML or JSON format can be included in your application’s source code in a directory named .ebextensions and deployed as part of your application source bundle. You create and manage configuration files locally.
+
+# Overview
+
+- Elastic Beanstalk is a developer centric view of deploying an application on AWS
+- It uses all the component's we've seen before: EC2, ASG, ELB, RDS,...
+- Managed service
+  - Automatically handles capacity provisioning, load balancing, scaling, application health monitoring, instance configuration...
+  - Just the application code is the responsibility of the developer
+- We still have full control over the configuration
+- Beanstalk is **free** but you pay for the underlying instances
+
+# Components
+
+- **Application**: collection of Elastic Beanstalk components (environments, versions, configurations...)
+- **Application Version**: an iteration of your application code
+- **Environment**
+  - _Tiers_:
+    - Web Server Environment Tier
+    - Worker Environment Tier
+  - Collection of AWS resources running an application version (only one application version at a time)
+  - You can create multiple environments (dev, test, prod,...)
+
+## Tiers:
+
+![tiers](./tiers.png)
+
+# Supported Platforms
+
+- Go
+- Java SE
+- Java with Tomcat
+- .NET core on Linux
+- .Net on Windows Server
+- Node.js
+- PHP
+- Python
+- Ruby
+- Packer Builder
+- Single Container Docker
+- Multi-container Docker
+- Pre-configured Docker
+
+# Deployment Modes
+
+![deployment modes](./deployment-modes.png)
+
+## Deployment options for updates
+
+- _All at once_ (deploy all in one go) - fastest, but instances aren't available to serve traffic for a bit (downtime)
+- _Rolling_: Update a few instances at a time (bucket), and then move onto the next bucket once the first bucket is healthy
+- _Rolling with additional batches_: like rolling, but spins up new instances to move the batch (so that the old application is still available)
+- _Immutable_: spins up new instances in a new ASG, deploys version to these instances, and then swaps all the instances when everything is healthy
+- _Blue Green_: create a new environment and switch over when ready
+- _Traffic Splitting_: canary testing - send a small % of traffic to new deployment
+
+### All at once
+
+![all at once](./all-at-once-deployment.png)
+
+### Rolling
+
+![rolling](./rolling-deployment.png)
+
+### Rolling with additional batches
+
+![rolling with additonal batches](./rolling-with-additional-deployment.png)
+
+### Immutable
+
+![immutable](./immutable-deployment.png)
+
+### Blue / Green
+
+![blue green](./blue-green-deployment.png)
+
+### Traffic Splitting
+
+- **Canary Testing**
+
+![traffic splitting](./traffic-splitting-deployment.png)
+
+#### Official doc
+
+https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/using-features.deploy-existing-version.html
+
+![deplooyment metrics](./deployment-metrics.png)
+
+# CLI
+
+- We can install an additional CLI called the "EB cli" which makes working with Beanstalk from the CLI easier
+- Basic commands are
+  - eb create
+  - eb status
+  - eb health
+  - eb events
+  - eb logs
+  - eb open
+  - eb deploy
+  - eb config
+  - eb terminate
+- helpful for automated deployment pipelines
+
+# Deployment Process
+
+- Describe dependencies (requirements.txt for Python, package.json for Node.js)
+- Package code as zip, and describe dependencies
+- _Console_: upload zip file (creates new app version), and then deploy
+- _CLI_: create new app version using CLI (uploads zip), and then deploy
+- Elastic Beanstalk will deploy the zip on each EC2 instance, resolve dependencies and start the application
+
+# Lifecycle Policy
+
+- Beanstalk can store at most 1000 application versions
+- If you don't remove old versions, you won't be able to deploy anymore
+- To phase out old application versions, use a lifecycle policy
+  - Based on time (old versions are removed)
+  - Based on space (when you have too many versions)
+- Versions that are currently used won't be deleted
+- Option not to delete the source bundle in S3 to prevent data loss
