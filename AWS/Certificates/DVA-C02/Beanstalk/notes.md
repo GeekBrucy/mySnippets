@@ -131,3 +131,57 @@ https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/using-features.deploy-exi
   - Based on space (when you have too many versions)
 - Versions that are currently used won't be deleted
 - Option not to delete the source bundle in S3 to prevent data loss
+
+# Beanstalk Extensions
+
+- A zip file containing our code must be deployed to Elastic Beanstalk
+- All the parameters set in the UI can be configured with code using files
+- Requirements:
+  - in the .ebextensions/ directory in the root of source code
+  - YAML / JSON format
+  - **.config** extensions (example: logging.config)
+  - Able to modify some default settings using: option_settings
+  - Ability to add resources such as RDS, ElastiCache, DynamoDB, etc...
+
+* Resources managed by .ebextensions get deleted if the environment goes away
+
+# Beanstalk Under the Hood
+
+- Under the hood, Elastic Beanstalk relies on CloudFormation
+- CloudFormation is used to provision other AWS services (we'll see later)
+- Use case: you can define CloudFormation resources in your .ebextensions to provision ElastiCache, an S3 bucket, anything you want
+
+# Beanstalk Cloning
+
+- Clone an environment with the exact same configuration
+- Useful for deploying a test version of your application
+- All resources and configuration are preserved:
+  - Load Balancer type and configuration
+  - RDS database type (but the data is not preserved)
+  - Environment variables
+- After cloning an environment, you can change settings
+
+# Beanstalk Migration
+
+## Load Balancer
+
+- After creating an Elastic Beanstalk environment, you cannot change the Elastic Load Balancer type (only the configuration)
+- To migrate:
+  1. Create a new environment with the same configuration except LB
+  2. Deploy your application onto the new environment
+  3. Perform a CNAME swap or Route 53 update
+
+## RDS
+
+- RDS can be provisioned with Beanstalk, which is great for dev / test
+- This is not great for PROD as the database lifecycle is tied to the Beanstalk environment lifecycle
+- The best for PROD is to separately create an RDS database and provide our EB application with the connection string
+
+### Decouple RDS
+
+1. Create a snapshot of RDS DB (as a safeguard)
+2. Go to the RDS console and protect the RDS database from deletion
+3. Create a new Elastic Beanstalk environment, without RDS, point your application to existing RDS
+4. Perform a CNAME swap (blue/green) or Route 53 update, confirm working
+5. Terminate the old environment (RDS won't be deleted)
+6. Delete CloudFormation stack (in DELETE_FAILED state)
