@@ -27,3 +27,17 @@
 - Use Access Keys for Programmatic Access (CLI / SDK)
 - Audit permissions of your account using IAM Credentials Report & IAM Access Advisor
 - Never share IAM users & Access Keys
+
+# Serverless in AWS
+
+- Lambda
+- DynamoDB
+- Cognito
+- API Gateway
+- S3
+- SNS
+- SQS
+- Kinesis Data Firehose
+- Aurora serverless
+- Step Functions
+- Fargate
