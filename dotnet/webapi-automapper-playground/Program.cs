@@ -13,10 +13,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddAutoMapper
-(
-    opt => opt.AddMaps(Assembly.GetExecutingAssembly())
-);
+builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
 
 builder.Services.AddScoped<ISearchProcessorFactory, SearchProcessorFactory>();
