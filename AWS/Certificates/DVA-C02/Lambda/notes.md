@@ -16,19 +16,17 @@
 
 - If the lambda function was created with the default settings , it would have the default timeout of 3 seconds
 
-- For errors such as “ServiceException”, best practice is to Retry invoking Lambda function. Within a Retry Code “ErrorEquals” field is required string which matches error names & all other fields are optional.
+- For errors such as `ServiceException`, best practice is to Retry invoking Lambda function. Within a Retry Code `ErrorEquals` field is required string which matches error names & all other fields are optional.
 
 - Lambda Catch code is only used after a number of retries are performed by State function.
 
-- BackoffRate field is optional in Lambda Retry code & if not specified Default value of 2.0 is considered.
+- `BackoffRate` field is optional in Lambda Retry code & if not specified Default value of 2.0 is considered.
 
-- Lambda Catch code is only used after a number of retries are performed by State function. ResultPath is an optional field in a Catch Code, ErrorEquals & Next are required strings.
+- Lambda Catch code is **only used after a number of retries** are performed by State function. ResultPath is an optional field in a Catch Code, ErrorEquals & Next are required strings.
 
 - If you are writing code that uses other resources, such as a graphics library for image processing, or you want to use the AWS CLI instead of the console, you need to first create the Lambda function deployment package, and then use the console or the CLI to upload the package.
 
 - Take advantage of Execution Context reuse to improve the performance of your function. Make sure any externalized configuration or dependencies that your code retrieves are stored and referenced locally after initial execution. Limit the re-initialization of variables/objects on every invocation. Instead use static initialization/constructor, global/static variables and singletons. Keep alive and reuse connections (HTTP, database, etc.) that were established during a previous invocation.
-
-- Integration Type “Aws_Proxy” can be used for an API method to be integrated with the Lambda Function where incoming requests from the clients is passed as input to Lambda Function.
 
 - AWS Lambda uses environment variables to facilitate communication with the X-Ray daemon and configure the X-Ray SDK.
 
@@ -766,3 +764,4 @@ CMD [ "app.lambdaHandler" ]
   - Remember the AWS Lambda limits
   - Use Layers where necessary
 - Avoid using recursive code, never have a Lambda function call itself
+- [doc](https://docs.aws.amazon.com/lambda/latest/dg/best-practices.html)

@@ -1,2 +1,4 @@
 - In Amazon Redshift, you can enable database encryption for your clusters to help protect data at rest. When you enable encryption for a cluster, the data blocks and system metadata are encrypted for the cluster and its snapshots.
-  - Encryption is an optional, immutable setting of a cluster. If you want encryption, you enable it during the cluster launch process. As of October 2018, you can enable encryption on an un-encrypted cluster and AWS will handle migrating the data over to a new, encrypted cluster behind-the-scenes.
+  - Encryption is an optional, immutable setting of a cluster. If you want encryption, you **enable it during the cluster launch process**. As of October 2018, you **can enable encryption on an un-encrypted cluster** and AWS will handle migrating the data over to a new, encrypted cluster behind-the-scenes.
+  - [doc](https://docs.aws.amazon.com/redshift/latest/mgmt/changing-cluster-encryption.html)
+- [loading in data from Amazon S3](https://docs.aws.amazon.com/redshift/latest/gsg/new-user-serverless.html#serverless-load-data-from-s3)

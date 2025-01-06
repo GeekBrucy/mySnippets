@@ -1,4 +1,5 @@
 - For web distributions, to control how long your objects stay in a CloudFront cache before CloudFront forwards another request to your origin, you can:
-  - Configure your origin to add a Cache-Control or an Expires header field to each object.
-  - Specify a value for Minimum TTL in CloudFront cache behaviors.
+  - Configure your **origin to add a Cache-Control** or an **Expires header field to each object**.
+  - Specify a value for **Minimum TTL in CloudFront cache behaviors**.
     - Use the default value of 24 hours.
+  - [Request and response behavior for Amazon S3 origins](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/RequestAndResponseBehaviorS3Origin.html)
