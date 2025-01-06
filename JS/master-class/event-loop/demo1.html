@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Event Loop (aka Message Loop) Demo1</title>
+</head>
+<body>
+  <h1>This is H1</h1>
+  <p>this demo is to prove JS is single thread</p>
+  <p>When the button is clicked, the h1 tag will be changed after 3 seconds</p>
+  <div>Queue Priority</div>
+  <ul>
+    <li>Highest: Micro task queue - Promise etc.</li>
+    <li>High: Interaction task queue - Button click etc.</li>
+    <li>Medium: Delay task queue - SetTimeout etc.</li>
+  </ul>
+  <button>Change</button>
+  <script>
+    var h1 = document.querySelector('h1');
+    var btn = document.querySelector('button');
+
+    function delay(duration) {
+      var start = Date.now();
+      while (Date.now() - start < duration) {}
+    }
+
+    btn.onclick = function () {
+      h1.textContent = "button clicked";
+      delay(3000);
+    }
+
+    function promiseCallBack() {}
+
+    // the promiseCallback will be pushed into micro task queue, which has the highest priority
+    Promise.resolve().then(promiseCallBack);
+  </script>
+</body>
+</html>
