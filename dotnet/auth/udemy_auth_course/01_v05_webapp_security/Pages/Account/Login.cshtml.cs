@@ -38,6 +38,9 @@ public class Login : PageModel
             {
                 new Claim(ClaimTypes.Name, "admin"),
                 new Claim(ClaimTypes.Email, "admin@test.com"),
+                new Claim("Department", "HR"),
+                new Claim("Admin", "true"),
+                new Claim("Manager", "true"),
             };
             var identity = new ClaimsIdentity(claims, CookieSchemeNames.TestCookieAuth);
             ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal(identity);

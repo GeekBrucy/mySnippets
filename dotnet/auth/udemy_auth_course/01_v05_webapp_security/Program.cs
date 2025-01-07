@@ -8,6 +8,19 @@ builder.Services.AddRazorPages();
 builder.Services.AddAuthentication(CookieSchemeNames.TestCookieAuth).AddCookie(CookieSchemeNames.TestCookieAuth, options =>
 {
     options.Cookie.Name = CookieSchemeNames.TestCookieAuth; // Cookie.Name must match the scheme name above
+    // by default, options.LoginPath is pointing to "/account/login"
+    // options.LoginPath = "/whatever_path/whatever_your_login_Page_file_name";
+
+    // by default, options.AccessDeniedPath is pointing to "/Account/AccessDenied"
+});
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AdminOnly", policy => policy.RequireClaim("Admin"));
+    options.AddPolicy("MustBelongToHRDepartment", policy => policy.RequireClaim("Department", "HR"));
+    options.AddPolicy("HRManagerOnly", policy => policy
+        .RequireClaim("Department", "HR")
+        .RequireClaim("Manager"));
 });
 
 var app = builder.Build();
