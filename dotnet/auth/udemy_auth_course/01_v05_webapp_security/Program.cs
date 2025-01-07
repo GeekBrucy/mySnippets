@@ -1,7 +1,14 @@
+using _01_v05_webapp_security.Contants;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+
+builder.Services.AddAuthentication(CookieSchemeNames.TestCookieAuth).AddCookie(CookieSchemeNames.TestCookieAuth, options =>
+{
+    options.Cookie.Name = CookieSchemeNames.TestCookieAuth; // Cookie.Name must match the scheme name above
+});
 
 var app = builder.Build();
 
@@ -18,6 +25,12 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+/*
+app.UseAuthentication(): this middleware is responsible to call the authentication handler
+
+it will call IAuthenticationService.AuthenticateAsync method. Then it will translate the cookies into security context
+*/
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapRazorPages();

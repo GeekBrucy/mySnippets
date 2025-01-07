@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -14,6 +15,10 @@ public class IndexModel : PageModel
 
     public void OnGet()
     {
-
+        Console.WriteLine($"Is Authenticated: {User.Identity.IsAuthenticated}");
+        foreach (var claim in ((ClaimsIdentity)User.Identity).Claims)
+        {
+            Console.WriteLine($"claim: {claim}");
+        }
     }
 }
