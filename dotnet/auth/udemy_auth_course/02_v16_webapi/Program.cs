@@ -45,6 +45,11 @@ builder.Services.AddAuthentication(options =>
     };
 }).AddJwtBearer("TestScheme"); // this means nothing in this demo. If there are multiple auth handler, the framework will loop through all the defined handlers and try to recognize which one to authenticate with
 
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AdminOnly", policy => policy.RequireClaim("Admin"));
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
