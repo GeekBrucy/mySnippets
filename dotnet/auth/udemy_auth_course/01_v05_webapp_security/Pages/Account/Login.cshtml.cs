@@ -41,6 +41,7 @@ public class Login : PageModel
                 new Claim("Department", "HR"),
                 new Claim("Admin", "true"),
                 new Claim("Manager", "true"),
+                new Claim("EmploymentDate", "2025-01-07"),
             };
             var identity = new ClaimsIdentity(claims, CookieSchemeNames.TestCookieAuth);
             ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal(identity);

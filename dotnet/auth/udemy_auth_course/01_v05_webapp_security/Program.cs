@@ -1,4 +1,6 @@
+using _01_v05_webapp_security.Authorization.HRManager;
 using _01_v05_webapp_security.Contants;
+using Microsoft.AspNetCore.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,8 +22,11 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("MustBelongToHRDepartment", policy => policy.RequireClaim("Department", "HR"));
     options.AddPolicy("HRManagerOnly", policy => policy
         .RequireClaim("Department", "HR")
-        .RequireClaim("Manager"));
+        .RequireClaim("Manager")
+        .Requirements.Add(new HRManagerProbationRequirement(3)));
 });
+
+builder.Services.AddSingleton<IAuthorizationHandler, HRManagerProbationRequirementHandler>();
 
 var app = builder.Build();
 
