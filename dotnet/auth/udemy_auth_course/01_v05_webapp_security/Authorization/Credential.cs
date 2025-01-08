@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace _01_v05_webapp_security.Models;
+namespace _01_v05_webapp_security.Authorization;
 
 public class Credential
 {

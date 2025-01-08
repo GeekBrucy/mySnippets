@@ -1,8 +1,8 @@
 
 using System.Security.Claims;
 using System.Threading.Tasks;
+using _01_v05_webapp_security.Authorization;
 using _01_v05_webapp_security.Contants;
-using _01_v05_webapp_security.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -41,7 +41,7 @@ public class Login : PageModel
                 new Claim("Department", "HR"),
                 new Claim("Admin", "true"),
                 new Claim("Manager", "true"),
-                new Claim("EmploymentDate", "2025-01-07"),
+                new Claim("EmploymentDate", "2024-01-07"),
             };
             var identity = new ClaimsIdentity(claims, CookieSchemeNames.TestCookieAuth);
             ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal(identity);
