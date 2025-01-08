@@ -46,9 +46,13 @@ public class Login : PageModel
             var identity = new ClaimsIdentity(claims, CookieSchemeNames.TestCookieAuth);
             ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal(identity);
 
+            var authProperties = new AuthenticationProperties
+            {
+                IsPersistent = Credential.RememberMe
+            };
             // HttpContent.SignInAsync
             // Microsoft.AspNetCore.Authentication
-            await HttpContext.SignInAsync(CookieSchemeNames.TestCookieAuth, claimsPrincipal); // generate cookie
+            await HttpContext.SignInAsync(CookieSchemeNames.TestCookieAuth, claimsPrincipal, authProperties); // generate cookie
 
             return RedirectToPage("/Index");
         }

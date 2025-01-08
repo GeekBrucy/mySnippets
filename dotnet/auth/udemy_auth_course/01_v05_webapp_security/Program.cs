@@ -14,6 +14,8 @@ builder.Services.AddAuthentication(CookieSchemeNames.TestCookieAuth).AddCookie(C
     // options.LoginPath = "/whatever_path/whatever_your_login_Page_file_name";
 
     // by default, options.AccessDeniedPath is pointing to "/Account/AccessDenied"
+
+    options.ExpireTimeSpan = TimeSpan.FromSeconds(20);
 });
 
 builder.Services.AddAuthorization(options =>
