@@ -15,7 +15,7 @@ builder.Services.AddAuthentication(CookieSchemeNames.TestCookieAuth).AddCookie(C
 
     // by default, options.AccessDeniedPath is pointing to "/Account/AccessDenied"
 
-    options.ExpireTimeSpan = TimeSpan.FromSeconds(20);
+    options.ExpireTimeSpan = TimeSpan.FromHours(20);
 });
 
 builder.Services.AddAuthorization(options =>
@@ -33,6 +33,13 @@ builder.Services.AddSingleton<IAuthorizationHandler, HRManagerProbationRequireme
 builder.Services.AddHttpClient(HttpClientNames.TestWebAPI, client =>
 {
     client.BaseAddress = new Uri("http://localhost:5138/");
+});
+
+builder.Services.AddSession(options =>
+{
+    options.Cookie.HttpOnly = true;
+    options.IdleTimeout = TimeSpan.FromMinutes(20);
+    options.Cookie.IsEssential = true;
 });
 
 var app = builder.Build();
@@ -57,7 +64,7 @@ it will call IAuthenticationService.AuthenticateAsync method. Then it will trans
 */
 app.UseAuthentication();
 app.UseAuthorization();
-
+app.UseSession();
 app.MapRazorPages();
 
 app.Run();

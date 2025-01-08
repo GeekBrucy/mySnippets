@@ -31,16 +31,40 @@ public class HRManager : PageModel
 
     public async Task OnGetAsync()
     {
-        var httpClient = _httpClientFactory.CreateClient(HttpClientNames.TestWebAPI);
+        // get token from session
+        JwtToken token = new JwtToken();
 
-        // get token
+        var strTokenObj = HttpContext.Session.GetString("access_token"); // "access_token" actually can be any string
+
+        if (string.IsNullOrEmpty(strTokenObj))
+        {
+            token = await Authenticate();
+        }
+        else
+        {
+            token = JsonConvert.DeserializeObject<JwtToken>(strTokenObj) ?? new JwtToken();
+        }
+
+        if (token == null
+        || string.IsNullOrEmpty(token.AccessToken)
+        || token.ExpiresAt <= DateTime.UtcNow)
+        {
+            token = await Authenticate();
+        }
+
+
+        var httpClient = _httpClientFactory.CreateClient(HttpClientNames.TestWebAPI);
+        httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token?.AccessToken ?? string.Empty);
+        weatherForecastItems = await httpClient.GetFromJsonAsync<List<WeatherForecastDTO>>("WeatherForecast") ?? new List<WeatherForecastDTO>();
+    }
+
+    private async Task<JwtToken> Authenticate()
+    {
+        var httpClient = _httpClientFactory.CreateClient(HttpClientNames.TestWebAPI);
         var res = await httpClient.PostAsJsonAsync("auth", new Credential { UserName = "admin", Password = "password" });
         res.EnsureSuccessStatusCode();
         string strJwt = await res.Content.ReadAsStringAsync();
-        var token = JsonConvert.DeserializeObject<JwtToken>(strJwt);
-
-        // attach token to header
-        httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token?.AccessToken ?? string.Empty);
-        weatherForecastItems = await httpClient.GetFromJsonAsync<List<WeatherForecastDTO>>("WeatherForecast") ?? new List<WeatherForecastDTO>();
+        HttpContext.Session.SetString("access_token", strJwt);
+        return JsonConvert.DeserializeObject<JwtToken>(strJwt) ?? new JwtToken();
     }
 }
