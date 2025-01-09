@@ -1,7 +1,17 @@
+using _03_v25_webapp_identity.Data;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+
+var connStr = builder.Configuration.GetConnectionString("postgres");
+
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+{
+    options.UseNpgsql(connStr);
+});
 
 var app = builder.Build();
 
