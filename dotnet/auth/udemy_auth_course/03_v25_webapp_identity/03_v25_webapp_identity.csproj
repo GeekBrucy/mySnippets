@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>_03_v25_webapp_identity</RootNamespace>
+    <UserSecretsId>c385ddc9-b5e8-4ffa-82e7-76513b568981</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Threading.Tasks;
+using _03_v25_webapp_identity.Models;
 using _03_v25_webapp_identity.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -16,11 +19,13 @@ public class Register : PageModel
   public RegisterViewModel RegisterViewModel { get; set; } = new RegisterViewModel();
   private readonly ILogger<Register> _logger;
   private readonly UserManager<IdentityUser> _userManager;
+  private readonly IConfiguration _configuration;
 
-  public Register(ILogger<Register> logger, UserManager<IdentityUser> userManager)
+  public Register(ILogger<Register> logger, UserManager<IdentityUser> userManager, IConfiguration configuration)
   {
     _logger = logger;
     _userManager = userManager;
+    _configuration = configuration;
   }
 
   public void OnGet()
@@ -47,16 +52,35 @@ public class Register : PageModel
     if (result.Succeeded)
     {
       var confirmationToken = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-      return Redirect
-      (
-        Url.PageLink
+      var confirmationLink = Url.PageLink
         (
           pageName: "/Account/ConfirmEmail",
           values: new { userId = user.Id, token = confirmationToken }
-        )
-        ??
-        ""
+        );
+      var smtpSettings = new SmtpSettings();
+
+      _configuration.GetSection("SMTPSettings").Bind(smtpSettings);
+
+      var message = new MailMessage
+      (
+        smtpSettings.SmtpSender,
+        user.Email,
+        "Please confirm your email",
+        $"Please click on this link to confirm your email address: {confirmationLink}"
       );
+
+      using (var emailClient = new SmtpClient(smtpSettings.SmtpServer, 587))
+      {
+        emailClient.Credentials = new NetworkCredential
+        (
+          smtpSettings.SmtpUser,
+          smtpSettings.SmtpPassword
+        );
+
+        await emailClient.SendMailAsync(message);
+      }
+
+      return RedirectToPage("/Account/Login");
     }
     else
     {
