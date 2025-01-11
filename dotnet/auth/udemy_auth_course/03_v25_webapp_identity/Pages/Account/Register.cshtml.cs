@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using _03_v25_webapp_identity.Data.Account;
 using _03_v25_webapp_identity.Services;
@@ -56,14 +57,17 @@ public class Register : PageModel
     {
       Email = RegisterViewModel.Email,
       UserName = RegisterViewModel.Email,
-      Department = RegisterViewModel.Department,
-      Position = RegisterViewModel.Position
     };
+
+    var claimDepartment = new Claim("Department", RegisterViewModel.Department);
+    var claimPosition = new Claim("Position", RegisterViewModel.Position);
 
     var result = await _userManager.CreateAsync(user, RegisterViewModel.Password);
 
     if (result.Succeeded)
     {
+      await _userManager.AddClaimAsync(user, claimDepartment);
+      await _userManager.AddClaimAsync(user, claimPosition);
       var confirmationToken = await _userManager.GenerateEmailConfirmationTokenAsync(user);
       var confirmationLink = Url.PageLink
         (
