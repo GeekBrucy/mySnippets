@@ -4,12 +4,14 @@ using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
-using _03_v25_webapp_identity.Models;
+using _03_v25_webapp_identity.Services;
+using _03_v25_webapp_identity.Settings;
 using _03_v25_webapp_identity.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 namespace _03_v25_webapp_identity.Pages.Account;
 
@@ -19,13 +21,21 @@ public class Register : PageModel
   public RegisterViewModel RegisterViewModel { get; set; } = new RegisterViewModel();
   private readonly ILogger<Register> _logger;
   private readonly UserManager<IdentityUser> _userManager;
-  private readonly IConfiguration _configuration;
+  private readonly IEmailService _emailService;
+  private readonly SmtpSettings _smtpSettings;
 
-  public Register(ILogger<Register> logger, UserManager<IdentityUser> userManager, IConfiguration configuration)
+  public Register
+  (
+    ILogger<Register> logger,
+    UserManager<IdentityUser> userManager,
+    IEmailService emailService,
+    IOptionsSnapshot<SmtpSettings> options
+  )
   {
     _logger = logger;
     _userManager = userManager;
-    _configuration = configuration;
+    _emailService = emailService;
+    _smtpSettings = options.Value;
   }
 
   public void OnGet()
@@ -57,28 +67,14 @@ public class Register : PageModel
           pageName: "/Account/ConfirmEmail",
           values: new { userId = user.Id, token = confirmationToken }
         );
-      var smtpSettings = new SmtpSettings();
 
-      _configuration.GetSection("SMTPSettings").Bind(smtpSettings);
-
-      var message = new MailMessage
+      await _emailService.SendAsync
       (
-        smtpSettings.SmtpSender,
+        _smtpSettings.Sender,
         user.Email,
         "Please confirm your email",
         $"Please click on this link to confirm your email address: {confirmationLink}"
       );
-
-      using (var emailClient = new SmtpClient(smtpSettings.SmtpServer, 587))
-      {
-        emailClient.Credentials = new NetworkCredential
-        (
-          smtpSettings.SmtpUser,
-          smtpSettings.SmtpPassword
-        );
-
-        await emailClient.SendMailAsync(message);
-      }
 
       return RedirectToPage("/Account/Login");
     }

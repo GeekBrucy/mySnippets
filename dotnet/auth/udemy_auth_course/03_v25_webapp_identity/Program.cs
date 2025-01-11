@@ -1,4 +1,6 @@
 using _03_v25_webapp_identity.Data;
+using _03_v25_webapp_identity.Services;
+using _03_v25_webapp_identity.Settings;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -38,6 +40,10 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.LoginPath = "/Account/Login";
     options.AccessDeniedPath = "/Account/AccessDenied";
 });
+
+builder.Services.Configure<SmtpSettings>(builder.Configuration.GetSection("SMTPSettings"));
+
+builder.Services.AddSingleton<IEmailService, EmailService>();
 
 var app = builder.Build();
 
