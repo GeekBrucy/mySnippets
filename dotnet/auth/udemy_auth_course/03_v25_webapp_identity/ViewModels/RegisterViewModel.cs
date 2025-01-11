@@ -15,4 +15,11 @@ public class RegisterViewModel
   [Required]
   [DataType(dataType: DataType.Password)]
   public string Password { get; set; } = string.Empty;
+
+  [Required]
+  public string Department { get; set; } = string.Empty;
+
+  [Required]
+  public string Position { get; set; } = string.Empty;
+
 }

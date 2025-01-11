@@ -1,4 +1,5 @@
 using _03_v25_webapp_identity.Data;
+using _03_v25_webapp_identity.Data.Account;
 using _03_v25_webapp_identity.Services;
 using _03_v25_webapp_identity.Settings;
 using Microsoft.AspNetCore.Identity;
@@ -16,7 +17,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(connStr);
 });
 
-builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
+builder.Services.AddIdentity<User, IdentityRole>(options =>
 {
     options.Password.RequiredLength = 8;
     // you can configure the password requirement, but for demo purpose, just 8 character password will do

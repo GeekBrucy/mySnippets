@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using _03_v25_webapp_identity.Data.Account;
 using _03_v25_webapp_identity.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -13,12 +14,12 @@ namespace _03_v25_webapp_identity.Pages.Account;
 public class Login : PageModel
 {
     private readonly ILogger<Login> _logger;
-    private readonly SignInManager<IdentityUser> _signInManager;
+    private readonly SignInManager<User> _signInManager;
 
     [BindProperty]
     public CredentialViewModel Credential { get; set; } = new CredentialViewModel();
 
-    public Login(ILogger<Login> logger, SignInManager<IdentityUser> signInManager)
+    public Login(ILogger<Login> logger, SignInManager<User> signInManager)
     {
         _logger = logger;
         _signInManager = signInManager;

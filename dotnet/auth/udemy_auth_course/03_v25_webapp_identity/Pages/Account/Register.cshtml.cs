@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
+using _03_v25_webapp_identity.Data.Account;
 using _03_v25_webapp_identity.Services;
 using _03_v25_webapp_identity.Settings;
 using _03_v25_webapp_identity.ViewModels;
@@ -20,14 +21,14 @@ public class Register : PageModel
   [BindProperty]
   public RegisterViewModel RegisterViewModel { get; set; } = new RegisterViewModel();
   private readonly ILogger<Register> _logger;
-  private readonly UserManager<IdentityUser> _userManager;
+  private readonly UserManager<User> _userManager;
   private readonly IEmailService _emailService;
   private readonly SmtpSettings _smtpSettings;
 
   public Register
   (
     ILogger<Register> logger,
-    UserManager<IdentityUser> userManager,
+    UserManager<User> userManager,
     IEmailService emailService,
     IOptionsSnapshot<SmtpSettings> options
   )
@@ -51,10 +52,12 @@ public class Register : PageModel
     */
 
     // Try to create the user
-    var user = new IdentityUser
+    var user = new User
     {
       Email = RegisterViewModel.Email,
       UserName = RegisterViewModel.Email,
+      Department = RegisterViewModel.Department,
+      Position = RegisterViewModel.Position
     };
 
     var result = await _userManager.CreateAsync(user, RegisterViewModel.Password);
