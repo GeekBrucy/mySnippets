@@ -1,0 +1,31 @@
+@page
+@model _03_v25_webapp_identity.Pages.Account.LoginTwoFactorWithAuthenticator
+@{
+    ViewData["Title"] = "LoginTwoFactorWithAuthenticator";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="container border p-2">
+    <h3>Please enter the Code from your authenticator app:</h3>
+    <form method="post">
+        <div class="text-danger" asp-validation-summary="All"></div>
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="AuthenticatorMFA.SecurityCode"></label>
+            </div>
+            <div class="col">
+                <input type="text" asp-for="AuthenticatorMFA.SecurityCode" class="form-control">
+            </div>
+            <span class="text-danger" asp-validation-for="AuthenticatorMFA.SecurityCode"></span>
+        </div>
+        <div class="form-group row">
+            <div class="col-2">
+                <input type="submit" class="btn btn-primary" value="Verify">
+            </div>
+            <div class="col">
+                <input type="hidden" asp-for="AuthenticatorMFA.RememberMe">
+            </div>
+        </div>
+    </form>
+</div>

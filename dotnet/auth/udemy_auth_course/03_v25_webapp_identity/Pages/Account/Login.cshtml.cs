@@ -49,10 +49,9 @@ public class Login : PageModel
             {
                 return RedirectToPage
                 (
-                    "/Account/LoginTwoFactor",
+                    "/Account/LoginTwoFactorWithAuthenticator",
                     new
                     {
-                        Email = Credential.Email,
                         RememberMe = Credential.RememberMe
                     }
                 );
