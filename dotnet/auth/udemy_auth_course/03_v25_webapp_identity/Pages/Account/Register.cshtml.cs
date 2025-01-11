@@ -71,15 +71,21 @@ public class Register : PageModel
           values: new { userId = user.Id, token = confirmationToken }
         );
 
-      await _emailService.SendAsync
-      (
-        _smtpSettings.Sender,
-        user.Email,
-        "Please confirm your email",
-        $"Please click on this link to confirm your email address: {confirmationLink}"
-      );
+      // for demo purpose, use the confirmation link directly
+      return Redirect(confirmationLink ?? "");
 
-      return RedirectToPage("/Account/Login");
+      /////////////////////////////////////////////////////////////////
+      // To Trigger the email confirmation flow, use the code below //
+      ///////////////////////////////////////////////////////////////
+      // await _emailService.SendAsync
+      // (
+      //   _smtpSettings.Sender,
+      //   user.Email,
+      //   "Please confirm your email",
+      //   $"Please click on this link to confirm your email address: {confirmationLink}"
+      // );
+
+      // return RedirectToPage("/Account/Login");
     }
     else
     {
