@@ -77,14 +77,8 @@ public class Login : PageModel
 
     public IActionResult OnPostLoginExternally(string provider)
     {
-        Console.WriteLine(new string('@', 50));
-        Console.WriteLine("OnPostLoginExternally");
-        Console.WriteLine(new string('@', 50));
         var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, null);
         properties.RedirectUri = Url.Action("ExternalLoginCallback", "Account");
-        Console.WriteLine(new string('@', 50));
-        Console.WriteLine($"setup the redirect uri: {properties.RedirectUri}");
-        Console.WriteLine(new string('@', 50));
         return Challenge(properties, provider);
     }
 }

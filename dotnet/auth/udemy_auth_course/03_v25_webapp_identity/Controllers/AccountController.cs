@@ -22,15 +22,9 @@ public class AccountController : ControllerBase
 
   public async Task<IActionResult> ExternalLoginCallback()
   {
-    Console.WriteLine(new string('@', 50));
-    Console.WriteLine("AccountController:ExternalLoginCallback");
-    Console.WriteLine(new string('@', 50));
     var loginInfo = await _signInManager.GetExternalLoginInfoAsync();
     if (loginInfo != null)
     {
-      Console.WriteLine(new string('@', 50));
-      Console.WriteLine("has login info");
-      Console.WriteLine(new string('@', 50));
       var emailClaim = loginInfo.Principal.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Email);
       var nameClaim = loginInfo.Principal.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name);
 
@@ -38,9 +32,6 @@ public class AccountController : ControllerBase
       {
         var user = new User { Email = emailClaim.Value, UserName = nameClaim.Value };
         await _signInManager.SignInAsync(user, false);
-        Console.WriteLine(new string('@', 50));
-        Console.WriteLine("after sign in");
-        Console.WriteLine(new string('@', 50));
       }
     }
 

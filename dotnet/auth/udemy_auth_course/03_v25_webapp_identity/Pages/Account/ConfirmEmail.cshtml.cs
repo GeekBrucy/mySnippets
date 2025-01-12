@@ -26,8 +26,6 @@ public class ConfirmEmail : PageModel
 
     public async Task<IActionResult> OnGetAsync(string userId, string token)
     {
-        Console.WriteLine($"userId: {userId}");
-        Console.WriteLine($"token: {token}");
         var user = await _userManager.FindByIdAsync(userId);
 
         Message = "Failed to validate email.";
@@ -38,7 +36,6 @@ public class ConfirmEmail : PageModel
         }
 
         var result = await _userManager.ConfirmEmailAsync(user, token);
-        Console.WriteLine($"result.Succeeded: {result.Succeeded}");
         if (result.Succeeded)
         {
             Message = "Email address is successfully confirmed, you can now try to login";
