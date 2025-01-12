@@ -6,8 +6,15 @@
 
 <h1>@ViewData["Title"]</h1>
 <div class="mb-3">
-    <h3>Step 1: Please enter the key to your authenticator app.</h3>
-    @Model.SetupMFAViewModel.Key
+    <h3>Step 1: Please scan the QR Code or enter the key to your authenticator app.</h3>
+    <p class="mb-3">@Model.SetupMFAViewModel.Key</p>
+    <p>
+        @if (Model.SetupMFAViewModel.QRCodeBytes != null)
+        {
+            <img src="@string.Format("data:image/png;base64, {0}",
+                Convert.ToBase64String(Model.SetupMFAViewModel.QRCodeBytes))" width="300" height="300" />
+        }
+    </p>
 </div>
 <div class="mb-3">
     <h3>Step 2: Please enter the code from your authenticator app:</h3>
@@ -34,6 +41,7 @@
             </div>
             <div class="col">
                 <input type="hidden" asp-for="SetupMFAViewModel.Key">
+                <input type="hidden" asp-for="SetupMFAViewModel.QRCodeBytes">
             </div>
         </div>
     </form>

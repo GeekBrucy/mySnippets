@@ -12,4 +12,5 @@ public class SetupMFAViewModel
   [Required]
   [Display(Name = "Code")]
   public string SecurityCode { get; set; }
+  public Byte[]? QRCodeBytes { get; set; }
 }
