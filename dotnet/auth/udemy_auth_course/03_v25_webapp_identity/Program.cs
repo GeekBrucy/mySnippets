@@ -9,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddControllers();
 
 var connStr = builder.Configuration.GetConnectionString("postgres");
 
@@ -46,6 +47,12 @@ builder.Services.Configure<SmtpSettings>(builder.Configuration.GetSection("SMTPS
 
 builder.Services.AddSingleton<IEmailService, EmailService>();
 
+builder.Services.AddAuthentication().AddFacebook(options =>
+{
+    options.AppId = builder.Configuration["FaceBookAuth:AppId"] ?? string.Empty;
+    options.AppSecret = builder.Configuration["FaceBookAuth:Secret"] ?? string.Empty;
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -64,5 +71,5 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapRazorPages();
-
+app.MapControllers();
 app.Run();

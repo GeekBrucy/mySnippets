@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using _03_v25_webapp_identity.Data.Account;
 using _03_v25_webapp_identity.ViewModels;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -19,14 +20,18 @@ public class Login : PageModel
     [BindProperty]
     public CredentialViewModel Credential { get; set; } = new CredentialViewModel();
 
+    [BindProperty]
+    public IEnumerable<AuthenticationScheme> ExternalLoginProviders { get; set; }
+
     public Login(ILogger<Login> logger, SignInManager<User> signInManager)
     {
         _logger = logger;
         _signInManager = signInManager;
     }
 
-    public void OnGet()
+    public async Task OnGetAsync()
     {
+        ExternalLoginProviders = await _signInManager.GetExternalAuthenticationSchemesAsync();
     }
 
     public async Task<IActionResult> OnPostAsync()
@@ -68,5 +73,18 @@ public class Login : PageModel
         }
 
         return Page();
+    }
+
+    public IActionResult OnPostLoginExternally(string provider)
+    {
+        Console.WriteLine(new string('@', 50));
+        Console.WriteLine("OnPostLoginExternally");
+        Console.WriteLine(new string('@', 50));
+        var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, null);
+        properties.RedirectUri = Url.Action("ExternalLoginCallback", "Account");
+        Console.WriteLine(new string('@', 50));
+        Console.WriteLine($"setup the redirect uri: {properties.RedirectUri}");
+        Console.WriteLine(new string('@', 50));
+        return Challenge(properties, provider);
     }
 }
