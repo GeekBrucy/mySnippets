@@ -1,0 +1,13 @@
+# https://container-registry.oracle.com/ords/f?p=113:4:17030271979974:::4:P4_REPOSITORY,AI_REPOSITORY,AI_REPOSITORY_NAME,P4_REPOSITORY_NAME,P4_EULA_ID,P4_BUSINESS_AREA_ID:803,803,Oracle%20Database%20Express%20Edition,Oracle%20Database%20Express%20Edition,1,0&cs=3VqNBc-2iH4clwr7ID8at9vVYQ_jaTMTtiJ6UmBrEWaOZ1tpyRLELlXOpqKjWnHExKov2zktvFS9W9frKzf2zWg
+services:
+  oracle-for-dev:
+    image: container-registry.oracle.com/database/express:21.3.0-xe
+    environment:
+      # - ORACLE_SID=ORCLCDB # Default SID
+      - ORACLE_PDB=ORCLPDB1
+      - ORACLE_PWD=oraclepw # Admin password
+    ports:
+      - 1521:1521
+      - 5500:5500
+    volumes:
+      - ${DATA_PATH}:/opt/oracle/oradata
