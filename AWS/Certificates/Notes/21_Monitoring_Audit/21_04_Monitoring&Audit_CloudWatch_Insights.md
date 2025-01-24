@@ -43,6 +43,6 @@
 - CloudWatch Lambda Insights
   - Detailed metrics to troubleshoot serverless applications
 - CloudWatch Contributors Insights
-  - Find “Top-N” Contributors through CloudWatch Logs
+  - Find "Top-N" Contributors through CloudWatch Logs
 - CloudWatch Application Insights
   - Automatic dashboard to troubleshoot your application and related AWS services

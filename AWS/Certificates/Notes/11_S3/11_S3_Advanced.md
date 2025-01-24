@@ -30,9 +30,9 @@ Your application on EC2 creates images thumbnails after profile photos are uploa
 
 A rule in your company states that you should be able to recover your deleted S3 objects immediately for 30 days, although this may happen rarely. After this time, and for up to 365 days, deleted objects should be recoverable within 48 hours.
 
-- Enable S3 Versioning in order to have object versions, so that “deleted objects” are in fact hidden by a “delete marker” and can be recovered
-- Transition the “noncurrent versions” of the object to Standard IA
-- Transition afterwards the “noncurrent versions” to Glacier Deep Archive
+- Enable S3 Versioning in order to have object versions, so that "deleted objects" are in fact hidden by a "delete marker" and can be recovered
+- Transition the "noncurrent versions" of the object to Standard IA
+- Transition afterwards the "noncurrent versions" to Glacier Deep Archive
 
 # S3 Analytics – Storage Class Analysis
 
@@ -55,7 +55,7 @@ A rule in your company states that you should be able to recover your deleted S3
 - S3:ObjectCreated, S3:ObjectRemoved, S3:ObjectRestore, S3:Replication…
 - Object name filtering possible (\*.jpg)
 - Use case: generate thumbnails of images uploaded to S3
-- Can create as many “S3 events” as desired
+- Can create as many "S3 events" as desired
 - S3 event notifications typically deliver events in seconds but can sometimes take a minute or longer
 
 ## Event Notifications with Amazon EventBridge

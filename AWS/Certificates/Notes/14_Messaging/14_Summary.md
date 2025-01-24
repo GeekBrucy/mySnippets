@@ -2,7 +2,7 @@
 
 ## SQS
 
-- Consumer “pull data”
+- Consumer "pull data"
 - Data is deleted after being consumed
 - Can have as many workers (consumers) as we want
 - No need to provision throughput

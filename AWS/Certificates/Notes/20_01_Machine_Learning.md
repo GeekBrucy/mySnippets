@@ -4,7 +4,7 @@
 
 - Find objects, people, text, scenes in images and videos using ML
 - Facial analysis and facial search to do user verification, people counting
-- Create a database of “familiar faces” or compare against celebrities
+- Create a database of "familiar faces" or compare against celebrities
 - Use cases:
   - Labeling
   - Content Moderation
@@ -45,8 +45,8 @@
 ## Lexicon & SSML
 
 - Customize the pronunciation of words with Pronunciation lexicons
-  - Stylized words: St3ph4ne => “Stephane”
-  - Acronyms: AWS => “Amazon Web Services”
+  - Stylized words: St3ph4ne => "Stephane"
+  - Acronyms: AWS => "Amazon Web Services"
 - Upload the lexicons and use them in the SynthesizeSpeech operation
 - Generate speech from plain text or from documents marked up with Speech
   Synthesis Markup Language (SSML) – enables more customization

@@ -1,6 +1,6 @@
 # Hybrid Cloud for Storage
 
-- AWS is pushing for ”hybrid cloud”
+- AWS is pushing for "hybrid cloud"
   - Part of your infrastructure is on the cloud
   - Part of your infrastructure is on-premises
 - This can be due to

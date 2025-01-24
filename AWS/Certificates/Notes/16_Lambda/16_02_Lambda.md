@@ -73,7 +73,7 @@
   - Memory allocation: 128 MB – 10GB (1 MB increments)
   - Maximum execution time: 900 seconds (15 minutes)
   - Environment variables (4 KB)
-  - Disk capacity in the “function container” (in /tmp): 512 MB to 10GB
+  - Disk capacity in the "function container" (in /tmp): 512 MB to 10GB
   - Concurrency executions: 1000 (can be increased)
 - Deployment:
   - Lambda function deployment size (compressed .zip): 50 MB

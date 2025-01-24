@@ -447,7 +447,7 @@ function has the appropriate permissions
 
 # DynamoDB Write Sharding
 - Imagine we have a voting application with two candidates, candidate A and candidate B
-- If Partition Key is “Candidate_ID”, this results into two partitions, which will generate issues (e.g., Hot Partition)
+- If Partition Key is "Candidate_ID", this results into two partitions, which will generate issues (e.g., Hot Partition)
 - A strategy that allows better distribution of items evenly across partitions
 - Add a suffix to Partition Key value
 - Two methods:

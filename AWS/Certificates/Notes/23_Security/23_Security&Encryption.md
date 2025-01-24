@@ -30,7 +30,7 @@
 
 ## AWS KMS (Key Management Service)
 
-- Anytime you hear “encryption” for an AWS service, it’s most likely KMS
+- Anytime you hear "encryption" for an AWS service, it’s most likely KMS
 - AWS manages encryption keys for us
 - Fully integrated with IAM for authorization
 - Easy way to control access to your data
@@ -67,7 +67,7 @@
 
 ### KMS Key Policies
 
-- Control access to KMS keys, “similar” to S3 bucket policies
+- Control access to KMS keys, "similar" to S3 bucket policies
 - Difference: you cannot control access without them
 - Default KMS Key Policy:
   - Created if you don’t provide a specific KMS Key Policy
@@ -413,7 +413,7 @@
   - Optional Features – EKS Audit Logs, RDS & Aurora, EBS, Lambda, S3 Data Events…
 - Can setup EventBridge rules to be notified in case of findings
 - EventBridge rules can target AWS Lambda or SNS
-- Can protect against CryptoCurrency attacks (has a dedicated “finding” for it)
+- Can protect against CryptoCurrency attacks (has a dedicated "finding" for it)
 
 ![image](./23_13_GuardDuty_Structure.png)
 

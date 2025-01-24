@@ -23,7 +23,7 @@
 
 # Docker vs. Virtual Machines
 
-- Docker is ”sort of” a virtualization technology, but not exactly
+- Docker is "sort of" a virtualization technology, but not exactly
 - Resources are shared with the host => many containers on one server
 
 # Docker Containers Management on AWS

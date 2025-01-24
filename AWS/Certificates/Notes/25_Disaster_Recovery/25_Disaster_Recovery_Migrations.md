@@ -77,7 +77,7 @@ https://docs.aws.amazon.com/whitepapers/latest/disaster-recovery-workloads-on-aw
   - Recover / Reboot EC2 instances with CloudWatch if alarms fail
   - AWS Lambda functions for customized automations
 - Chaos
-  - Netflix has a “simian-army” randomly terminating EC2
+  - Netflix has a "simian-army" randomly terminating EC2
 
 # DMS – Database Migration Service
 

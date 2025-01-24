@@ -23,7 +23,7 @@
 ## FSx for Lustre
 
 - Lustre is a type of parallel distributed file system, for large-scale computing
-- The name Lustre is derived from “Linux” and “cluster
+- The name Lustre is derived from "Linux" and "cluster
 - Machine Learning, High Performance Computing (HPC)
 - Video Processing, Financial Modeling, Electronic Design Automation
 - Scales up to 100s GB/s, millions of IOPS, sub-ms latencies
@@ -31,7 +31,7 @@
   - SSD – low-latency, IOPS intensive workloads, small & random file operations
   - HDD – throughput-intensive workloads, large & sequential file operations
 - Seamless integration with S3
-  - Can “read S3” as a file system (through FSx)
+  - Can "read S3" as a file system (through FSx)
   - Can write the output of the computations back to S3 (through FSx)
 - Can be used from on-premises servers (VPN or Direct Connect)
 

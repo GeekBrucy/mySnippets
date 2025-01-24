@@ -68,7 +68,7 @@ https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_evaluation-l
 
 - Use cases
   - Delegate responsibilities to non administrators within their permission boundaries, for example create new IAM users
-  - Allow developers to self-assign policies and manage their own permissions, while making sure they can’t “escalate” their privileges (= make themselves admin)
+  - Allow developers to self-assign policies and manage their own permissions, while making sure they can’t "escalate" their privileges (= make themselves admin)
   - Useful to restrict one specific user (instead of a whole account using Organizations & SCP)
 
 # IAM Policy Evaluation Logic
@@ -110,7 +110,7 @@ https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_evaluation-l
 
 - AWS Managed Microsoft AD
   - Create your own AD in AWS, manage users locally, supports MFA
-  - Establish “trust” connections with your onpremises AD
+  - Establish "trust" connections with your onpremises AD
 - AD Connector
   - Directory Gateway (proxy) to redirect to onpremises AD, supports MFA
   - Users are managed on the on-premises AD

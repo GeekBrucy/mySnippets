@@ -3,14 +3,14 @@
 - Imagine you have 100 trucks (truck_1, truck_2, … truck_100) on the road sending their GPS positions regularly into AWS.
 - You want to consume the data in order for each truck, so that you can track their movement accurately.
 - How should you send that data into Kinesis?
-- Answer: send using a “Partition Key” value of the “truck_id”
+- Answer: send using a "Partition Key" value of the "truck_id"
 - The same key will always go to the same shard
 
 # Ordering data into SQS
 
 - For SQS standard, there is no ordering.
 - For SQS FIFO, if you don’t use a Group ID, messages are consumed in the order they are sent, with only one consumer
-- You want to scale the number of consumers, but you want messages to be “grouped” when they are related to each other
+- You want to scale the number of consumers, but you want messages to be "grouped" when they are related to each other
 - Then you use a Group ID (similar to Partition Key in Kinesis)
 
 # Kinesis vs SQS ordering

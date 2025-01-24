@@ -7,7 +7,7 @@
 - Cognito Identity Pools (Federated Identity):
   - Provide AWS credentials to users so they can access AWS resources directly
   - Integrate with Cognito User Pools as an identity provider
-- Cognito vs IAM: “hundreds of users”, ”mobile users”, “authenticate with SAML”
+- Cognito vs IAM: "hundreds of users", "mobile users", "authenticate with SAML"
 
 # Cognito User Pools (CUP) – User Features
 
@@ -24,7 +24,7 @@
 
 # Cognito Identity Pools (Federated Identities)
 
-- Get identities for “users” so they obtain temporary AWS credentials
+- Get identities for "users" so they obtain temporary AWS credentials
 - Users source can be Cognito User Pools, 3rd party logins, etc…
 - Users can then access AWS services directly or through API Gateway
 - The IAM policies applied to the credentials are defined in Cognito

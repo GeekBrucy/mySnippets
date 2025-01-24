@@ -74,7 +74,7 @@ Answer: Yes, you can set up your Read Replica as a Multi AZ if you want it to
 ### RDS – From Single-AZ to Multi-AZ
 
 - Zero downtime operation (no need to stop the DB)
-- Just click on “modify” for the database
+- Just click on "modify" for the database
 - The following happens internally:
   - A snapshot is taken
   - A new DB is restored from the snapshot in a new AZ
@@ -98,7 +98,7 @@ Answer: Yes, you can set up your Read Replica as a Multi AZ if you want it to
 
 - Aurora is a proprietary technology from AWS (not open sourced)
 - Postgres and MySQL are both supported as Aurora DB (that means your drivers will work as if Aurora was a Postgres or MySQL database)
-- Aurora is “AWS cloud optimized” and claims 5x performance improvement over MySQL on RDS, over 3x the performance of Postgres on RDS
+- Aurora is "AWS cloud optimized" and claims 5x performance improvement over MySQL on RDS, over 3x the performance of Postgres on RDS
 - Aurora storage automatically grows in increments of 10GB, up to 128 TB.
 - Aurora can have up to 15 replicas and the replication process is faster than MySQL (sub 10 ms replica lag)
 - Failover in Aurora is instantaneous. It’s HA (High Availability) native.
@@ -198,7 +198,7 @@ Answer: Yes, you can set up your Read Replica as a Multi AZ if you want it to
     – no copying is needed)
   - When updates are made to the new DB cluster data, then additional storage is allocated and data is copied to be separated
 - Very fast & cost-effective
-- Useful to create a “staging” database from a “production” database without impacting the production database
+- Useful to create a "staging" database from a "production" database without impacting the production database
 
 ### RDS & Aurora Security
 
@@ -270,7 +270,7 @@ MEMCACHED
 - ElastiCache supports IAM Authentication for Redis
 - IAM policies on ElastiCache are only used for AWS API-level security
 - Redis AUTH
-  - You can set a “password/token” when you create a Redis cluster
+  - You can set a "password/token" when you create a Redis cluster
   - This is an extra level of security for your cache (on top of security groups)
   - Support SSL in flight encryption
 - Memcached

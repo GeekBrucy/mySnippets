@@ -5,6 +5,7 @@
 - Amazon S3 automatically scales to high request rates. For example, your application can achieve at least **3,500 PUT/POST/DELETE** and **5,500 GET** requests **per second per prefix** in a bucket. There are no limits to the number of prefixes in a bucket. It is simple to increase your read or write performance exponentially. For example, if you create 10 prefixes in an Amazon S3 bucket to parallelize reads, you could scale your read performance to 55,000 read requests per second.
 
 - To host a static website, you configure an Amazon S3 bucket for website hosting, and then upload your website content to the bucket. This bucket **must have public read access**. It is intentional that everyone in the world will have read access to this bucket.
+- [Sharing objects with presigned URLs](https://docs.aws.amazon.com/AmazonS3/latest/userguide/ShareObjectPreSignedURL.html)
 
 # S3 policy that only allows vpc gateway endpoint
 

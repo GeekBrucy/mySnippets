@@ -4,7 +4,7 @@
 - They just deploy code
 - They just deploy… functions !
 - Initially... Serverless == FaaS (Function as a Service)
-- Serverless was pioneered by AWS Lambda but now also includes anything that’s managed: “databases, messaging, storage, etc.”
+- Serverless was pioneered by AWS Lambda but now also includes anything that’s managed: "databases, messaging, storage, etc."
 - Serverless does not mean there are no servers… it means you just don’t manage / provision / see them
 
 # Serverless in AWS

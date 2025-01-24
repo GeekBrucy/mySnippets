@@ -18,7 +18,7 @@
 
 # Snapshots & DR
 
-- Redshift has “Multi-AZ” mode for some clusters
+- Redshift has "Multi-AZ" mode for some clusters
 - Snapshots are point-in-time backups of a cluster, stored internally in S3
 - Snapshots are incremental (only what has changed is saved)
 - You can restore a snapshot into a new cluster

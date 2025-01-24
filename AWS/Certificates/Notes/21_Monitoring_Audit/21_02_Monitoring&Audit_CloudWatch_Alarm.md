@@ -21,7 +21,7 @@
 - CloudWatch Alarms are on a single metric
 - Composite Alarms are monitoring the states of multiple other alarms
 - AND and OR conditions
-- Helpful to reduce “alarm noise” by creating complex composite alarms
+- Helpful to reduce "alarm noise" by creating complex composite alarms
 
 ## EC2 Instance Recovery
 
