@@ -25,8 +25,19 @@ public class AccountController : ControllerBase
     var loginInfo = await _signInManager.GetExternalLoginInfoAsync();
     if (loginInfo != null)
     {
+      Console.WriteLine(loginInfo.LoginProvider);
+      foreach (var claim in loginInfo.Principal.Claims)
+      {
+        Console.WriteLine(claim);
+      }
       var emailClaim = loginInfo.Principal.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Email);
-      var nameClaim = loginInfo.Principal.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name);
+      // the following implementation is for both facebook and cognito
+      // the code needs to be improved
+      var nameClaim = loginInfo.Principal.Claims.FirstOrDefault
+      (
+        x => x.Type == ClaimTypes.Name
+        || x.Type == "cognito:username"
+      );
 
       if (emailClaim != null && nameClaim != null)
       {

@@ -1,9 +1,14 @@
+using System.IdentityModel.Tokens.Jwt;
 using _03_v25_webapp_identity.Data;
 using _03_v25_webapp_identity.Data.Account;
 using _03_v25_webapp_identity.Services;
 using _03_v25_webapp_identity.Settings;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -51,8 +56,40 @@ builder.Services.AddAuthentication().AddFacebook(options =>
 {
     options.AppId = builder.Configuration["FaceBookAuth:AppId"] ?? string.Empty;
     options.AppSecret = builder.Configuration["FaceBookAuth:Secret"] ?? string.Empty;
+})
+.AddCookie()
+.AddOpenIdConnect("Cognito", options =>
+{
+    options.ResponseType = builder.Configuration["Authentication:Cognito:ResponseType"] ?? string.Empty;
+    options.MetadataAddress = builder.Configuration["Authentication:Cognito:MetadataAddress"] ?? string.Empty;
+    options.ClientId = builder.Configuration["Authentication:Cognito:ClientId"] ?? string.Empty;
+    options.ClientSecret = builder.Configuration["Authentication:Cognito:Secret"] ?? string.Empty;
+    options.Events = new OpenIdConnectEvents()
+    {
+        OnRedirectToIdentityProviderForSignOut = OnRedirectToIdentityProviderForSignOut
+    };
 });
 
+Task OnRedirectToIdentityProviderForSignOut(RedirectContext context)
+{
+    context.ProtocolMessage.Scope = "openid";
+    context.ProtocolMessage.ResponseType = "code";
+
+    var cognitoDomain = builder.Configuration["Authentication:Cognito:CognitoDomain"];
+
+    var clientId = builder.Configuration["Authentication:Cognito:ClientId"];
+
+    var logoutUrl = $"{context.Request.Scheme}://{context.Request.Host}{builder.Configuration["Authentication:Cognito:AppSignOutUrl"]}";
+
+    context.ProtocolMessage.IssuerAddress = $"{cognitoDomain}/logout?client_id={clientId}&logout_uri={logoutUrl}&redirect_uri={logoutUrl}";
+
+    // delete cookies
+    context.Properties.Items.Remove(CookieAuthenticationDefaults.AuthenticationScheme);
+    // close openid session
+    context.Properties.Items.Remove(OpenIdConnectDefaults.AuthenticationScheme);
+
+    return Task.CompletedTask;
+}
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

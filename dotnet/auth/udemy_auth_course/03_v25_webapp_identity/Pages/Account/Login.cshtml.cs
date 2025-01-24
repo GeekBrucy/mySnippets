@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using _03_v25_webapp_identity.Data.Account;
 using _03_v25_webapp_identity.ViewModels;
+using Dumpify;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -77,6 +78,7 @@ public class Login : PageModel
 
     public IActionResult OnPostLoginExternally(string provider)
     {
+        string redirectUrl = string.Empty;
         var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, null);
         properties.RedirectUri = Url.Action("ExternalLoginCallback", "Account");
         return Challenge(properties, provider);
