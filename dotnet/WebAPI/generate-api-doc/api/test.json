@@ -1,0 +1,135 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "External API",
+    "version": "v1"
+  },
+  "paths": {
+    "/Function1": {
+      "get": {
+        "tags": [
+          "Function1"
+        ],
+        "parameters": [
+          {
+            "name": "param1",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "param2",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Function1"
+        ],
+        "parameters": [
+          {
+            "name": "param1",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "param2",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Function1DTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Function1DTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Function1DTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/Function2": {
+      "get": {
+        "tags": [
+          "Function2"
+        ],
+        "parameters": [
+          {
+            "name": "param1",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "param2",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Function1DTO": {
+        "type": "object",
+        "properties": {
+          "prop1": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "prop2": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "prop3": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  }
+}

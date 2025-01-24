@@ -1,0 +1,357 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "External API",
+    "version": "v1"
+  },
+  "paths": {
+    "/Function1": {
+      "get": {
+        "tags": [
+          "Function1"
+        ],
+        "parameters": [
+          {
+            "name": "param1",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "param2",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Function1"
+        ],
+        "parameters": [
+          {
+            "name": "param1",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "param2",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Function1DTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Function1DTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Function1DTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/Function2": {
+      "get": {
+        "tags": [
+          "Function2"
+        ],
+        "parameters": [
+          {
+            "name": "param1",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "param2",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Function2"
+        ],
+        "parameters": [
+          {
+            "name": "param1",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "param2",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Shot"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Shot"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Shot"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "BaseSet": {
+        "type": "object",
+        "additionalProperties": false
+      },
+      "CurrentSet": {
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/BaseSet"
+          }
+        ],
+        "properties": {
+          "branchlineWeightingRegime": {
+            "type": "string",
+            "nullable": true
+          },
+          "branchlineWeight": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "lengthOfBranchline": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "branchlineWeightDistanceFromHook": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "comments": {
+            "type": "string",
+            "nullable": true
+          },
+          "depthFishedMaximum": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "depthFishedMinimum": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "endDateTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endPositionLatitude": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "endPositionLongitude": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "fishingDepthTemperatureAverage": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "fishingGround": {
+            "type": "string",
+            "nullable": true
+          },
+          "lineShooterUsed": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "lineShootingSpeed": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "numberOfHooksBetweenBubbles": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "numberOfHooksSet": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "hookType": {
+            "nullable": true
+          },
+          "hookSize": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "numberOfLightsticksUsed": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "researchDescription": {
+            "type": "string",
+            "nullable": true
+          },
+          "seaSurfaceTemperatureAverage": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "startDateTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "startSetPositionLatitude": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "startSetPositionLongitude": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "totalLengthOfLineShot": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "vesselShootingSpeed": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Function1DTO": {
+        "type": "object",
+        "properties": {
+          "prop1": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "prop2": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "prop3": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "PreviousSet": {
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/BaseSet"
+          }
+        ],
+        "properties": {
+          "setTripActivityNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "setTripId": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Shot": {
+        "type": "object",
+        "properties": {
+          "set": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/PreviousSet"
+              },
+              {
+                "$ref": "#/components/schemas/CurrentSet"
+              }
+            ],
+            "nullable": true
+          },
+          "myProperty": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  }
+}

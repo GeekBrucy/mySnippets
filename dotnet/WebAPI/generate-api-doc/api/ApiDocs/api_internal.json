@@ -1,0 +1,68 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Internal API",
+    "version": "v1"
+  },
+  "paths": {
+    "/internal/InternalFunction1": {
+      "get": {
+        "tags": [
+          "InternalFunction1"
+        ],
+        "parameters": [
+          {
+            "name": "param1",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "param2",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/internal/InternalFunction2": {
+      "get": {
+        "tags": [
+          "InternalFunction2"
+        ],
+        "parameters": [
+          {
+            "name": "param1",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "param2",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "components": { }
+}
