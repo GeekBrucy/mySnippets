@@ -1,3 +1,7 @@
+# Amazon ECS - IAM Roles for ECS
+
+# ecs.config
+
 # ECS Service Auto Scaling
 * Automatically increase/decrease the desired number of ECS tasks
 * Amazon ECS Auto Scaling uses AWS Application Auto Scaling
@@ -92,3 +96,90 @@ Starting number of tasks: 4
 * Use cases:
   * Share ephemeral data between multiple containers
   * "Sidecar" container pattern, where the "sidecar" container used to send metrics/logs to other destinations (separation of concerns)
+
+# ECS Tasks Placement
+* When a task of type EC2 is launched, ECS must determine where to place it, with the constraints of CPU, memory,and available port
+* Similarly, when a service scales in, ECS needs to determine which task to terminate
+* To Assist with this, you can define a task placement strategy and task placement constraints
+* Note: this is only for ECS with EC2, **Not for Fargate**
+
+## ECS Task Placement Process
+* Task placement strategies are a best effort
+* When Amazon ECS places tasks, it uses the following process to select container instances:
+  1. Identify the instances that satisfy the CPU, memory and port requirements in the task definition
+  2. Identify the instances that satisfy the task placement constraints
+  3. Identify the instances that satisfy the task placement strategies
+  4. Select the instances for task placement
+
+### Placement Strategies
+#### Binpack
+* Place tasks based on the least available amount of CPU or memory
+* This minimizes the number of instances in use (cost savings)
+
+```json
+{
+  "placementStrategy": [
+    {
+      "field": "memory",
+      "type": "binpack"
+    }
+  ]
+}
+```
+
+#### Random
+* Place the task randomly
+
+```json
+{
+  "placementStrategy": [
+    {
+      "type": "random"
+    }
+  ]
+}
+```
+
+#### Spread
+* Place the task evenly based on the specified value
+* Example: instanceId, attributes:ecs.availability-zone
+
+```json
+{
+  "placementStrategy": [
+    {
+      "field": "attribute:ecs.availability-zone",
+      "type": "spread"
+    }
+  ]
+}
+```
+
+### Placement Constraints
+#### distinctInstance
+Place each task on a different container instance
+
+```json
+{
+  "placementConstraints": [
+    {
+      "type": "distinctInstance"
+    }
+  ]
+}
+```
+
+#### memberOf
+Place task on instances that satisfy an expression
+* Uses the cluster Query Language (advance)
+
+```json
+{
+  "placementConstraints": [
+    {
+      "expression": "attribute:ecs.instance-type =~ t2.*",
+      "type": "memberOf"
+    }
+  ]
+}
+```
