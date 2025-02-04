@@ -10,3 +10,9 @@
 
 # UML / Structure
 ![](./abstract_factory_uml.png)
+
+# Abstract Factory模式的几个要点
+* 如果没有应对“多系列对象构建”的需求变化, 则没有必要使用Abstract Factory模式, 这个时候使用简单的静态工厂完全可以
+* “系列对象”指的是这些对象之间有相互依赖、或作用的关系, 例如游戏开发场景中的“道路”与“房屋”的依赖, “道路”与“地道”的依赖
+* Abstract Factory模式主要在于应对“新系列”的需求变动. 其缺点在于难以应对“新对象”的需求变动
+* Abstract Factory模式经常和Factory Method模式共同组合来应对“对象创建”的需求变化
