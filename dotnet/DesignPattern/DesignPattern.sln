@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "creational_01_singleton_bas
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "creational_02_abstract_factory_basics", "creational_02_abstract_factory_basics\creational_02_abstract_factory_basics.csproj", "{9D075A63-000D-4685-A936-B5CBA489335E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "creational_03_builder_basics", "creational_03_builder_basics\creational_03_builder_basics.csproj", "{9A5F6989-F6F8-4BDE-9EA0-B40497EADF10}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{9D075A63-000D-4685-A936-B5CBA489335E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9D075A63-000D-4685-A936-B5CBA489335E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9D075A63-000D-4685-A936-B5CBA489335E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A5F6989-F6F8-4BDE-9EA0-B40497EADF10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A5F6989-F6F8-4BDE-9EA0-B40497EADF10}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A5F6989-F6F8-4BDE-9EA0-B40497EADF10}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A5F6989-F6F8-4BDE-9EA0-B40497EADF10}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
