@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "structural_10_facade_basics
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "structural_11_flyweight_basics", "structural_11_flyweight_basics\structural_11_flyweight_basics.csproj", "{DB99B598-C3EF-4C27-9A35-5B982C0BF3BC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "structural_12_proxy_basics", "structural_12_proxy_basics\structural_12_proxy_basics.csproj", "{78167888-A4A9-4A28-B9A2-098F175DA509}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -78,5 +80,9 @@ Global
 		{DB99B598-C3EF-4C27-9A35-5B982C0BF3BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DB99B598-C3EF-4C27-9A35-5B982C0BF3BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DB99B598-C3EF-4C27-9A35-5B982C0BF3BC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78167888-A4A9-4A28-B9A2-098F175DA509}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78167888-A4A9-4A28-B9A2-098F175DA509}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78167888-A4A9-4A28-B9A2-098F175DA509}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78167888-A4A9-4A28-B9A2-098F175DA509}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
