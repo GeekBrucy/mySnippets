@@ -29,6 +29,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "structural_12_proxy_basics"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "behavioral_13_template_method_basics", "behavioral_13_template_method_basics\behavioral_13_template_method_basics.csproj", "{61845B4E-14D8-4EE4-86C9-8C8167C7E55E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "behavioral_14_command_basics", "behavioral_14_command_basics\behavioral_14_command_basics.csproj", "{4C1F03E7-5BE5-48B4-9289-51554F856E7A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -90,5 +92,9 @@ Global
 		{61845B4E-14D8-4EE4-86C9-8C8167C7E55E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{61845B4E-14D8-4EE4-86C9-8C8167C7E55E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{61845B4E-14D8-4EE4-86C9-8C8167C7E55E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C1F03E7-5BE5-48B4-9289-51554F856E7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C1F03E7-5BE5-48B4-9289-51554F856E7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C1F03E7-5BE5-48B4-9289-51554F856E7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C1F03E7-5BE5-48B4-9289-51554F856E7A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
