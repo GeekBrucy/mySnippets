@@ -35,6 +35,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "behavioral_15_interpreter_b
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "behavioral_16_mediator_basics", "behavioral_16_mediator_basics\behavioral_16_mediator_basics.csproj", "{ACF2E8F9-B094-4D5E-AE41-AE8B0A0EEB78}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "behavioral_17_iterator_basics", "behavioral_17_iterator_basics\behavioral_17_iterator_basics.csproj", "{44EDE611-0E6B-4250-A83E-6D6308FA9250}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -108,5 +110,9 @@ Global
 		{ACF2E8F9-B094-4D5E-AE41-AE8B0A0EEB78}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ACF2E8F9-B094-4D5E-AE41-AE8B0A0EEB78}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ACF2E8F9-B094-4D5E-AE41-AE8B0A0EEB78}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44EDE611-0E6B-4250-A83E-6D6308FA9250}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44EDE611-0E6B-4250-A83E-6D6308FA9250}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44EDE611-0E6B-4250-A83E-6D6308FA9250}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44EDE611-0E6B-4250-A83E-6D6308FA9250}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
