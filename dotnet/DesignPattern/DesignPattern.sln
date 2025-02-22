@@ -45,6 +45,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "behavioral_20_memento_basic
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "behavioral_21_state_basics", "behavioral_21_state_basics\behavioral_21_state_basics.csproj", "{38ED8060-F90F-4DAA-B8E1-0B7E2736E4B4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "behavioral_22_strategy_basics", "behavioral_22_strategy_basics\behavioral_22_strategy_basics.csproj", "{A2D92FE2-3D44-491D-A945-BD2E400AF40D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -138,5 +140,9 @@ Global
 		{38ED8060-F90F-4DAA-B8E1-0B7E2736E4B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{38ED8060-F90F-4DAA-B8E1-0B7E2736E4B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{38ED8060-F90F-4DAA-B8E1-0B7E2736E4B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2D92FE2-3D44-491D-A945-BD2E400AF40D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2D92FE2-3D44-491D-A945-BD2E400AF40D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2D92FE2-3D44-491D-A945-BD2E400AF40D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2D92FE2-3D44-491D-A945-BD2E400AF40D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
