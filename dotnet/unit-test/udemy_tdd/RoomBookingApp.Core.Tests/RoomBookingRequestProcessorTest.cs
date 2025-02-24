@@ -27,12 +27,9 @@ namespace RoomBookingApp.Core.Tests
 
             _availableRooms = new List<Room>()
             {
-                // new Room { Id = 1, Name = "Room 1" },
-                // new Room { Id = 2, Name = "Room 2" },
-                // new Room { Id = 3, Name = "Room 3" }
-                new Room(),
-                new Room(),
-                new Room()
+                new Room { Id = 1, Name = "Room 1" },
+                new Room { Id = 2, Name = "Room 2" },
+                new Room { Id = 3, Name = "Room 3" }
             };
             _roomBookingServiceMock = new Mock<IRoomBookingService>();
             _roomBookingServiceMock.Setup(x => x.GetAvailableRooms(_request.Date))
@@ -96,6 +93,7 @@ namespace RoomBookingApp.Core.Tests
             savedBooking.FullName.ShouldBe(_request.FullName);
             savedBooking.Email.ShouldBe(_request.Email);
             savedBooking.Date.ShouldBe(_request.Date);
+            savedBooking.RoomId.ShouldBe(_availableRooms.First().Id);
         }
 
         [Fact]
