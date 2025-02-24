@@ -13,12 +13,11 @@ namespace RoomBookingApp.Core.Tests
         private RoomBookingRequestProcessor _processor;
         private RoomBookingRequest _request;
         private Mock<IRoomBookingService> _roomBookingServiceMock;
+        private List<Room> _availableRooms;
 
         public RoomBookingRequestProcessorTest()
         {
             // Arrange
-            _roomBookingServiceMock = new Mock<IRoomBookingService>();
-            _processor = new RoomBookingRequestProcessor(_roomBookingServiceMock.Object);
             _request = new RoomBookingRequest
             {
                 FullName = "Test Name",
@@ -26,6 +25,19 @@ namespace RoomBookingApp.Core.Tests
                 Date = new DateTime(2025, 02, 23)
             };
 
+            _availableRooms = new List<Room>()
+            {
+                // new Room { Id = 1, Name = "Room 1" },
+                // new Room { Id = 2, Name = "Room 2" },
+                // new Room { Id = 3, Name = "Room 3" }
+                new Room(),
+                new Room(),
+                new Room()
+            };
+            _roomBookingServiceMock = new Mock<IRoomBookingService>();
+            _roomBookingServiceMock.Setup(x => x.GetAvailableRooms(_request.Date))
+                .Returns(_availableRooms);
+            _processor = new RoomBookingRequestProcessor(_roomBookingServiceMock.Object);
         }
         [Fact]
         public void Should_Return_Room_Booking_Response_With_Request_Values()
@@ -84,6 +96,19 @@ namespace RoomBookingApp.Core.Tests
             savedBooking.FullName.ShouldBe(_request.FullName);
             savedBooking.Email.ShouldBe(_request.Email);
             savedBooking.Date.ShouldBe(_request.Date);
+        }
+
+        [Fact]
+        public void Should_Not_Save_Room_Booking_Request_If_None_Available()
+        {
+            // Arrange
+            // make sure no rooms are available at the beginning
+            _availableRooms.Clear();
+            // Act
+            _processor.BookRoom(_request);
+
+            // Assert
+            _roomBookingServiceMock.Verify(q => q.Save(It.IsAny<RoomBooking>()), Times.Never);
         }
     }
 }
