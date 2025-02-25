@@ -26,7 +26,8 @@ namespace RoomBookingApp.Persistence.Repositories
 
         public void Save(RoomBooking roomBookingApp)
         {
-            throw new NotImplementedException();
+            _context.Add(roomBookingApp);
+            _context.SaveChanges();
         }
     }
 }

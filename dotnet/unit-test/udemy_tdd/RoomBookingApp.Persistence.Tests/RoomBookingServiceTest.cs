@@ -36,4 +36,25 @@ public class RoomBookingServiceTest
         Assert.Contains(availableRooms, ar => ar.Id == 3);
         Assert.DoesNotContain(availableRooms, ar => ar.Id == 1);
     }
+
+    [Fact]
+    public void Should_Save_Room_Booking()
+    {
+        // Arrange
+        var dbOptions = new DbContextOptionsBuilder<RoomBookingAppDbContext>()
+            .UseInMemoryDatabase(databaseName: "AvailableRoomTest")
+            .Options;
+
+        var roomBooking = new RoomBooking { RoomId = 1, Date = new DateTime(2024, 06, 24) };
+        // Act
+        using var context = new RoomBookingAppDbContext(dbOptions);
+        var roomBookingService = new RoomBookingService(context);
+        roomBookingService.Save(roomBooking);
+
+        // Assert
+        var bookings = context.RoomBookings.ToList();
+        var booking = Assert.Single(bookings);
+        Assert.Equal(roomBooking.RoomId, booking.RoomId);
+        Assert.Equal(roomBooking.Date, booking.Date);
+    }
 }
