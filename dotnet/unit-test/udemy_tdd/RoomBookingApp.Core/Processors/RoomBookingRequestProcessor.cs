@@ -6,7 +6,7 @@ using RoomBookingApp.Core.Models;
 
 namespace RoomBookingApp.Core.Processors
 {
-  public class RoomBookingRequestProcessor
+  public class RoomBookingRequestProcessor : IRoomBookingRequestProcessor
   {
     private IRoomBookingService _roomBookingService;
 
