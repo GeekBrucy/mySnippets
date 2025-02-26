@@ -1,0 +1,2 @@
+- API Gateway does NOT support SOAP API
+- Pass the HTTP header Cache-Control: max-age=0 to invalidate the API cache

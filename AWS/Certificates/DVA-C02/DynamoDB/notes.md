@@ -502,3 +502,7 @@ function has the appropriate permissions
 - **Attributes** – limit specific attributes the user can see
 
 ![](./fine-grained-access-control-iam.png)
+
+# Reduce the latency
+* Use eventually consistent reads in place of strongly consistent reads whenever possible
+* Consider using Global tables if your application is accessed by globally distributed users

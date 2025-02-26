@@ -1,0 +1,1 @@
+- Long polling: Set the ReceiveMessage API with a WaitTimeSeconds of 20

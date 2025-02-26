@@ -1,0 +1,1 @@
+- Amazon RDS Proxy is designed to improve application scalability and resilience by pooling and sharing database connections, reducing the CPU and memory overhead on the database. It handles the burst in connections seamlessly and improves the application‘s ability to scale.

@@ -37,3 +37,12 @@
 
 - In API Gateway, an API’s method request can take a payload in a different format from the corresponding integration request payload, as required in the backend. Similarly, the backend may return an integration response payload different from the method response payload, as expected by the frontend. API Gateway lets you use mapping templates to map the payload from a method request to the corresponding integration request and from an integration response to the corresponding method response.
   - A mapping template is a script expressed in Velocity Template Language (VTL) and applied to the payload using JSONPath expressions. The payload can have a data model according to the JSON schema draft 4. You must define the model in order to have API Gateway to generate a SDK or to enable basic request validation for your API. You do not have to define any model to create a mapping template. However, a model can help you create a template because API Gateway will generate a template blueprint based on a provided model.
+
+# Stage Variables
+* name-value pairs that you can define as configuration attributes associated with a deployment stage of an API. Thye act like environment variables and can be used in API setup and mapping templates.
+* With deployment stages in API gateway, you can manage multiple release stages for each API, such as alpha, beta, and production. Using stage variables you can configure an API deployment stage to interact with different backend endpoints
+
+# Method-level logging
+- To enable CloudWatch Logs for all or only some of the methods, you must also specify the ARN of an IAM role that enables API Gateway to write information to CloudWatch Logs on behalf of your user. The IAM role must also contain the following trust relationship statement
+
+- AWS Security Token Service(STS) is used by API Gateway for logging data to CloudWatch logs. Hence, AWS STS has to be enabled for the Region that you‘re using

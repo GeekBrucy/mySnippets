@@ -1,0 +1,4 @@
+- CodeCommit with three types of credentials:
+  - **Git credentials**: an IAM -generated user name and password pair you can use to communicate with CodeCommit repositories over HTTPS.
+  - **SSH keys**: a locally generated public-private key pair that you can associate with your IAM user to communicate with CodeCommit repositories over SSH.
+  - **AWS access keys**: can use with the credential helper included with the AWS CLI to communicate with CodeCommit repositories over HTTPS.

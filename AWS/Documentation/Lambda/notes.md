@@ -17,3 +17,14 @@ Useful for reducing cold start latencies.
 This represents the **maximum number of concurrent instances** allocated to your function. When a function has reserved concurrency, no other function can use that concurrency. Reserved concurrency is useful for **ensuring** that your most critical functions always have **enough concurrency** to handle incoming requests. Configuring reserved concurrency for a function incurs **no additional charges**.
 
 Useful if you don't want other functions taking up all the available unreserved concurrency.
+
+# Lambda authorizer
+for Custom authorization scheme
+
+## Two types of Lambda authorizers
+
+### Token-based Lambda authorizer (TOKEN authorizer)
+Receives the caller's identity in a bearer token, such as a JSON Web Token (JWT) or an OAuth token
+
+### Request parameter-based Lambda authorizer (REQUEST authorizer)
+Receives the caller's identity in a combination of headers, query string parameters, state variables, and $context variables

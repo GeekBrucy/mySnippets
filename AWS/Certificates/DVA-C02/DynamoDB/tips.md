@@ -1,0 +1,2 @@
+- A `FilterExpression` is a string that contains conditions that DynamoDB applies after the scan operation, but before the data is returned to you. This will **NOT** assist with speeding up the scan or preventing it from affecting normal workloads
+- Composite keys

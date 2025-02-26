@@ -1,0 +1,6 @@
+- Hive-compatible partitions?
+- Commands:
+  - `MSCK REPAIR TABLE`: scans Amazon S3 for Hive compatible partitions that were added to the file system after the table was created
+    - compares the partitions in the table metadata and the partitions in S3
+    - If new partitions are present in the S3 location that you specified when you created the table, it adds those partitions to the metadata and to the Athena table
+    - work better than DDL if have more than a few thousand partitions and DDL is facing timeout issues

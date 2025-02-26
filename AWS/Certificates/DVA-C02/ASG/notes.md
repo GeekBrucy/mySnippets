@@ -1,0 +1,2 @@
+- Amazon EC2 Auto Scaling works with both Application Load Balancers and Network Load Balancers
+- Amazon EC2 Auto Scaling cannot add a volume to an existing instance if the existing volume is approaching capacity

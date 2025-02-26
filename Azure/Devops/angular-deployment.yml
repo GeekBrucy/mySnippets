@@ -1,0 +1,92 @@
+# the following script works for Linux Web App
+
+trigger:
+- main  # Trigger pipeline on changes to the main branch
+
+pool:
+  vmImage: 'ubuntu-latest'  # Use a Linux agent (or 'windows-latest' for Windows)
+
+variables:
+  buildConfiguration: 'production'
+  nodeVersion: '18.x'  # Specify the Node.js version
+
+steps:
+- task: UseNode@1
+  inputs:
+    version: $(nodeVersion)
+  displayName: 'Install Node.js'
+
+- script: |
+    npm install -g @angular/cli
+    cd angular-deployment
+    npm install
+    ng build --configuration=$(buildConfiguration)
+  displayName: 'Install dependencies and build Angular app'
+
+- task: ArchiveFiles@2
+  inputs:
+    rootFolderOrFile: 'angular-deployment/dist/angular-deployment/browser'
+    includeRootFolder: false
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+    replaceExistingArchive: true
+  displayName: 'Archive build artifacts'
+
+- task: ArchiveFiles@2
+  inputs:
+    rootFolderOrFile: 'angular-deployment/dist/angular-deployment/server'
+    includeRootFolder: false
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/ssr/$(Build.BuildId).zip'
+    replaceExistingArchive: true
+  displayName: 'Archive build artifacts'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
+  displayName: 'Publish build artifacts'
+
+# Deploy to Azure Web App
+- task: AzureWebApp@1
+  inputs:
+    azureSubscription: '<subscription>'
+    appType: 'webApp'
+    appName: '<webapp1 name>'
+    package: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+    runtimeStack: 'NODE|22-lts'
+  displayName: 'Deploy to Azure Web App'
+
+- task: AzureWebApp@1
+  inputs:
+    azureSubscription: '<subscription>'
+    appType: 'webApp'
+    appName: '<webapp2 name>'
+    package: '$(Build.ArtifactStagingDirectory)/ssr/$(Build.BuildId).zip'
+    runtimeStack: 'NODE|22-lts'
+  displayName: 'Deploy to Azure Web App'
+
+- task: AzureAppServiceSettings@1
+  inputs:
+    azureSubscription: '<subscription>'
+    appName: '<webapp1 name>'
+    appSettings: |
+      {
+        "WEBSITE_NODE_DEFAULT_VERSION": "22",
+        "WEBSITES_ENABLE_APP_SERVICE_STORAGE": "false",
+        "STARTUP_COMMAND": "pm2 serve /home/site/wwwroot --no-daemon --spa"
+      }
+  displayName: 'Set SSR Web App Startup Command'
+
+- task: AzureAppServiceSettings@1
+  inputs:
+    azureSubscription: '<subscription>'
+    appName: '<webapp2 name>'
+    appSettings: |
+      {
+        "WEBSITE_NODE_DEFAULT_VERSION": "22",
+        "WEBSITES_ENABLE_APP_SERVICE_STORAGE": "false",
+        "STARTUP_COMMAND": "node /home/site/wwwroot/server.mjs"
+      }
+  displayName: 'Set SSR Web App Startup Command'

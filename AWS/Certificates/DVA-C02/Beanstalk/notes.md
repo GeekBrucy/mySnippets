@@ -13,6 +13,13 @@
 
 - Elastic Beanstalk supports two methods of saving configuration option settings. Configuration files in YAML or JSON format can be included in your application’s source code in a directory named .ebextensions and deployed as part of your application source bundle. You create and manage configuration files locally.
 
+# Migrate Env
+1. Create a saved configuration from account A
+2. Download it to local machine
+3. Make the account-specific param changes
+4. Upload to S3 in account B
+5. Create an application from that configuration
+
 # Overview
 
 - Elastic Beanstalk is a developer centric view of deploying an application on AWS

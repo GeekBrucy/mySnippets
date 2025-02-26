@@ -6,3 +6,6 @@
 
 - Before you can connect to a DB instance running the MySQL database engine, you must create a DB instance. For information, see Creating a DB Instance Running the MySQL Database Engine. Once Amazon RDS provisions your DB instance, you can use any standard MySQL client application or utility to connect to the instance. In the connection string, you specify the DNS address from the DB instance endpoint as the host parameter and specify the port number from the DB instance endpoint as the port parameter.
   - You can use the AWS Management Console, the AWS CLI describe-db-instances command, or the Amazon RDS API DescribeDBInstances action to list the details of an Amazon RDS DB instance, including its endpoint
+
+- RDS applies OS updates by performing maintenance on the standby, then promoting the standby to primary and finally performing maintenance on the old primary, which becomes the new standby
+- Amazon RDS automatically initiates a failover to the standby, in case primary database fails for any reason

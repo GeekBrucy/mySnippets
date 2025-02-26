@@ -183,3 +183,6 @@ Place task on instances that satisfy an expression
   ]
 }
 ```
+
+# Auditing
+* Use the awslogs log driver to configure the containers in your tasks to send log information to CloudWatch Logs. Add the required logConfiguration parameters to your task definition
