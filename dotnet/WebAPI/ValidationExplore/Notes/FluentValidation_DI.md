@@ -102,7 +102,7 @@ If you want to customize the validation behavior (e.g., change the response form
    dotnet add package FluentValidation.AspNetCore
    ```
 
-2. **Configure FluentValidation in `Program.cs`**:
+2. **Configure FluentValidation in `Program.cs`**: 
    ```csharp
    builder.Services.AddControllers()
        .AddFluentValidation(fv =>
@@ -112,6 +112,12 @@ If you want to customize the validation behavior (e.g., change the response form
            fv.ImplicitlyValidateChildProperties = true; // Validate nested objects
        });
    ```
+
+Note: the implementation above is obsoleted, use the following instead:
+```c#
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddScoped<IValidator<Customer>, CustomerValidator>(); // must have!!
+```
 
 3. **Customize Validation Response**:
    You can customize the validation response by overriding the `InvalidModelStateResponseFactory`:
