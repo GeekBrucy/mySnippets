@@ -1,99 +1,190 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+1. Exchanges an **authorization code** for **tokens** (access token, ID token, refresh token).
+2. Validates the **access token** issued by JobAdder.
+3. Protects routes using a **JWT guard**.
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Once the backend is ready, we’ll move to the **React frontend** to complete the POC.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+---
 
-## Description
+## **Step 1: Set Up a New NestJS Project**
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
-## Project setup
-
+### **1. Install NestJS CLI**
+If you haven’t already, install the NestJS CLI globally:
 ```bash
-$ npm install
+npm install -g @nestjs/cli
 ```
 
-## Compile and run the project
-
+### **2. Create a New NestJS Project**
+Run the following command to create a new NestJS project:
 ```bash
-# development
-$ npm run start
+nest new jobadder-auth-backend
+```
+Choose your preferred package manager (e.g., `npm` or `yarn`).
 
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+### **3. Navigate to the Project**
+```bash
+cd jobadder-auth-backend
 ```
 
-## Run tests
+---
 
+## **Step 2: Install Required Dependencies**
+
+Install the necessary packages for handling HTTP requests, JWT validation, and environment variables:
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+npm install @nestjs/passport passport passport-jwt axios @nestjs/config
 ```
 
-## Deployment
+---
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+## **Step 3: Set Up Environment Variables**
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+Create a `.env` file in the root of your project and add the following variables:
+```env
+# JobAdder OAuth2 credentials
+JOBADDER_CLIENT_ID=your-client-id
+JOBADDER_CLIENT_SECRET=your-client-secret
+JOBADDER_REDIRECT_URI=http://localhost:3000/callback
 
-```bash
-$ npm install -g mau
-$ mau deploy
+# JWT validation (optional for direct JobAdder auth)
+JWT_SECRET=your-jwt-secret
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+---
 
-## Resources
+## **Step 4: Create the Auth Module**
 
-Check out a few resources that may come in handy when working with NestJS:
+### **1. Generate the Auth Module**
+Run the following command to generate the `AuthModule`:
+```bash
+nest generate module auth
+```
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+### **2. Generate the Auth Service**
+Run the following command to generate the `AuthService`:
+```bash
+nest generate service auth
+```
 
-## Support
+### **3. Generate the Auth Controller**
+Run the following command to generate the `AuthController`:
+```bash
+nest generate controller auth
+```
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+---
 
-## Stay in touch
+## **Step 5: Implement the Auth Service**
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+Update the `auth.service.ts` file to handle the OAuth2 flow:
 
-## License
+```typescript
+// src/auth/auth.service.ts
+import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import axios from 'axios';
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+@Injectable()
+export class AuthService {
+  constructor(private configService: ConfigService) {}
+
+  async exchangeCodeForTokens(code: string) {
+    const clientId = this.configService.get<string>('JOBADDER_CLIENT_ID');
+    const clientSecret = this.configService.get<string>('JOBADDER_CLIENT_SECRET');
+    const redirectUri = this.configService.get<string>('JOBADDER_REDIRECT_URI');
+
+    const tokenUrl = 'https://id.jobadder.com/connect/token';
+
+    const response = await axios.post(
+      tokenUrl,
+      new URLSearchParams({
+        client_id: clientId,
+        client_secret: clientSecret,
+        code: code,
+        redirect_uri: redirectUri,
+        grant_type: 'authorization_code',
+      }),
+      {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+      },
+    );
+
+    return response.data; // Returns access_token, id_token, refresh_token, etc.
+  }
+}
+```
+
+---
+
+## **Step 6: Implement the Auth Controller**
+
+Update the `auth.controller.ts` file to handle the callback and token exchange:
+
+```typescript
+// src/auth/auth.controller.ts
+import { Controller, Post, Body } from '@nestjs/common';
+import { AuthService } from './auth.service';
+
+@Controller('auth')
+export class AuthController {
+  constructor(private readonly authService: AuthService) {}
+
+  @Post('callback')
+  async handleCallback(@Body('code') code: string) {
+    const tokens = await this.authService.exchangeCodeForTokens(code);
+    return { tokens };
+  }
+}
+```
+
+---
+
+## **Step 7: Set Up the App Module**
+
+Update the `app.module.ts` file to include the `AuthModule` and configure the `ConfigModule`:
+
+```typescript
+// src/app.module.ts
+import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
+import { AuthModule } from './auth/auth.module';
+
+@Module({
+  imports: [
+    ConfigModule.forRoot({ isGlobal: true }), // Load environment variables
+    AuthModule,
+  ],
+})
+export class AppModule {}
+```
+
+---
+
+## **Step 8: Test the Backend**
+
+### **1. Start the NestJS Server**
+Run the following command to start the server:
+```bash
+npm run start
+```
+
+### **2. Test the `/auth/callback` Endpoint**
+Use a tool like **Postman** or **cURL** to test the endpoint:
+```bash
+curl -X POST http://localhost:3000/auth/callback \
+  -H "Content-Type: application/json" \
+  -d '{"code": "your-authorization-code"}'
+```
+
+If successful, the backend will return the tokens:
+```json
+{
+  "tokens": {
+    "access_token": "your-access-token",
+    "id_token": "your-id-token",
+    "refresh_token": "your-refresh-token"
+  }
+}
+```
