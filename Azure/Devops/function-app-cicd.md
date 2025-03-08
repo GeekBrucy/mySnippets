@@ -19,10 +19,6 @@ steps:
     version: '6.x'
     installationPath: $(Agent.ToolsDirectory)/dotnet
 
-- task: NuGetCommand@2
-  inputs:
-    restoreSolution: '**/*.sln'
-
 - task: DotNetCoreCLI@2
   inputs:
     command: 'build'
@@ -33,6 +29,7 @@ steps:
   inputs:
     command: 'publish'
     projects: '**/*.csproj'
+    publishWebProjects: false
     arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
     zipAfterPublish: true
 
