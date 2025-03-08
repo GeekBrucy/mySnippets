@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Socket.IO Test</title>
+  <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    button {
+      padding: 10px 20px;
+      margin: 5px;
+      font-size: 16px;
+    }
+    textarea {
+      width: 100%;
+      height: 150px;
+      margin-top: 10px;
+      padding: 10px;
+      font-size: 14px;
+      resize: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>Socket.IO Test Client</h1>
+
+  <!-- Connect Button -->
+  <button id="connectButton">Connect</button>
+
+  <!-- Send Message Button (Disabled until connected) -->
+  <button id="sendButton" disabled>Send Message</button>
+
+  <!-- Message Input -->
+  <input type="text" id="messageInput" placeholder="Enter your message" disabled />
+
+  <!-- Message Display Area -->
+  <textarea id="messageArea" readonly></textarea>
+
+  <script>
+    let socket;
+
+    // Connect Button
+    document.getElementById('connectButton').addEventListener('click', () => {
+      // Initialize Socket.IO connection
+      socket = io('ws://test-websockt-dev.ap-southeast-2.elasticbeanstalk.com/', {transports: ['websocket']});
+
+      // Enable Send Message button and input field
+      document.getElementById('sendButton').disabled = false;
+      document.getElementById('messageInput').disabled = false;
+
+      // Handle connection event
+      socket.on('connect', () => {
+        appendMessage('Connected to Socket.IO server');
+      });
+
+      // Handle incoming messages
+      socket.on('message', (data) => {
+        appendMessage(`Server: ${data}`);
+      });
+
+      // Handle disconnection event
+      socket.on('disconnect', () => {
+        appendMessage('Disconnected from Socket.IO server');
+        document.getElementById('sendButton').disabled = true;
+        document.getElementById('messageInput').disabled = true;
+      });
+    });
+
+    // Send Message Button
+    document.getElementById('sendButton').addEventListener('click', () => {
+      const message = document.getElementById('messageInput').value;
+      if (message) {
+        socket.emit('message', message); // Send message to server
+        appendMessage(`You: ${message}`);
+        document.getElementById('messageInput').value = ''; // Clear input field
+      }
+    });
+
+    // Function to append messages to the textarea
+    function appendMessage(message) {
+      const messageArea = document.getElementById('messageArea');
+      messageArea.value += `${message}\n`;
+      messageArea.scrollTop = messageArea.scrollHeight; // Auto-scroll to bottom
+    }
+  </script>
+</body>
+</html>
