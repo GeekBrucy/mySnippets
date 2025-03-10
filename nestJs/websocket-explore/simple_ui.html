@@ -44,7 +44,7 @@
     // Connect Button
     document.getElementById('connectButton').addEventListener('click', () => {
       // Initialize Socket.IO connection
-      socket = io('ws://test-websockt-dev.ap-southeast-2.elasticbeanstalk.com/', {transports: ['websocket']});
+      socket = io('ws://test-websockt-env.eba-iiuswupf.ap-southeast-2.elasticbeanstalk.com/', {transports: ['websocket']});
 
       // Enable Send Message button and input field
       document.getElementById('sendButton').disabled = false;
