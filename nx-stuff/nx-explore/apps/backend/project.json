@@ -33,6 +33,20 @@
           "buildTarget": "backend:build:production"
         }
       }
+    },
+    "deploy": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "rm -r dist/apps/backend && rm -r dist/libs",
+          "nx run backend:build",
+          "cp -r .elasticbeanstalk dist/apps/backend/.elasticbeanstalk",
+          "cd dist/apps/backend && npm install",
+          "cd dist/apps/backend && mv main.js app.js",
+          "cd dist/apps/backend && eb deploy"
+        ],
+        "parallel": false
+      }
     }
   }
 }

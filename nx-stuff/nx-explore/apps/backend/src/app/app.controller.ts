@@ -8,6 +8,7 @@ export class AppController {
 
   @Get()
   getData() {
-    return this.appService.getData() + ' ' + mylib();
+    
+    return this.appService.getData().message + ' ' + mylib() + ' ' + process.env['TEST'];
   }
 }
