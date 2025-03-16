@@ -1,9 +1,15 @@
 using System.Security.Claims;
+using System.Security.Cryptography;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.JsonWebTokens;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
 var defaultCookieScheme = "MyCookieScheme";
+var bearerAuth = "MyBearer";
+var key = RSA.Create();
 var myPolicy = "MyPolicy";
 // Add services to the container.
 
@@ -23,6 +29,28 @@ builder.Services.AddAuthorization(builder =>
         policyConfig.RequireClaim("special", "allow");
     });
 });
+
+builder.Services.AddAuthentication(bearerAuth).AddJwtBearer(bearerAuth, opt =>
+{
+    opt.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = false,
+        ValidAudience = "jwt-explore",
+        IssuerSigningKey = new RsaSecurityKey(key)
+    };
+    opt.Events = new JwtBearerEvents
+    {
+        OnMessageReceived = (ctx) =>
+        {
+            if (ctx.Request.Query.ContainsKey("token"))
+            {
+                ctx.Token = ctx.Request.Query["token"];
+            }
+            return Task.CompletedTask;
+        }
+    };
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -56,6 +84,14 @@ app.MapGet("otherCookie", (HttpContext ctx) =>
         return "NOT Authed";
     }
 });
+
+app.MapGet("otherJWT", (string token, HttpContext ctx) =>
+{
+    bool isAuthed = ctx.User.Claims.Any(x => x.Issuer == "Test");
+
+    return isAuthed;
+});
+
 app.MapGet("special", (HttpContext ctx) =>
 {
     bool isAuth = ctx.User.Identities.Any(c => c.AuthenticationType == defaultCookieScheme);
@@ -89,6 +125,27 @@ app.MapGet("loginCookie", async (HttpContext ctx) =>
     var identity = new ClaimsIdentity(claims, defaultCookieScheme);
     await ctx.SignInAsync(defaultCookieScheme, new ClaimsPrincipal(identity));
     return "ok";
+});
+
+app.MapGet("jwt", (HttpContext ctx) =>
+{
+    var secret = new RsaSecurityKey(key);
+    var jwt = new JsonWebTokenHandler().CreateToken(new SecurityTokenDescriptor()
+    {
+        Subject = new ClaimsIdentity
+        (
+            new List<Claim>
+            {
+                new Claim(JwtRegisteredClaimNames.Iss, "Test"),
+                new Claim(JwtRegisteredClaimNames.Aud, "jwt-explore"),
+                new Claim("sub", "exploring")
+            },
+            bearerAuth
+        ),
+        SigningCredentials = new SigningCredentials(secret, SecurityAlgorithms.RsaSha256)
+    });
+
+    return jwt;
 });
 
 app.MapControllers();
