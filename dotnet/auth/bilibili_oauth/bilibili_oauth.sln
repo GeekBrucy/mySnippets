@@ -5,6 +5,12 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01_cookie_jwt", "01_cookie_jwt\01_cookie_jwt.csproj", "{EE258E1C-4970-499E-9FD4-122C04AD8688}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02_oauth", "02_oauth", "{CABCBC3B-4408-4AE2-BCA9-36FC536E26E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OAuthClient", "02_oauth\OAuthClient\OAuthClient.csproj", "{01E97CB7-ED3E-4292-A59A-F346BFEC5EDD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OAuthServer", "02_oauth\OAuthServer\OAuthServer.csproj", "{34F47AE1-8BEA-4FD5-AE16-3EA813DBC51C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +24,17 @@ Global
 		{EE258E1C-4970-499E-9FD4-122C04AD8688}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EE258E1C-4970-499E-9FD4-122C04AD8688}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EE258E1C-4970-499E-9FD4-122C04AD8688}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01E97CB7-ED3E-4292-A59A-F346BFEC5EDD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01E97CB7-ED3E-4292-A59A-F346BFEC5EDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01E97CB7-ED3E-4292-A59A-F346BFEC5EDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01E97CB7-ED3E-4292-A59A-F346BFEC5EDD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34F47AE1-8BEA-4FD5-AE16-3EA813DBC51C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34F47AE1-8BEA-4FD5-AE16-3EA813DBC51C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34F47AE1-8BEA-4FD5-AE16-3EA813DBC51C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34F47AE1-8BEA-4FD5-AE16-3EA813DBC51C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{01E97CB7-ED3E-4292-A59A-F346BFEC5EDD} = {CABCBC3B-4408-4AE2-BCA9-36FC536E26E8}
+		{34F47AE1-8BEA-4FD5-AE16-3EA813DBC51C} = {CABCBC3B-4408-4AE2-BCA9-36FC536E26E8}
 	EndGlobalSection
 EndGlobal
