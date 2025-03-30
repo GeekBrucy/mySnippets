@@ -1,3 +1,4 @@
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
@@ -114,19 +115,19 @@ namespace OAuthServer.Controllers
             }
 
             var secret = new RsaSecurityKey(key);
+            var claims = new List<Claim>
+            {
+                new Claim("sub", AuthConstants.OAuthSub),
+                new Claim("custom", "test-custom")
+            };
+            claims.AddRange(User.Claims);
+
             var jwt = new JsonWebTokenHandler().CreateToken
             (
                 new SecurityTokenDescriptor()
                 {
                     Audience = AuthConstants.OAuthAudience,
-                    Subject = new ClaimsIdentity
-                    (
-                        new List<Claim>
-                        {
-                            new Claim("sub", AuthConstants.OAuthSub),
-                            new Claim("custom", "test-custom")
-                        }
-                    ),
+                    Subject = new ClaimsIdentity(claims),
                     Expires = DateTime.Now.AddMinutes(15),
                     TokenType = AuthConstants.TokenType,
                     SigningCredentials = new SigningCredentials(secret, SecurityAlgorithms.RsaSha256)
@@ -150,6 +151,49 @@ namespace OAuthServer.Controllers
             );
 
             return verifiedCode.Equals(code.CodeChallenge);
+        }
+
+        public async Task<IActionResult> UserInfo()
+        {
+            string content = Request.Headers.Authorization;
+            string access_token = content.Split(' ')[1];
+
+            var jwtSecurityTokenHandler = new JwtSecurityTokenHandler();
+            bool canReadToken = jwtSecurityTokenHandler.CanReadToken(access_token);
+
+            if (!canReadToken)
+            {
+                return Unauthorized("验证token的格式无效");
+            }
+
+            var validationParameters = new TokenValidationParameters()
+            {
+                ValidateIssuer = false,
+                ValidateLifetime = true,
+                ClockSkew = TimeSpan.FromSeconds(1),
+                ValidateIssuerSigningKey = true,
+                ValidAudience = AuthConstants.OAuthAudience,
+                IssuerSigningKey = new RsaSecurityKey(key)
+            };
+            SecurityToken securityToken = null;
+            try
+            {
+                jwtSecurityTokenHandler.ValidateToken(access_token, validationParameters, out securityToken);
+            }
+            catch (System.Exception)
+            {
+
+                return Unauthorized("验证失败");
+            }
+
+            var payload = access_token?.Split('.')[1];
+            if (!string.IsNullOrEmpty(payload))
+            {
+                var pl = Base64UrlEncoder.Decode(payload);
+                var data = JsonDocument.Parse(pl);
+                return Ok(JsonSerializer.Serialize(data));
+            }
+            return Unauthorized("token无效");
         }
     }
 }
