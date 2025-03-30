@@ -114,6 +114,56 @@ namespace OAuthServer.Controllers
                 return null;
             }
 
+            return new AuthToken
+            {
+                access_token = IssueToken(),
+                refresh_token = IssueToken(60 * 60 * 24),
+                token_type = AuthConstants.TokenType,
+                expires_in = DateTime.Now.AddSeconds(20).ToString()
+            };
+        }
+
+        public async Task<AuthToken> RefreshToken(AuthToken authToken)
+        {
+            var jwtSecurityTokenHandler = new JwtSecurityTokenHandler();
+            bool canReadToken = jwtSecurityTokenHandler.CanReadToken(authToken.refresh_token);
+
+            if (!canReadToken)
+            {
+                return new();
+            }
+
+            var validationParameters = new TokenValidationParameters()
+            {
+                ValidateIssuer = false,
+                ValidateLifetime = true,
+                ClockSkew = TimeSpan.FromSeconds(1),
+                ValidateIssuerSigningKey = true,
+                ValidAudience = AuthConstants.OAuthAudience,
+                IssuerSigningKey = new RsaSecurityKey(key)
+            };
+            SecurityToken securityToken = null;
+            try
+            {
+                jwtSecurityTokenHandler.ValidateToken(authToken.refresh_token, validationParameters, out securityToken);
+            }
+            catch (System.Exception)
+            {
+
+                return new();
+            }
+
+            return new AuthToken
+            {
+                access_token = IssueToken(),
+                refresh_token = IssueToken(60 * 60 * 24),
+                token_type = AuthConstants.TokenType,
+                expires_in = DateTime.Now.AddSeconds(20).ToString()
+            };
+        }
+
+        public string IssueToken(double seconds = 20)
+        {
             var secret = new RsaSecurityKey(key);
             var claims = new List<Claim>
             {
@@ -128,17 +178,13 @@ namespace OAuthServer.Controllers
                 {
                     Audience = AuthConstants.OAuthAudience,
                     Subject = new ClaimsIdentity(claims),
-                    Expires = DateTime.Now.AddMinutes(15),
+                    Expires = DateTime.Now.AddSeconds(seconds),
                     TokenType = AuthConstants.TokenType,
                     SigningCredentials = new SigningCredentials(secret, SecurityAlgorithms.RsaSha256)
                 }
             );
 
-            return new AuthToken
-            {
-                access_token = jwt,
-                token_type = AuthConstants.TokenType
-            };
+            return jwt;
         }
 
         public static bool ValidateCode(AuthCode code, string codeVerify)
@@ -156,7 +202,8 @@ namespace OAuthServer.Controllers
         public async Task<IActionResult> UserInfo()
         {
             string content = Request.Headers.Authorization;
-            string access_token = content.Split(' ')[1];
+
+            string access_token = content.Split(" ")[1];
 
             var jwtSecurityTokenHandler = new JwtSecurityTokenHandler();
             bool canReadToken = jwtSecurityTokenHandler.CanReadToken(access_token);
@@ -182,7 +229,6 @@ namespace OAuthServer.Controllers
             }
             catch (System.Exception)
             {
-
                 return Unauthorized("验证失败");
             }
 
@@ -193,6 +239,7 @@ namespace OAuthServer.Controllers
                 var data = JsonDocument.Parse(pl);
                 return Ok(JsonSerializer.Serialize(data));
             }
+
             return Unauthorized("token无效");
         }
     }
