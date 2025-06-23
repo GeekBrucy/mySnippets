@@ -20,11 +20,61 @@
 - **客户端证书认证**: 服务器验证客户端提供的证书
 - **双向 TLS (mTLS)**: 客户端和服务器都使用证书进行身份验证
 - **证书链**: 验证证书的有效性和信任关系
+- **Chained Certificate（链式证书）**: 客户端证书由中间 CA 签发，中间 CA 由根 CA 签发，服务器只信任根 CA。
 
 ## 技术要点
 - ASP.NET Core 证书认证中间件
 - HttpClient 配置客户端证书
 - 开发证书生成和管理
+
+## 证书链生成命令（openssl）
+
+建议在项目根目录下新建 `certs/` 文件夹，所有命令都在 `certs/` 目录下执行。
+
+```bash
+mkdir certs
+cd certs
+```
+
+### 1. 生成根 CA（Root CA）
+```bash
+openssl genrsa -out rootCA.key 2048
+openssl req -x509 -new -nodes -key rootCA.key -sha256 -days 3650 -out rootCA.pem -subj "/C=CN/ST=Test/L=Test/O=TestOrg/OU=TestRootCA/CN=TestRootCA"
+```
+
+### 2. 生成中间 CA（Intermediate CA）
+```bash
+openssl genrsa -out intermediateCA.key 2048
+openssl req -new -key intermediateCA.key -out intermediateCA.csr -subj "/C=CN/ST=Test/L=Test/O=TestOrg/OU=TestIntermediateCA/CN=TestIntermediateCA"
+openssl x509 -req -in intermediateCA.csr -CA rootCA.pem -CAkey rootCA.key -CAcreateserial -out intermediateCA.pem -days 1825 -sha256
+```
+
+### 3. 生成服务端证书（Server Certificate）
+```bash
+openssl genrsa -out server.key 2048
+openssl req -new -key server.key -out server.csr -subj "/C=CN/ST=Test/L=Test/O=TestOrg/OU=TestServer/CN=localhost"
+openssl x509 -req -in server.csr -CA intermediateCA.pem -CAkey intermediateCA.key -CAcreateserial -out server.pem -days 825 -sha256
+cat server.pem intermediateCA.pem > server-chain.pem
+```
+
+### 4. 生成客户端证书（Client Certificate）
+```bash
+openssl genrsa -out client.key 2048
+openssl req -new -key client.key -out client.csr -subj "/C=CN/ST=Test/L=Test/O=TestOrg/OU=TestClient/CN=TestClient"
+openssl x509 -req -in client.csr -CA intermediateCA.pem -CAkey intermediateCA.key -CAcreateserial -out client.pem -days 825 -sha256
+cat client.pem intermediateCA.pem > client-chain.pem
+```
+
+### 5. 证书链的用法
+- 服务器端 HTTPS 证书用 `server-chain.pem`（包含 server 证书和中间 CA 证书）
+- 客户端请求时用 `client-chain.pem`（包含 client 证书和中间 CA 证书）
+- 服务器信任的 CA 证书是 `rootCA.pem`
+
+---
+
+## 执行说明
+- **你需要依次执行上述所有命令**，这样才能生成完整的链式证书体系。
+- 生成的所有证书和密钥都在 `certs/` 目录下，便于管理和配置。
 
 ## 实现进度
 

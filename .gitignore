@@ -544,3 +544,5 @@ AWS/Certificates/ExamQuestions/*
 .cursor
 
 .cursorignore
+
+certs/
