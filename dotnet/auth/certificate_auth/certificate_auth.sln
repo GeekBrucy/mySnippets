@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cert_auth_client", "cert_auth_client\cert_auth_client.csproj", "{55952470-8A9B-4CCB-83C3-4A26154A51BF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cert_auth_client", "cert_auth_client\cert_auth_client.csproj", "{C6C8DF0B-5B21-42AF-9820-E0D2F4ED7EE7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cert_auth_server", "cert_auth_server\cert_auth_server.csproj", "{42B60E3B-E516-4DBA-BF69-A0D433F996A4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cert_auth_server", "cert_auth_server\cert_auth_server.csproj", "{E52BA152-6682-4DC9-9574-EF15E8E3AC1D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -16,13 +16,13 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{55952470-8A9B-4CCB-83C3-4A26154A51BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{55952470-8A9B-4CCB-83C3-4A26154A51BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{55952470-8A9B-4CCB-83C3-4A26154A51BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{55952470-8A9B-4CCB-83C3-4A26154A51BF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{42B60E3B-E516-4DBA-BF69-A0D433F996A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{42B60E3B-E516-4DBA-BF69-A0D433F996A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{42B60E3B-E516-4DBA-BF69-A0D433F996A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{42B60E3B-E516-4DBA-BF69-A0D433F996A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C6C8DF0B-5B21-42AF-9820-E0D2F4ED7EE7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6C8DF0B-5B21-42AF-9820-E0D2F4ED7EE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6C8DF0B-5B21-42AF-9820-E0D2F4ED7EE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6C8DF0B-5B21-42AF-9820-E0D2F4ED7EE7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E52BA152-6682-4DC9-9574-EF15E8E3AC1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E52BA152-6682-4DC9-9574-EF15E8E3AC1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E52BA152-6682-4DC9-9574-EF15E8E3AC1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E52BA152-6682-4DC9-9574-EF15E8E3AC1D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
